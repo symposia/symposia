@@ -4,14 +4,11 @@ import "./App.css";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-const Index = () => <h2> Home </h2>;
-const Why = () => <h2> Why </h2>;
-
 class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <header>
           <nav>
             <ul>
               <li>
@@ -28,12 +25,17 @@ class App extends Component {
             </ul>
           </nav>
 
-          <Route path="/" exact component={Index} />
-          <Route path="/why/" component={Why} />
-        </div>
+          <main>
+            <Route path="/" exact component={Home} />
+            <Route path="/why/" component={Why} />
+          </main>
+        </header>
       </Router>
     );
   }
 }
+
+const Home = () => <h2> Home </h2>;
+const Why = () => <h2> Why </h2>;
 
 export default App;
