@@ -4,17 +4,8 @@ import "./App.css";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-function Index() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
+const Index = () => <h2> Home </h2>;
+const Why = () => <h2> Why </h2>;
 
 class App extends Component {
   render() {
@@ -27,17 +18,18 @@ class App extends Component {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/about/">About</Link>
+                <Link to="/why/">Why</Link>
               </li>
               <li>
-                <Link to="/users/">Users</Link>
+                <a href="mailto:pvthejas@uw.edu,jyc24@uw.edu,aman.arya524@gmail.com,lndrgs@uw.edu">
+                  Contact Us
+                </a>
               </li>
             </ul>
           </nav>
 
           <Route path="/" exact component={Index} />
-          <Route path="/about/" component={About} />
-          <Route path="/users/" component={Users} />
+          <Route path="/why/" component={Why} />
         </div>
       </Router>
     );
