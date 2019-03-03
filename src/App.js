@@ -1,23 +1,25 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import Home from "./components/Home";
+import Spectrum from "./components/Spectrum";
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <header>
+        <div id="app-container">
           <nav>
             <ul>
-              <li>
+              <li id="nav-link-1">
                 <Link to="/">Home</Link>
               </li>
-              <li>
-                <Link to="/why/">Why</Link>
+              <li id="nav-link-2">
+                <Link to="/about/">About</Link>
               </li>
-              <li>
+              <li id="nav-link-3">
                 <a href="mailto:pvthejas@uw.edu,jyc24@uw.edu,aman.arya524@gmail.com,lndrgs@uw.edu">
                   Contact Us
                 </a>
@@ -27,15 +29,15 @@ class App extends Component {
 
           <main>
             <Route path="/" exact component={Home} />
-            <Route path="/why/" component={Why} />
+            <Route path="/about/" component={About} />
+            <Route path="/spectrum/" component={Spectrum} />
           </main>
-        </header>
+        </div>
       </Router>
     );
   }
 }
 
-const Home = () => <h2> Home </h2>;
-const Why = () => <h2> Why </h2>;
+const About = () => <h2> About </h2>;
 
 export default App;
