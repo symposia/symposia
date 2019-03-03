@@ -17,6 +17,22 @@
   text-align: center;
 }
 
+#news-sources ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* Hero */
+#hero h1 {
+  font-size: 4em;
+  margin-bottom: 0;
+}
+
+#hero h2 {
+  font-size: 1.5em;
+}
+
 /* StoryCard */
 
 .story-card {

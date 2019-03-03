@@ -15,6 +15,16 @@ const Home = () => {
       <StoryCard />
       <section id="news-sources-container">
         <h3>News sources we parse through</h3>
+        <div id="news-sources">
+          <ul>
+            <li>CNN</li>
+            <li>BBC</li>
+            <li>NYTimes</li>
+            <li>Source</li>
+            <li>Source</li>
+            <li>Source</li>
+          </ul>
+        </div>
       </section>
     </div>
   );

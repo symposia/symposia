@@ -1,3 +1,7 @@
+ul {
+  list-style-type: none;
+}
+
 #app-container {
   height: 100%;
   display: flex;
@@ -17,7 +21,6 @@ main {
 nav > ul {
   width: 100%;
   padding: 0;
-  list-style-type: none;
 
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -47,5 +50,3 @@ nav a {
   text-decoration: none;
   font-weight: 600;
 }
-
-/* Main */
