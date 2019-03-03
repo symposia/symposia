@@ -1,0 +1,27 @@
+#home-container {
+  height: calc(100vh - 68px);
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-content: center;
+  grid-gap: 20px;
+}
+
+#home-container > section {
+  grid-column: 1/4;
+}
+
+#hero h1,
+#hero h2,
+#news-sources-container h3 {
+  text-align: center;
+}
+
+/* StoryCard */
+
+.story-card {
+  height: 200px;
+  padding: 0 20px;
+  background-color: gray;
+  border-radius: 5px;
+}
