@@ -4,6 +4,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Home from "./components/Home";
+import About from "./components/About";
 import Spectrum from "./components/Spectrum";
 
 class App extends Component {
@@ -37,7 +38,5 @@ class App extends Component {
     );
   }
 }
-
-const About = () => <h2> About </h2>;
 
 export default App;
