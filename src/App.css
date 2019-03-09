@@ -1,5 +1,6 @@
 ul {
   list-style-type: none;
+  padding: 0;
 }
 
 #app-container {
@@ -46,7 +47,7 @@ nav > ul {
 /* NavBar Links */
 
 nav a {
-  color: black;
+  color: white;
   text-decoration: none;
   font-weight: 600;
 }

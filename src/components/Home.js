@@ -23,7 +23,7 @@ const Home = () => {
         backgroundImage="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/President_Trump_Meets_With_Congressional_Leadership_%2845966024294%29.jpg/640px-President_Trump_Meets_With_Congressional_Leadership_%2845966024294%29.jpg"
       />
       <StoryCard
-        title="Venezuelan Presidential Crisis"
+        title="Venezuelan Crisis"
         backgroundImage="https://upload.wikimedia.org/wikipedia/commons/3/30/2017_Venezuelan_protests_flag.jpg"
       />
       <section id="news-sources-container">
@@ -56,12 +56,12 @@ class StoryCard extends Component {
         <div
           class="story-card"
           style={{
-            backgroundImage: `linear-gradient(0deg,rgba(0,0,0,0),rgba(0,0,0,0.8)),url(${
+            backgroundImage: `linear-gradient(0deg,rgba(0,0,0,0.8),rgba(0,0,0,0)),url(${
               this.props.backgroundImage
             })`
           }}
         >
-          <span class="title">{this.props.title}</span>
+          <div class="title">{this.props.title}</div>
         </div>
       </Link>
     );

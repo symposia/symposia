@@ -16,6 +16,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  color: rgba(255, 255, 255, 0.65);
+  background-color: #151617;
+}
+
+/* Header Colors */
+h1,
+a {
+  color: white;
 }
 
 code {
