@@ -1,9 +1,8 @@
+/* Home Container */
+
 #home-container {
   min-height: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-content: start;
-  grid-gap: 20px;
+  width: 100%;
 }
 
 #home-container > section {
@@ -17,17 +16,33 @@
 }
 
 /* Hero */
+
 #hero {
-  margin: 75px auto;
+  margin: 120px auto;
 }
 
 #hero h1 {
   font-size: 4em;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 #hero h2 {
   font-size: 1.5em;
+  margin: 0;
+}
+
+/* Featured Stories */
+
+#featured-stories {
+  width: 1040px;
+  max-width: 100%;
+  margin: auto;
+  padding: 0 12px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-content: start;
+  grid-gap: 20px;
 }
 
 /* StoryCard */
@@ -64,8 +79,7 @@
 /* News Sources */
 
 #news-sources-container {
-  margin: 50px 0;
-  padding: 50px 0;
+  margin: 80px 0;
 }
 
 #news-sources ul {
@@ -87,11 +101,11 @@
 }
 
 @media screen and (max-width: 800px) {
-  #home-container {
+  #featured-stories {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  #home-container > section {
+  #featured-stories > section {
     grid-column: 1/3;
   }
 

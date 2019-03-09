@@ -14,18 +14,20 @@ const Home = () => {
         <h1>Find the Balance</h1>
         <h2>the truth is in the spectrum</h2>
       </section>
-      <StoryCard
-        title="Huawei CFO Arrest"
-        backgroundImage="https://cdn.mos.cms.futurecdn.net/RYqiU3byPDDFvXMxvn9kNm-970-80.jpg"
-      />
-      <StoryCard
-        title="Government Shutdown"
-        backgroundImage="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/President_Trump_Meets_With_Congressional_Leadership_%2845966024294%29.jpg/640px-President_Trump_Meets_With_Congressional_Leadership_%2845966024294%29.jpg"
-      />
-      <StoryCard
-        title="Venezuelan Crisis"
-        backgroundImage="https://upload.wikimedia.org/wikipedia/commons/3/30/2017_Venezuelan_protests_flag.jpg"
-      />
+      <section id="featured-stories">
+        <StoryCard
+          title="Huawei CFO Arrest"
+          backgroundImage="https://cdn.mos.cms.futurecdn.net/RYqiU3byPDDFvXMxvn9kNm-970-80.jpg"
+        />
+        <StoryCard
+          title="Government Shutdown"
+          backgroundImage="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/President_Trump_Meets_With_Congressional_Leadership_%2845966024294%29.jpg/640px-President_Trump_Meets_With_Congressional_Leadership_%2845966024294%29.jpg"
+        />
+        <StoryCard
+          title="Venezuelan Crisis"
+          backgroundImage="https://upload.wikimedia.org/wikipedia/commons/3/30/2017_Venezuelan_protests_flag.jpg"
+        />
+      </section>
       <section id="news-sources-container">
         <h3>News sources we parse through</h3>
         <div id="news-sources">
