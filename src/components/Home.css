@@ -1,9 +1,8 @@
 #home-container {
-  height: calc(100vh - 68px);
   min-height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  align-content: center;
+  align-content: start;
   grid-gap: 20px;
 }
 
