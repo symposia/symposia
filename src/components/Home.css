@@ -23,6 +23,10 @@
 }
 
 /* Hero */
+#hero {
+  margin: 50px auto;
+}
+
 #hero h1 {
   font-size: 4em;
   margin-bottom: 0;
@@ -35,8 +39,36 @@
 /* StoryCard */
 
 .story-card {
-  height: 200px;
-  padding: 0 20px;
-  background-color: gray;
+  height: 400px;
+  padding: 20px 20px;
   border-radius: 5px;
+
+  background: linear-gradient(rgba(255, 0, 0, 0.45), rgba(255, 0, 0, 0.45));
+  background-color: gray;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.story-card .title {
+  color: white;
+  font-size: 1.5em;
+}
+
+.story-card-container {
+  text-decoration: none;
+}
+
+/* News Sources */
+
+#news-sources-container {
+  margin: 50px 0;
+}
+
+#news-sources {
+  margin-top: 50px;
+}
+
+.news-logo {
+  height: 30px;
 }
