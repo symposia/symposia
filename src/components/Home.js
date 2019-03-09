@@ -16,7 +16,7 @@ const Home = () => {
       </section>
       <StoryCard
         title="Huawei CFO Arrest"
-        backgroundImage="https://upload.wikimedia.org/wikipedia/commons/1/14/Meng_Wanzhou_at_Russia_Calling%21_Investment_Forum.jpg"
+        backgroundImage="https://cdn.mos.cms.futurecdn.net/RYqiU3byPDDFvXMxvn9kNm-970-80.jpg"
       />
       <StoryCard
         title="Government Shutdown"
