@@ -1,4 +1,5 @@
 import React from "react";
+import "./About.css";
 
 const About = () => {
   return (
@@ -9,7 +10,6 @@ const About = () => {
         for a given story, make useful visualizations, and help you compare
         important information.
       </p>
-      <h3>Why is Symposia?</h3>
     </div>
   );
 };
