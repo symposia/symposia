@@ -18,14 +18,17 @@ const Home = () => {
         <StoryCard
           title="Huawei CFO Arrest"
           backgroundImage="https://cdn.mos.cms.futurecdn.net/RYqiU3byPDDFvXMxvn9kNm-970-80.jpg"
+          path="huawei-cfo-arrest"
         />
         <StoryCard
           title="Government Shutdown"
           backgroundImage="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/President_Trump_Meets_With_Congressional_Leadership_%2845966024294%29.jpg/640px-President_Trump_Meets_With_Congressional_Leadership_%2845966024294%29.jpg"
+          path="us-government-shutdown"
         />
         <StoryCard
           title="Venezuelan Crisis"
           backgroundImage="https://upload.wikimedia.org/wikipedia/commons/3/30/2017_Venezuelan_protests_flag.jpg"
+          path="venezuelan-crisis"
         />
       </section>
       <section id="news-sources-container">
@@ -54,7 +57,7 @@ const Home = () => {
 class StoryCard extends Component {
   render() {
     return (
-      <Link to="/spectrum/" class="story-card-container">
+      <Link to={"/cluster/" + this.props.path} class="story-card-container">
         <div
           class="story-card"
           style={{

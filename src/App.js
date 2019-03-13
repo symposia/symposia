@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
 import Spectrum from "./components/Spectrum";
+import Cluster from "./components/Cluster";
 
 import logo from "./logo.png";
 
@@ -39,7 +40,7 @@ class App extends Component {
           <main>
             <Route path="/" exact component={Home} />
             <Route path="/about/" component={About} />
-            <Route path="/spectrum/" component={Spectrum} />
+            <Route path="/cluster/" component={Cluster} />
           </main>
         </div>
       </Router>
