@@ -16,7 +16,6 @@ body{font-family:"Pontano Sans",sans-serif;background-color:#151617;color:#EEE}.
   padding: 12px;
 
   display: grid;
-  grid-gap: 24px;
   grid-template-columns: auto min-content;
   grid-template-rows: auto;
   grid-template-areas:
