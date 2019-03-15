@@ -254,10 +254,8 @@ class ClusterViz extends Component {
               "</a>" +
               "</p>" +
               "<h4>" +
-              "<b>Author: </b> King James</h4>" +
-              "<h4>" +
               "<b>Date: </b> Jan 18, 2019</h4>" +
-              "<h4>Description: blah blah blah<h4>"
+              `<h4>Description: ${d.description} </h4>`
           )
           .style("visibility", "visible");
       }
