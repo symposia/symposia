@@ -6,17 +6,31 @@ import "./ClusterViz.css";
 
 class ClusterViz extends Component {
   state = {
-    data: null
+    data: null,
+    title: ""
   };
 
   componentDidMount() {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
-    console.log(last_segment)
+    let title;
+
+    switch (last_segment) {
+      case "huawei":
+        title = "Huawei CFO Arrest";
+        break;
+      case "shutdown":
+        title = "US Government Shutdown";
+        break;
+      case "venezuela":
+        title = "Venezeulan Crisis";
+        break;
+      default:
+    }
     const dataURL = `/data/${last_segment}.json`;
     d3.json(dataURL).then(data => {
-      this.setState({ data });
+      this.setState({ data: data, title: title });
     });
   }
 
@@ -32,14 +46,19 @@ class ClusterViz extends Component {
     }
 
     return (
-      <div>
-        <svg width="1000" height="600">
-          <g ref="anchor" />
-        </svg>
-        <button id="reset-zoom" className="my-btn">
-          Reset Zoom
-        </button>
-        <div id="tooltip-container" className="second" />
+      <div id="cluster-viz-container">
+        <div id="title-container">
+          <h1 id="title">{this.state.title}</h1>
+        </div>
+        <div id="svg-container">
+          <svg ref="anchor" />
+          <div id="reset-zoom-container">
+            <button id="reset-zoom" className="my-btn">
+              Reset Zoom
+            </button>
+          </div>
+        </div>
+          <div id="tooltip-container" className="second" />
         <div id="filter-container" className="dropdown-list">
           <input
             type="search"
@@ -85,8 +104,7 @@ class ClusterViz extends Component {
     svg
       .style("overflow", "scroll")
       .attr("width", width)
-      .attr("height", height)
-      .attr("class", "container--fluid");
+      .attr("height", height);
 
     const gMain = svg.append("g");
     gMain.attr("class", "g-main");
@@ -116,6 +134,7 @@ class ClusterViz extends Component {
 
     gMain.call(zoom);
     gMain.call(zoom.transform, transform);
+    gMain.on("dblclick.zoom", null);
 
     function getDomain(url) {
       var result;
@@ -230,7 +249,7 @@ class ClusterViz extends Component {
               "</p>" +
               "<p><a href=" +
               d.url +
-              ">" +
+              ' target="blank">' +
               d.title +
               "</a>" +
               "</p>" +
