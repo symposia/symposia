@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 // import * as d3 from "d3";
 
-// import "./Spectrum.css";
-// import json from "./readme.json";
-
-class Cluster extends Component {
+class ClusterViz extends Component {
   render() {
     return (
       <div class="cluster-container">
@@ -16,4 +13,4 @@ class Cluster extends Component {
   }
 }
 
-export default Cluster;
+export default ClusterViz;

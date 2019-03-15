@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Home from "./components/Home";
 import About from "./components/About";
-import Cluster from "./components/Cluster";
+import ClusterViz from "./components/ClusterViz";
 
 import logo from "./logo.png";
 
@@ -39,7 +39,10 @@ class App extends Component {
           <main>
             <Route path="/" exact component={Home} />
             <Route path="/about/" component={About} />
-            <Route path="/cluster/" component={Cluster} />
+            <Route
+              path="/cluster/"
+              render={() => <ClusterViz width={1000} height={600} />}
+            />
           </main>
         </div>
       </Router>

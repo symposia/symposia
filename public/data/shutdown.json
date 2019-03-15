@@ -1,0 +1,602 @@
+{
+  "0": {
+    "sourceName": "lifehacker",
+    "url": "https://lifehacker.com/avoid-long-security-lines-with-the-tsas-app-1831848521",
+    "title": "Avoid Long Security Lines With the TSA's App",
+    "clust": 3
+  },
+  "1": {
+    "sourceName": "lifehacker",
+    "url": "https://twocents.lifehacker.com/how-your-1040-tax-form-is-changing-this-year-1832055703",
+    "title": "How Your 1040 Tax Form Is Changing This Year",
+    "clust": 3
+  },
+  "2": {
+    "sourceName": "lifehacker",
+    "url": "https://twocents.lifehacker.com/what-to-do-before-and-after-being-laid-off-1832365683",
+    "title": "What to Do Before and After Being Laid Off",
+    "clust": 0
+  },
+  "3": {
+    "sourceName": "lifehacker",
+    "url": "https://offspring.lifehacker.com/help-federal-workers-by-donating-to-diaper-banks-1832191362",
+    "title": "Help Federal Workers by Donating to Diaper Banks",
+    "clust": 3
+  },
+  "4": {
+    "sourceName": "lifehacker",
+    "url": "https://twocents.lifehacker.com/everything-you-need-to-know-to-file-your-2018-taxes-1832057732",
+    "title": "Everything You Need to Know to File Your 2018 Taxes",
+    "clust": 4
+  },
+  "5": {
+    "sourceName": "lifehacker",
+    "url": "https://lifehacker.com/furloughed-government-workers-can-get-free-tickets-to-t-1831895377",
+    "title": "Furloughed Government Workers Can Get Free Tickets to The Met",
+    "clust": 1
+  },
+  "6": {
+    "sourceName": "lifehacker",
+    "url": "https://twocents.lifehacker.com/all-the-tax-deductions-you-can-take-for-2018-1831808127",
+    "title": "All the Tax Deductions You Can Take for 2018",
+    "clust": 3
+  },
+  "7": {
+    "sourceName": "lifehacker",
+    "url": "https://lifehacker.com/how-to-livestream-the-2019-state-of-the-union-address-1832341008",
+    "title": "How to Livestream the 2019 State of the Union Address",
+    "clust": 4
+  },
+  "8": {
+    "sourceName": "lifehacker",
+    "url": "https://twocents.lifehacker.com/before-taking-a-tax-refund-advance-ask-these-questions-1831868188",
+    "title": "Before Taking a Tax Refund Advance, Ask These Questions",
+    "clust": 4
+  },
+  "9": {
+    "sourceName": "lifehacker",
+    "url": "https://lifehacker.com/what-is-the-indigenous-peoples-movement-1831965372",
+    "title": "What Is the Indigenous Peoples Movement?",
+    "clust": 0
+  },
+  "10": {
+    "sourceName": "engadget",
+    "url": "https://www.engadget.com/2019/02/01/climate-change-hearing-house-of-representatives/",
+    "title": "House committee sets first climate change hearing in eight years",
+    "clust": 1
+  },
+  "11": {
+    "sourceName": "engadget",
+    "url": "https://www.engadget.com/2019/01/24/senators-ftc-fcc-location-tracking-scandal-investigation/",
+    "title": "Senators demand investigation into carrier location-selling scandal",
+    "clust": 4
+  },
+  "12": {
+    "sourceName": "engadget",
+    "url": "https://www.engadget.com/2019/01/19/gofundme-government-shutdown-campaign/",
+    "title": "GoFundMe launches campaign for government workers hit by shutdown",
+    "clust": 0
+  },
+  "13": {
+    "sourceName": "engadget",
+    "url": "https://www.engadget.com/2019/02/07/spacex-first-crew-dragon-flight-march-2nd/",
+    "title": "SpaceX postpones first Crew Dragon flight until March 2nd",
+    "clust": 1
+  },
+  "14": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/antibiotics-are-failing-us-crispr-is-our-glimmer-of-hope/",
+    "title": "Antibiotics Are Failing Us. Crispr Is Our Glimmer of Hope",
+    "clust": 4
+  },
+  "15": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/how-to-watch-the-state-of-the-union-2019/",
+    "title": "How to Live Stream the State of the Union Address 2019",
+    "clust": 1
+  },
+  "16": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/the-excruciating-impossible-science-of-airport-delays/",
+    "title": "The Excruciating, Impossible Science of Airport Delays",
+    "clust": 1
+  },
+  "17": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/the-pentagon-needs-to-woo-ai-experts-away-from-big-tech/",
+    "title": "The Pentagon Needs to Woo AI Experts Away From Big Tech",
+    "clust": 1
+  },
+  "18": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/trump-impeachment-mueller-cohen/",
+    "title": "If Trump Told Cohen to Lie, Impeachment Is Coming",
+    "clust": 0
+  },
+  "19": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/congress-spending-bill-wall-money-border-tech/",
+    "title": "Trump's Wall Won't Solve a National Emergency. It Is One",
+    "clust": 1
+  },
+  "20": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/government-shutdown-cybersecurity-recovery/",
+    "title": "Cybersecurity Workers Scramble to Fix a Post-Shutdown Mess",
+    "clust": 1
+  },
+  "21": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/roger-stone-indictment-wikileaks-mueller-investigation/",
+    "title": "The Roger Stone Indictment: 4 Key Takeaways",
+    "clust": 1
+  },
+  "22": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/trump-missile-defense-review/",
+    "title": "Trump's Missile Defense Plan Creates More Problems Than It Solves",
+    "clust": 2
+  },
+  "23": {
+    "sourceName": "wired",
+    "url": "https://www.wired.com/story/its-time-to-rethink-whos-best-suited-for-space-travel/",
+    "title": "It\u2019s Time to Rethink Who\u2019s Best Suited for Space Travel",
+    "clust": 4
+  },
+  "24": {
+    "sourceName": "theverge",
+    "url": "https://www.theverge.com/2019/1/18/18188807/fcc-government-shutdown-reopen-equipment-authorization-system-phone-electronics-certification",
+    "title": "The FCC has reopened its device approval system during the government shutdown",
+    "clust": 0
+  },
+  "25": {
+    "sourceName": "theverge",
+    "url": "https://www.theverge.com/2019/2/5/18212191/state-of-the-union-watch-how-to-online-sotu-trump-speech-date-time",
+    "title": "How to watch Trump\u2019s State of the Union speech online",
+    "clust": 1
+  },
+  "26": {
+    "sourceName": "theverge",
+    "url": "https://www.theverge.com/2019/1/23/18194281/government-shutdown-us-federal-websites-homeland-security-hackers",
+    "title": "Amid shutdown, agencies scramble to secure federal websites",
+    "clust": 0
+  },
+  "27": {
+    "sourceName": "theverge",
+    "url": "https://www.theverge.com/2019/2/5/18212123/wall-southern-border-invasive-surveillance-tech-immigration-open-letter-congress",
+    "title": "Don\u2019t replace wall with \u2018invasive surveillance tech,\u2019 say civil liberties groups",
+    "clust": 0
+  },
+  "28": {
+    "sourceName": "techcrunch",
+    "url": "http://techcrunch.com/2019/01/24/with-cybersecurity-threats-looming-the-government-shutdown-is-putting-america-at-risk/",
+    "title": "With cybersecurity threats looming, the government shutdown is putting America at risk",
+    "clust": 3
+  },
+  "29": {
+    "sourceName": "techcrunch",
+    "url": "http://techcrunch.com/2019/01/17/judge-orders-net-neutrality-lawsuit-to-go-ahead-despite-shutdown/",
+    "title": "Judge orders net neutrality lawsuit to go ahead despite shutdown",
+    "clust": 1
+  },
+  "30": {
+    "sourceName": "techcrunch",
+    "url": "http://techcrunch.com/2019/01/17/vc-funding-cybersecurity-record/",
+    "title": "VC funding of cybersecurity companies hits record $5.3B in 2018",
+    "clust": 4
+  },
+  "31": {
+    "sourceName": "techcrunch",
+    "url": "http://techcrunch.com/2019/01/16/shutdown-could-delay-challenge-of-fccs-net-neutrality-rollback/",
+    "title": "Shutdown could delay challenge of FCC\u2019s net neutrality rollback",
+    "clust": 0
+  },
+  "32": {
+    "sourceName": "techcrunch",
+    "url": "http://techcrunch.com/2019/02/01/foxconn-says-wisconsin-factory-plans-are-back-on-after-talk-with-trump/",
+    "title": "Foxconn says Wisconsin factory plans are back on after talk with Trump",
+    "clust": 1
+  },
+  "33": {
+    "sourceName": "techcrunch",
+    "url": "http://techcrunch.com/2019/01/18/daily-crunch-tesla-cuts-its-workforce/",
+    "title": "Daily Crunch: Tesla cuts its workforce",
+    "clust": 0
+  },
+  "34": {
+    "sourceName": "techcrunch",
+    "url": "http://techcrunch.com/2019/01/23/a-new-abc-documentary-and-podcast-about-theranos-features-never-before-aired-depositions/",
+    "title": "A new ABC documentary and podcast about Theranos features never-before-aired depositions",
+    "clust": 0
+  },
+  "35": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/orbital-sculpture-stays-flaccid-due-to-government-shutd-1832047711",
+    "title": "Orbital Sculpture Stays Flaccid Due to Government Shutdown",
+    "clust": 4
+  },
+  "36": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/heres-how-the-government-shutdown-is-affecting-spam-rob-1831815996",
+    "title": "Here's How the Government Shutdown Is Affecting Spam Robocalls",
+    "clust": 0
+  },
+  "37": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/thousands-of-workers-at-fda-and-faa-head-back-to-work-w-1831798034",
+    "title": "Thousands of Workers at FDA and FAA Head Back to Work Without Pay to Inspect Food and Planes",
+    "clust": 1
+  },
+  "38": {
+    "sourceName": "gizmodo",
+    "url": "https://earther.gizmodo.com/these-elephant-seals-are-the-only-winners-of-the-govern-1832229870",
+    "title": "These Elephant Seals Are the Only Winners of the Government Shutdown",
+    "clust": 4
+  },
+  "39": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/air-safety-is-deteriorating-by-the-day-thanks-to-the-sh-1832018541",
+    "title": "Air Safety Is 'Deteriorating by the Day' Thanks to the Shutdown, Aviation Workers Warn",
+    "clust": 1
+  },
+  "40": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/theres-never-been-a-better-time-to-bribe-tsa-and-cbp-of-1832010680",
+    "title": "There's Never Been a Better Time to Bribe TSA and CBP Officers Than During President Trump's Shutdown",
+    "clust": 4
+  },
+  "41": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/flights-delayed-at-3-major-airports-due-to-air-traffic-1832050824",
+    "title": "Flights Delayed at Several Major Airports Due to Air Traffic Control Staffing Shortage During Shutdown",
+    "clust": 1
+  },
+  "42": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/air-travel-unions-warn-they-cannot-even-calculate-the-l-1832005919",
+    "title": "Air Travel Unions Warn They 'Cannot Even Calculate the Level of Risk' From Trump's Shutdown",
+    "clust": 1
+  },
+  "43": {
+    "sourceName": "gizmodo",
+    "url": "https://earther.gizmodo.com/key-data-for-nasas-ice-monitoring-satellite-in-trouble-1831965393",
+    "title": "Key Data For NASA's Ice-Monitoring Satellite in Trouble Thanks to Shutdown",
+    "clust": 3
+  },
+  "44": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/to-stop-the-wall-democrats-agree-to-fund-mass-surveill-1832633266",
+    "title": "To Stop the Wall, Democrats Agree to Fund Mass Surveillance Near U.S. Border",
+    "clust": 0
+  },
+  "45": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/government-workers-turn-to-craigslist-to-pay-bills-and-1831866476",
+    "title": "Government Workers Turn to Craigslist to Pay Bills and Rent as Shutdown Wears On",
+    "clust": 3
+  },
+  "46": {
+    "sourceName": "gizmodo",
+    "url": "https://earther.gizmodo.com/some-national-parks-to-reopen-as-others-prepare-for-cle-1832099741",
+    "title": "Some National Parks Reopen as Others Prepare for Cleanup Following Chaotic Shutdown",
+    "clust": 0
+  },
+  "47": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/fcc-trying-to-postpone-net-neutrality-lawsuit-over-shut-1831788127",
+    "title": "FCC Trying to Postpone Net Neutrality Lawsuit Over Shutdown, But It Probably Won't Work",
+    "clust": 0
+  },
+  "48": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/gofundme-kicks-off-campaign-to-help-government-workers-1831907937",
+    "title": "GoFundMe Kicks Off Campaign to Help Government Workers Affected by Trump's Shutdown",
+    "clust": 3
+  },
+  "49": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/this-startup-backed-by-bill-gates-and-dhs-is-gunning-to-1832157587",
+    "title": "This Startup Backed by Bill Gates and DHS Is Gunning to Test Its Anti-Drone Radar at the Super Bowl",
+    "clust": 1
+  },
+  "50": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/robocalls-really-were-worse-than-ever-last-year-report-1832191994",
+    "title": "Robocalls Really Were Worse Than Ever Last Year, Report Finds",
+    "clust": 4
+  },
+  "51": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/how-long-before-facebooks-new-petition-feature-is-compl-1831922324",
+    "title": "How Long Before Facebook's New Petition Feature is Complicit in Genocide?",
+    "clust": 4
+  },
+  "52": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/the-tsa-found-an-average-of-11-guns-a-day-in-carry-on-b-1832460316",
+    "title": "The TSA Found an Average of 11 Guns a Day in Carry-On Bags Last Year",
+    "clust": 4
+  },
+  "53": {
+    "sourceName": "gizmodo",
+    "url": "https://earther.gizmodo.com/the-u-s-government-was-supposed-to-tell-us-how-hot-201-1831844134",
+    "title": "The U.S. Government Was Supposed to Tell Us How Hot 2018 Was Today, But, the Shutdown",
+    "clust": 0
+  },
+  "54": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/court-rejects-the-fccs-attempt-to-postpone-net-neutrali-1831853325",
+    "title": "Court Rejects FCC Motion to Postpone Net Neutrality Lawsuit Over Shutdown",
+    "clust": 1
+  },
+  "55": {
+    "sourceName": "gizmodo",
+    "url": "https://earther.gizmodo.com/the-wild-dunes-of-indiana-are-in-a-fight-to-survive-1831982795",
+    "title": "The Wild Dunes of Indiana Are in a Fight to Survive",
+    "clust": 0
+  },
+  "56": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/tech-genius-donald-trump-to-sign-executive-order-on-art-1832522701",
+    "title": "Tech Genius Donald Trump to Sign Executive Order on Artificial Intelligence Today",
+    "clust": 1
+  },
+  "57": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/report-the-ftc-may-issue-record-setting-fine-to-facebo-1831897305",
+    "title": "Report: The FTC May Slam Facebook With 'Record-Setting' Fine Over User Privacy",
+    "clust": 4
+  },
+  "58": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/ajit-pai-and-republicans-in-congress-helped-enable-boun-1832030913",
+    "title": "Ajit Pai and Republicans in Congress Helped Enable 'Bounty Hunters' to Track Your Phone",
+    "clust": 3
+  },
+  "59": {
+    "sourceName": "gizmodo",
+    "url": "https://gizmodo.com/i-cut-facebook-out-of-my-life-surprisingly-i-missed-i-1830565456",
+    "title": "I Cut Facebook Out of My Life. Surprisingly, I Missed It",
+    "clust": 3
+  },
+  "60": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/25/opinion/trump-shutdown-deal.html",
+    "title": "Opinion | Trump\u2019s Shutdown Was a Cruel Joke",
+    "clust": 1
+  },
+  "61": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/27/briefing/roger-stone-venezuela-huawei-your-monday-briefing.html",
+    "title": "Roger Stone, Venezuela, Huawei: Your Monday Briefing",
+    "clust": 4
+  },
+  "62": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/22/nyregion/shutdown-airports-security.html",
+    "title": "Government Shutdown Forces Airports to Rely on Backup Security Screeners",
+    "clust": 0
+  },
+  "63": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/25/briefing/government-shutdown-roger-stone-ironman.html",
+    "title": "Government Shutdown, Roger Stone, Ironman: Your Friday Evening Briefing",
+    "clust": 0
+  },
+  "64": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/27/briefing/roger-stone-novak-djokovic-government-shutdown.html",
+    "title": "Government Shutdown, Roger Stone, Novak Djokovic: Your Weekend Briefing",
+    "clust": 3
+  },
+  "65": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/19/us/politics/federal-workers-pawnshops-government-shutdown.html",
+    "title": "Federal Employees Turn to Pawnshops Amid Shutdown\u2019s Financial Pinch",
+    "clust": 1
+  },
+  "66": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/16/us/politics/pelosi-state-of-the-union-trump.html",
+    "title": "Pelosi Asks Trump to Reschedule State of the Union Amid Shutdown",
+    "clust": 4
+  },
+  "67": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/29/arts/television/stephen-colbert-trump-government-shutdown.html",
+    "title": "Stephen Colbert Calls Trump\u2019s Wall Strategy \u2018the Definition of Insanity\u2019",
+    "clust": 3
+  },
+  "68": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/18/arts/television/trevor-noah-cardi-b-trump-shutdown.html",
+    "title": "Trevor Noah Wonders if Cardi B Could End the Government Shutdown",
+    "clust": 0
+  },
+  "69": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/24/us/politics/government-shutdown-senate-vote.html",
+    "title": "Collapse of Two Plans to End Shutdown Propels Urgent Negotiations",
+    "clust": 0
+  },
+  "70": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/25/us/politics/shutdown-deal-reached-trump.html",
+    "title": "Trump Signs Bill Reopening Government for 3 Weeks in Surprise Retreat From Wall",
+    "clust": 4
+  },
+  "71": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/02/13/us/politics/government-shutdown-donald-trump.html",
+    "title": "Trump, Inching Toward Border Security Deal, Says Shutdown Would Be \u2018Terrible\u2019",
+    "clust": 0
+  },
+  "72": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/26/us/government-shutdown-over.html",
+    "title": "How the Shutdown Reordered American Life",
+    "clust": 1
+  },
+  "73": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/video/us/politics/100000006326509/trump-government-shutdown-deal.html",
+    "title": "Trump Agrees to End Shutdown, for Now",
+    "clust": 0
+  },
+  "74": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/23/us/shutdown-airports-security.html",
+    "title": "Aviation Professionals Warn of Dire Risk Amid Shutdown",
+    "clust": 3
+  },
+  "75": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/28/us/politics/shutdown-cost-us-economy-11-billion-cbo-says.html",
+    "title": "Government Shutdown Cost U.S. Economy $11 Billion, C.B.O. Says",
+    "clust": 0
+  },
+  "76": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/31/arts/television/trevor-noah-weather-reporters-polar-vortex.html",
+    "title": "Trevor Noah Doesn\u2019t Think Weather Reporters Ought to Freeze in the Cold",
+    "clust": 3
+  },
+  "77": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/19/us/womens-march-2019.html",
+    "title": "Smaller Crowds Turn Out for Third Annual Women\u2019s March Events",
+    "clust": 3
+  },
+  "78": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/30/us/politics/Victorina-Morales-trump-golf-club.html",
+    "title": "Undocumented Immigrant Who Worked at a Trump Golf Club Will Attend State of the Union",
+    "clust": 1
+  },
+  "79": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/30/us/politics/undocumented-worker-trump-golf-club.html",
+    "title": "Undocumented Immigrant Who Worked at a Trump Golf Club Will Attend State of the Union",
+    "clust": 1
+  },
+  "80": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/02/05/us/politics/sotu-analysis.html",
+    "title": "A Call for Bipartisanship With a Familiar Partisan Sting",
+    "clust": 1
+  },
+  "81": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/02/12/opinion/trump-border-wall-deal.html",
+    "title": "Opinion | Deal or No Deal, Mr. Trump?",
+    "clust": 0
+  },
+  "82": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/02/10/us/politics/trump-border-wall.html",
+    "title": "Talks Over Border Security Break Down, Imperiling Effort to Prevent Shutdown",
+    "clust": 3
+  },
+  "83": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/02/15/us/politics/trump-border-emergency-announcement.html",
+    "title": "Trump Follows Familiar Playbook When Confronted by a Loss: Distract and Digress",
+    "clust": 4
+  },
+  "84": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/18/us/politics/pelosi-trip-trump.html",
+    "title": "Trump to Make \u2018Major Announcement\u2019 on Border as Democrats Sweeten Offer",
+    "clust": 1
+  },
+  "85": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/01/29/us/politics/stacey-abrams-state-of-the-union.html",
+    "title": "Stacey Abrams to Deliver State of the Union Response for Democrats",
+    "clust": 1
+  },
+  "86": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/02/07/opinion/north-pole-gps.html",
+    "title": "Opinion | Which Way to the North Pole?",
+    "clust": 1
+  },
+  "87": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/02/12/opinion/bezos-trump-pecker.html",
+    "title": "Opinion | The Bezos Story Is Big",
+    "clust": 4
+  },
+  "88": {
+    "sourceName": "nytimes",
+    "url": "https://www.nytimes.com/2019/02/10/us/trump-el-paso-rally.html",
+    "title": "El Paso\u2019s Message for Trump Before Rally: Don\u2019t Speak for Us",
+    "clust": 3
+  },
+  "89": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/video/cardi-b-ig-shutdown/",
+    "title": "Cardi B speaks out on government shutdown",
+    "clust": 1
+  },
+  "90": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/article/pornhub-government-shutdown-traffic/",
+    "title": "Pornhub reports bump in traffic amid government shutdown",
+    "clust": 0
+  },
+  "91": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/video/government-shutdown-hits-delta/",
+    "title": "Delta CEO says the government shutdown will cost them $25 million this month",
+    "clust": 1
+  },
+  "92": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/article/cardi-b-government-shutdown/",
+    "title": "Cardi B is not cool with employees not getting paid during the shutdown",
+    "clust": 0
+  },
+  "93": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/article/cardi-b-government-shutdown-rant-song/",
+    "title": "Someone turned Cardi B's government shutdown rant into a song and it slaps",
+    "clust": 0
+  },
+  "94": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/article/bud-trader-free-weed-for-federal-employee-government-shutdown/",
+    "title": "A pot marketplace is offering federal employees free weed during the shutdown",
+    "clust": 3
+  },
+  "95": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/article/bon-jovi-restaurant-us-government-shutdown-free-lunch/",
+    "title": "Jon Bon Jovi's restaurant will offer free meals to furloughed government workers",
+    "clust": 0
+  },
+  "96": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/video/seth-meyers-trump-shutdown-deal/",
+    "title": "Seth Meyers absolutely slams Trump's rejected shutdown offer",
+    "clust": 0
+  },
+  "97": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/article/stephen-colbert-mugs-government-workers/",
+    "title": "Stephen Colbert is selling mugs to help feed furloughed federal workers",
+    "clust": 0
+  },
+  "98": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/article/national-park-service-instagram-shutdown/",
+    "title": "The sad silence of the National Parks Instagram accounts",
+    "clust": 1
+  },
+  "99": {
+    "sourceName": "mashable",
+    "url": "https://mashable.com/article/trump-shutdown-over-flight-attendants-air-traffic-controllers-unions/",
+    "title": "As the Trump shutdown ends, cheers for air travel workers echo across Twitter",
+    "clust": 4
+  }
+}
