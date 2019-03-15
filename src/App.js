@@ -22,7 +22,7 @@ class App extends Component {
                 </Link>
               </li>
               <li id="nav-link-2">
-                <span>
+                <span hidden>
                   <Link to="/about/">About</Link>
                 </span>
                 <a
