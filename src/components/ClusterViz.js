@@ -3,6 +3,8 @@ import * as d3 from "d3";
 import $ from "jquery";
 
 import "./ClusterViz.css";
+import ArticleGrid from "./ArticleGrid";
+import TagGrid from "./TagGrid";
 
 class ClusterViz extends Component {
   state = {
@@ -14,6 +16,7 @@ class ClusterViz extends Component {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
+    console.log(last_segment);
     let title;
 
     switch (last_segment) {
@@ -30,16 +33,30 @@ class ClusterViz extends Component {
     }
     const dataURL = `/data/${last_segment}.json`;
     d3.json(dataURL).then(data => {
-      this.setState({ data: data, title: title });
+      this.setState({ data: this.seperateClusters(data), title: title });
+      this.filter(this.state.data);
     });
   }
 
-  componentDidUpdate() {
-    this.setupVisiaulization();
+  seperateClusters(data) {
+    let clusteredArticles = {};
+    Object.values(data).forEach(entry => {
+      if (clusteredArticles.hasOwnProperty(entry.clust)) {
+        clusteredArticles[entry.clust].push(entry);
+      } else {
+        clusteredArticles[entry.clust] = [entry];
+      }
+    });
+    return clusteredArticles;
   }
+
+  // componentDidUpdate() {
+  //   this.setupVisiaulization();
+  // }
 
   render() {
     const data = this.state.data;
+    console.log(data, typeof(data));
 
     if (!data) {
       return null;
@@ -50,15 +67,25 @@ class ClusterViz extends Component {
         <div id="title-container">
           <h1 id="title">{this.state.title}</h1>
         </div>
-        <div id="svg-container">
-          <svg ref="anchor" />
-          <div id="reset-zoom-container">
+        <div>
+          {/* <svg ref="anchor" /> */}
+          <h2>Cluster 1</h2>
+          <ArticleGrid articles={data[2]} />
+          <h2>Cluster 2</h2>
+          <ArticleGrid articles={data[1]} />
+          <h2>Cluster 3</h2>
+          <ArticleGrid articles={data[0]} />
+          <h2>Cluster 4</h2>
+          <ArticleGrid articles={data[3]} />
+          <h2>Cluster 5</h2>
+          <ArticleGrid articles={data[4]} />
+          {/* <div id="reset-zoom-container">
             <button id="reset-zoom" className="my-btn">
               Reset Zoom
             </button>
-          </div>
+          </div> */}
         </div>
-          <div id="tooltip-container" className="second" />
+        {/* <div id="tooltip-container" className="second" /> */}
         <div id="filter-container" className="dropdown-list">
           <input
             type="search"
@@ -78,6 +105,111 @@ class ClusterViz extends Component {
         </div>
       </div>
     );
+  }
+
+  filter(data) {
+    var newsSources = [];
+    var exists = [];
+    var filtered = false;
+    var typeFilterList;
+
+    // function set_focus() {
+    //   nodeImages.style("opacity", function(o) {
+    //     return typeFilterList.includes(o.sourceName) ? 1 : highlight_trans;
+    //   });
+    // }
+
+    for (let el in data) {
+      var articles = data[el];
+      Object.values(articles).forEach(node => {
+        if (!exists.includes(node.sourceName)) {
+          exists.push(node.sourceName);
+          newsSources.push({ sourceName: node.sourceName, url: node.url });
+        }
+      }) 
+    }
+
+    typeFilterList = exists;
+    console.log(typeFilterList);
+
+    function stateTemplate(sourceName) {
+      return (
+        '<div class="list-item container__row">' +
+        `<input class="cbx" id="${sourceName}"  name="${sourceName}" type="checkbox">` +
+        `<label class="source-check" for="${sourceName}"><span class="slider"></span></label>` +
+        `<div class="label-text">${sourceName}</div>` +
+        "</div>"
+      );
+    }
+
+    // Populate list with states
+    newsSources.forEach(function(s) {
+      document
+        .getElementById("news-sources-filter-list")
+        .insertAdjacentHTML("beforeend", stateTemplate(s.sourceName));
+    });
+
+    // Events
+    const resetSourcesButton = document.querySelector(".reset-btn");
+    resetSourcesButton.addEventListener("click", e => {
+      e.stopPropagation();
+      typeFilterList = exists;
+      // $(":checkbox").prop("checked", false);
+      const list = document.querySelectorAll("input[type=checkbox]");
+      for (let item of list) {
+        item.checked = false;
+      }
+      console.log(typeFilterList);
+      filtered = false;
+      // set_focus();
+    });
+
+    const dropdownSearchInput = document.querySelector(".dropdown-search");
+    dropdownSearchInput.addEventListener("input", function(e) {
+      e.stopPropagation();
+      var target = $(this);
+      var dropdownList = target.closest(".dropdown-list");
+      var search = target.val().toLowerCase();
+
+      // if (!search) {
+      //   dropdownList.find(".label-text").show();
+      //   return false;
+      // }
+
+      dropdownList.find(".list-item").each(function() {
+        var text = $(this)
+          .text()
+          .toLowerCase();
+        var match = text.indexOf(search) > -1;
+        $(this).toggle(match);
+      });
+    });
+
+    document
+      .querySelector(".dropdown-list")
+      .addEventListener("change", function(e) {
+        if (e.target.type === "checkbox") {
+          if (!filtered) {
+            typeFilterList = [];
+            filtered = true;
+          }
+
+          if (e.target.checked) {
+            typeFilterList.push(d3.select(e.target).attr("name"));
+            // set_focus();
+          } else {
+            typeFilterList.splice(typeFilterList.indexOf("foo"), 1);
+            if (typeFilterList.length === 0) {
+              typeFilterList = exists;
+              filtered = false;
+            }
+            // set_focus();
+          }
+
+          console.log(typeFilterList);
+        }
+        return false;
+      });
   }
 
   setupVisiaulization() {
