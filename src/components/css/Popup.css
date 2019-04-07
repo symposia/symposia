@@ -1,0 +1,30 @@
+#popup-container {
+    width: 85%;
+    height: 350px;
+    background-color: rgba(0,0,0,.8);
+    z-index: 100;
+    position: fixed;
+    bottom: 10px;
+}
+
+#popup-logo {
+    width: 55px;
+    height: 55px;
+    background-color: white;
+
+    display: inline-block;
+    margin-right: 30px;
+}
+
+#popup-title {
+    text-decoration: underline;
+}
+
+
+#popup-date {
+    display: inline-block;
+}
+
+#exit-popup {
+    float: right;
+}

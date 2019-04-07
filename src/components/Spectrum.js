@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 
-import "./Spectrum.css";
+import "./css/Spectrum.css";
 import json from "./readme.json";
 
 /* Test */

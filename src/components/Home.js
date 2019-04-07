@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import "./Home.css";
+import "./css/Home.css";
 import cnnLogo from "../images/news-sources/CNN.svg";
 import bbcLogo from "../images/news-sources/BBC.svg";
 import bloombergLogo from "../images/news-sources/Bloomberg.svg";
