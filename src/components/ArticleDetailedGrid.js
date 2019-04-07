@@ -48,6 +48,8 @@ class ArticleDetailedGrid extends React.Component {
     alignItems: "flex-start"
   };
 
+  
+
   render() {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;

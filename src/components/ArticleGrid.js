@@ -77,6 +77,15 @@ class ArticleGrid extends React.Component {
 
   };
 
+  articlePopUp = (event, value) => {
+    console.log('clicked: ', event.target);
+    const index = event.target.attributes.getNamedItem('data-index').value
+    const article = this.props.articles[index]
+    console.log(article)
+    this.props.handlePopup(article)
+
+  }
+
   set_focus(typeFilterList) {
     this.props.articles.map(value => {
       if(typeFilterList.includes(value.sourceName)) {
@@ -87,6 +96,7 @@ class ArticleGrid extends React.Component {
     //   return typeFilterList.includes(o.sourceName) ? 1 : highlight_trans;
     // });
   }
+
 
   render() {
     const { classes } = this.props;
@@ -101,7 +111,7 @@ class ArticleGrid extends React.Component {
         justify={justify}
         xs={12}
       >
-        {this.props.articles.map(value => (
+        {this.props.articles.map((value, index) => (
           <Grid key={value.title} item>
             {/* <Paper
               className={classes.paper}
@@ -109,7 +119,7 @@ class ArticleGrid extends React.Component {
             >
               {value.sourceName}
             </Paper> */}
-            <Card className={classes.card}>
+            <Card className={classes.card} onClick={this.articlePopUp}>
               <CardActionArea>
                 <CardMedia
                   component="img"
@@ -118,6 +128,7 @@ class ArticleGrid extends React.Component {
                   height="100"
                   image={"http://logo.clearbit.com/" + getDomain(value.url)}
                   title={value.title}
+                  data-index={index}
                 />
               </CardActionArea>
             </Card>

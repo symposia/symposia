@@ -5,12 +5,22 @@ import $ from "jquery";
 import "./ClusterViz.css";
 import ArticleGrid from "./ArticleGrid";
 import TagGrid from "./TagGrid";
+import Popup from "./Popup";
 
 class ClusterViz extends Component {
-  state = {
-    data: null,
-    title: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null,
+      title: "",
+      popupData: null,
+    };
+
+    this.handlePopup = this.handlePopup.bind(this);
+    this.handlePopupExit = this.handlePopupExit.bind(this);
+  }
+
+
 
   componentDidMount() {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
@@ -50,13 +60,23 @@ class ClusterViz extends Component {
     return clusteredArticles;
   }
 
+  handlePopup (Article) {
+    this.setState({popupData: Article});
+  }
+
+  handlePopupExit () {
+    console.log('clicked popup exit');
+
+    this.setState({popupData: null});
+  }
+
   // componentDidUpdate() {
   //   this.setupVisiaulization();
   // }
 
   render() {
     const data = this.state.data;
-    console.log(data, typeof(data));
+    // console.log(data, typeof(data));
 
     if (!data) {
       return null;
@@ -69,16 +89,22 @@ class ClusterViz extends Component {
         </div>
         <div>
           {/* <svg ref="anchor" /> */}
+          {/* { data.map((cluster, index) => (
+            <div key={index}>
+              <h2> Cluster {index + 1} </h2>
+              <ArticleGrid handlePopup={this.handlePopup} articles={cluster} />
+            </div>
+        ))} */}
           <h2>Cluster 1</h2>
-          <ArticleGrid articles={data[2]} />
+          <ArticleGrid handlePopup={this.handlePopup} articles={data[2]} />
           <h2>Cluster 2</h2>
-          <ArticleGrid articles={data[1]} />
+          <ArticleGrid handlePopup={this.handlePopup} articles={data[1]} />
           <h2>Cluster 3</h2>
-          <ArticleGrid articles={data[0]} />
+          <ArticleGrid handlePopup={this.handlePopup} articles={data[0]} />
           <h2>Cluster 4</h2>
-          <ArticleGrid articles={data[3]} />
+          <ArticleGrid handlePopup={this.handlePopup} articles={data[3]} />
           <h2>Cluster 5</h2>
-          <ArticleGrid articles={data[4]} />
+          <ArticleGrid handlePopup={this.handlePopup} articles={data[4]} />
           {/* <div id="reset-zoom-container">
             <button id="reset-zoom" className="my-btn">
               Reset Zoom
@@ -103,6 +129,14 @@ class ClusterViz extends Component {
             Reset
           </button>
         </div>
+        {
+          this.state.popupData != null ?
+
+          <Popup handlePopupExit={this.handlePopupExit} data={this.state.popupData} /> :
+
+
+          <div></div>
+        }
       </div>
     );
   }
