@@ -100,7 +100,7 @@ class ArticleGrid extends React.Component {
         alignItems={alignItems}
         direction={direction}
         justify={justify}
-        xs={12}
+        // xs={12}
       >
         {this.props.articles.map((value, index) => (
           <Grid key={index} item>
