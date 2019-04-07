@@ -9,6 +9,7 @@ import TagGrid from "./TagGrid";
 class ClusterViz extends Component {
   state = {
     data: null,
+    tags: null,
     title: ""
   };
 
@@ -18,7 +19,6 @@ class ClusterViz extends Component {
     let last_segment = segment_array.pop();
     console.log(last_segment);
     let title;
-
     switch (last_segment) {
       case "huawei":
         title = "Huawei CFO Arrest";
@@ -32,8 +32,10 @@ class ClusterViz extends Component {
       default:
     }
     const dataURL = `/data/${last_segment}.json`;
-    d3.json(dataURL).then(data => {
-      this.setState({ data: this.seperateClusters(data), title: title });
+    const tagURL = `/data/${last_segment}-tags.json`;
+    Promise.all([d3.json(dataURL), d3.json(tagURL),])
+    .then(data => {
+      this.setState({ data: this.seperateClusters(data[0]), tags: data[1], title: title });
       this.filter(this.state.data);
     });
   }
@@ -56,6 +58,8 @@ class ClusterViz extends Component {
 
   render() {
     const data = this.state.data;
+    const tags = this.state.tags;
+    console.log(tags, typeof(tags));
     console.log(data, typeof(data));
 
     if (!data) {
@@ -69,15 +73,15 @@ class ClusterViz extends Component {
         </div>
         <div>
           {/* <svg ref="anchor" /> */}
-          <h2>Cluster 1</h2>
+          <TagGrid tags= {tags[2]} />
           <ArticleGrid articles={data[2]} />
-          <h2>Cluster 2</h2>
+          <TagGrid tags= {tags[1]} />
           <ArticleGrid articles={data[1]} />
-          <h2>Cluster 3</h2>
+          <TagGrid tags= {tags[0]} />
           <ArticleGrid articles={data[0]} />
-          <h2>Cluster 4</h2>
+          <TagGrid tags= {tags[3]} />
           <ArticleGrid articles={data[3]} />
-          <h2>Cluster 5</h2>
+          <TagGrid tags= {tags[4]} />
           <ArticleGrid articles={data[4]} />
           {/* <div id="reset-zoom-container">
             <button id="reset-zoom" className="my-btn">
@@ -126,7 +130,7 @@ class ClusterViz extends Component {
           exists.push(node.sourceName);
           newsSources.push({ sourceName: node.sourceName, url: node.url });
         }
-      }) 
+      })
     }
 
     typeFilterList = exists;
