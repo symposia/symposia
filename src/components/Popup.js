@@ -1,5 +1,4 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
 import "./Popup.css";
 
 function getDomain(url) {
@@ -44,7 +43,12 @@ class Popup extends React.Component {
         return (
             <div id="popup-container">
                 <div>
-                    <button id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
+                <button id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
+                    <button className='popup-buttons' id='compare-button' type='button'>Compare</button>
+                    <button className='popup-buttons' id='bookmark-button' type='button' onClick={()=>this.props.handleBookmark(article)}>Bookmark</button>
+                    
+                </div>
+                <div>
                     <a href={article.url}>
                         <h1 id='popup-title'>{article.title}</h1>
                     </a>

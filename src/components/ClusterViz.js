@@ -6,6 +6,9 @@ import "./ClusterViz.css";
 import ArticleGrid from "./ArticleGrid";
 import TagGrid from "./TagGrid";
 import Popup from "./Popup";
+import Bookmark from "./Bookmark";
+
+import { PropTypes } from 'react'
 
 class ClusterViz extends Component {
   constructor(props) {
@@ -14,10 +17,12 @@ class ClusterViz extends Component {
       data: null,
       title: "",
       popupData: null,
+      bookmark: null,
     };
 
     this.handlePopup = this.handlePopup.bind(this);
     this.handlePopupExit = this.handlePopupExit.bind(this);
+    this.handleBookmark = this.handleBookmark.bind(this);
   }
 
 
@@ -60,14 +65,25 @@ class ClusterViz extends Component {
     return clusteredArticles;
   }
 
-  handlePopup (Article) {
-    this.setState({popupData: Article});
+  handlePopup (article) {
+    this.setState({popupData: article});
   }
 
   handlePopupExit () {
-    console.log('clicked popup exit');
+    // console.log('clicked popup exit');
 
     this.setState({popupData: null});
+  }
+
+  handleBookmark(article) {
+    // var tmpBkList = this.state.bookmarkList;
+    // tmpBkList.add(article);
+
+    // console.log(tmpBkList);
+
+    // this.setState({bookmarkList: tmpBkList})
+
+    this.setState({bookmark: article});
   }
 
   // componentDidUpdate() {
@@ -76,6 +92,7 @@ class ClusterViz extends Component {
 
   render() {
     const data = this.state.data;
+    var bookmark = null;
     // console.log(data, typeof(data));
 
     if (!data) {
@@ -112,6 +129,7 @@ class ClusterViz extends Component {
           </div> */}
         </div>
         {/* <div id="tooltip-container" className="second" /> */}
+        <div id="filter-bookmark-container">
         <div id="filter-container" className="dropdown-list">
           <input
             type="search"
@@ -129,10 +147,13 @@ class ClusterViz extends Component {
             Reset
           </button>
         </div>
+
+        <Bookmark data={this.state.bookmark}/>
+        </div>
         {
           this.state.popupData != null ?
 
-          <Popup handlePopupExit={this.handlePopupExit} data={this.state.popupData} /> :
+          <Popup handlePopupExit={this.handlePopupExit} handleBookmark={this.handleBookmark} data={this.state.popupData} /> :
 
 
           <div></div>
@@ -164,7 +185,7 @@ class ClusterViz extends Component {
     }
 
     typeFilterList = exists;
-    console.log(typeFilterList);
+    // console.log(typeFilterList);
 
     function stateTemplate(sourceName) {
       return (
@@ -193,7 +214,7 @@ class ClusterViz extends Component {
       for (let item of list) {
         item.checked = false;
       }
-      console.log(typeFilterList);
+      // console.log(typeFilterList);
       filtered = false;
       // set_focus();
     });
@@ -370,7 +391,7 @@ class ClusterViz extends Component {
         .attr("transform", "translate(" + x + "," + y + ") scale(" + s + ")");
     }
 
-    console.log(nodeImages);
+    // console.log(nodeImages);
 
     nodeImages.on("click", function(d) {
       resetZoom();
@@ -395,10 +416,10 @@ class ClusterViz extends Component {
         const highlightedElements = document.getElementsByClassName(
           "highlighted"
         );
-        console.log(highlightedElements);
+        // console.log(highlightedElements);
         if (highlightedElements.length > 0) {
           for (let el of highlightedElements) {
-            console.log(el);
+            // console.log(el);
             el.classList.remove("highlighted");
           }
         }
@@ -484,10 +505,10 @@ class ClusterViz extends Component {
       const highlightedElements = document.getElementsByClassName(
         "highlighted"
       );
-      console.log(highlightedElements);
+      // console.log(highlightedElements);
       if (highlightedElements.length > 0) {
         for (let el of highlightedElements) {
-          console.log(el);
+          // console.log(el);
           el.classList.remove("highlighted");
         }
       }
@@ -521,7 +542,7 @@ class ClusterViz extends Component {
       }
 
       typeFilterList = exists;
-      console.log(typeFilterList);
+      // console.log(typeFilterList);
 
       function stateTemplate(sourceName) {
         return (
@@ -550,7 +571,7 @@ class ClusterViz extends Component {
         for (let item of list) {
           item.checked = false;
         }
-        console.log(typeFilterList);
+        // console.log(typeFilterList);
         filtered = false;
         set_focus();
       });
@@ -597,7 +618,7 @@ class ClusterViz extends Component {
               set_focus();
             }
 
-            console.log(typeFilterList);
+            // console.log(typeFilterList);
           }
           return false;
         });
