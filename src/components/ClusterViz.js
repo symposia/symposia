@@ -51,12 +51,6 @@ class ClusterViz extends Component {
     });
   }
 
-  // changeZoomLevel(zoomLevel) {
-  //   this.setState({
-  //     zoomLevel: zoomLevel
-  //   })
-  // }
-
   changeZoomLevel = (event, value) => {
     this.setState({ zoomLevel: value });
     console.log(this.state.zoomLevel);

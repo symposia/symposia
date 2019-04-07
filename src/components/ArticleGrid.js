@@ -1,13 +1,10 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
@@ -30,8 +27,8 @@ const styles = theme => ({
     maxHeight: 100
   },
   cardsmall: {
-    maxWidth: 50,
-    maxHeight: 50
+    maxWidth: 40,
+    maxHeight: 40
   },
   cardbig: {
     width: 300,
@@ -118,18 +115,12 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={value.title} item>
-                {/* <Paper
-                  className={classes.paper}
-                  // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
-                >
-                  {value.sourceName}
-                </Paper> */}
                 <Card className={classes.cardsmall} onClick={this.articlePopUp}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
                       alt={value.sourceName}
-                      height="50"
+                      height="40"
                       className={chooseOpacity(value)}
                       image={"http://logo.clearbit.com/" + getDomain(value.url)}
                       title={value.title}
@@ -155,13 +146,7 @@ class ArticleGrid extends React.Component {
             xs={12}
           >
             {this.props.articles.map((value, index) => (
-              <Grid key={value.title} item>
-                {/* <Paper
-                  className={classes.paper}
-                  // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
-                >
-                  {value.sourceName}
-                </Paper> */}
+              <Grid key={value.title} item>        
                 <Card className={classes.card} onClick={this.articlePopUp}>
                   <CardActionArea>
                     <CardMedia
@@ -190,7 +175,6 @@ class ArticleGrid extends React.Component {
             alignItems={alignItems}
             direction={direction}
             justify={justify}
-            xs={12}
           >
             {this.props.articles.map((value, index) => (
               <Grid key={value.title} item>

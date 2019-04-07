@@ -28,7 +28,7 @@ class Home extends Component {
           />
           <StoryCard
             title="Venezuelan Crisis"
-            backgroundImage="https://upload.wikimedia.org/wikipedia/commons/3/30/2017_Venezuelan_protests_flag.jpg"
+            backgroundImage="https://upload.wikimedia.org/wikipedia/commons/b/b8/Venezuelan_protests_-_23_January_2019.jpg"
             path="venezuela"
           />
         </section>
