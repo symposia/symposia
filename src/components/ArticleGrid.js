@@ -10,6 +10,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
+import "./ArticleGrid.css";
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -27,14 +29,15 @@ const styles = theme => ({
   },
   card: {
     maxWidth: 100,
-    maxHeight: 100
+    maxHeight: 100,
   },
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: "cover"
   },
-  filteredmedia: {
-    objectFit: "cover",
+  filteredCard: {
+    maxWidth: 100,
+    maxHeight: 100,
     opacity: 0.2
   },
   content: {
@@ -61,21 +64,30 @@ function getDomain(url) {
   return result;
 }
 
-function chooseOpacity(value) {
-  if (value.filtered) {
-    return styles.filteredmedia;
-  } else {
-    return styles.media;
-  }
-}
 
 class ArticleGrid extends React.Component {
   state = {
     direction: "row",
     justify: "flex-start",
     alignItems: "flex-start",
-
   };
+
+// chooseOpacity(value) {
+//   if (value.filterOut) {
+//     return this.props.filteredCard;
+//   } else {
+//     return this.props.card;
+//   }
+// }
+
+  componentDidUpdate() {
+    console.log("FilteredSources: ", this.props.filteredSources)
+  }
+
+  filterOut(value) {
+    console.log("AritcleGrid:", value.filterOut)
+    return value.filterOut ? "" : " filter-out"
+  }
 
   set_focus(typeFilterList) {
     this.props.articles.map(value => {
@@ -86,6 +98,21 @@ class ArticleGrid extends React.Component {
     // nodeImages.style("opacity", function(o) {
     //   return typeFilterList.includes(o.sourceName) ? 1 : highlight_trans;
     // });
+  }
+
+  applyFilterToArticles(data) {
+    let result = data;
+    if (this.props.filteredSources != null) {
+      console.log(this.props.filteredSources)
+      Object.keys(result).forEach(key => {
+        let article = result[key]
+        console.log(key, ": ", article);   // the value of the current key.
+        if (this.state.filteredSources.has(article.sourceName)) {
+          article["filterOut"] = true
+        }
+      });
+    }
+    return result;
   }
 
   render() {
@@ -101,20 +128,22 @@ class ArticleGrid extends React.Component {
         justify={justify}
         xs={12}
       >
-        {this.props.articles.map(value => (
-          <Grid key={value.title} item>
+        {this.props.articles.map((value, index) => (
+          <Grid key={index} item>
             {/* <Paper
               className={classes.paper}
               // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
             >
               {value.sourceName}
             </Paper> */}
-            <Card className={classes.card}>
+            <Card className={
+              classes.card + this.filterOut(value)
+              }>
               <CardActionArea>
                 <CardMedia
                   component="img"
                   alt={value.sourceName}
-                  className={chooseOpacity(value)}
+                  className={styles.media}
                   height="100"
                   image={"http://logo.clearbit.com/" + getDomain(value.url)}
                   title={value.title}

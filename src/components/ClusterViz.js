@@ -9,7 +9,8 @@ import TagGrid from "./TagGrid";
 class ClusterViz extends Component {
   state = {
     data: null,
-    title: ""
+    title: "",
+    filteredSources: null,
   };
 
   componentDidMount() {
@@ -33,8 +34,11 @@ class ClusterViz extends Component {
     }
     const dataURL = `/data/${last_segment}.json`;
     d3.json(dataURL).then(data => {
-      this.setState({ data: this.seperateClusters(data), title: title });
+      console.log(dataURL)
+      let dataWithSeparatedClusters = this.seperateClusters(data)
+      this.setState({data: dataWithSeparatedClusters, title: title})
       this.filter(this.state.data);
+      // this.applyFilterToArticles(dataWithSeparatedClusters)
     });
   }
 
@@ -53,38 +57,60 @@ class ClusterViz extends Component {
   // componentDidUpdate() {
   //   this.setupVisiaulization();
   // }
+  
+  applyFilterToArticles(data) {
+    let result = data;
+    if (this.state.filteredSources != null) {
+      Object.keys(result).forEach(key => {
+        let article = result[key]
+        console.log(key, ": ", article);   // the value of the current key.
+        if (this.state.filteredSources.has(article.sourceName)) {
+          article["filterOut"] = true
+        } else {
+          article.filterOut = false
+        }
+      });
+    }
+    return result;
+  }
 
   render() {
-    const data = this.state.data;
+    let data = this.state.data;
+    let title = this.state.title != null ? this.state.title : "title";
     console.log(data, typeof(data));
+    console.log(this.state.data);
 
-    if (!data) {
-      return null;
-    }
+    console.log(this.state.filteredSources)
+    // console.log("Techcrunch", this.state.data[0][0].filterOut)
 
     return (
       <div id="cluster-viz-container">
         <div id="title-container">
-          <h1 id="title">{this.state.title}</h1>
+          <h1 id="title">{title}</h1>
         </div>
-        <div>
           {/* <svg ref="anchor" /> */}
+          { data 
+          ? 
+        <div>
           <h2>Cluster 1</h2>
-          <ArticleGrid articles={data[2]} />
+          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[2])} />
           <h2>Cluster 2</h2>
-          <ArticleGrid articles={data[1]} />
+          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[1])} />
           <h2>Cluster 3</h2>
-          <ArticleGrid articles={data[0]} />
+          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[0])} />
           <h2>Cluster 4</h2>
-          <ArticleGrid articles={data[3]} />
+          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[3])} />
           <h2>Cluster 5</h2>
-          <ArticleGrid articles={data[4]} />
+          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[4])} />
+        </div>
+          :
+          <div></div>
+          }
           {/* <div id="reset-zoom-container">
             <button id="reset-zoom" className="my-btn">
               Reset Zoom
             </button>
           </div> */}
-        </div>
         {/* <div id="tooltip-container" className="second" /> */}
         <div id="filter-container" className="dropdown-list">
           <input
@@ -129,8 +155,13 @@ class ClusterViz extends Component {
       }) 
     }
 
+    this.setState({
+      filteredSources: new Set(exists)
+    })
     typeFilterList = exists;
-    console.log(typeFilterList);
+    console.log("typeFilterList:", typeFilterList);
+    console.log("this.state.filteredSources:", this.state.filteredSources);
+    // this.applyFilterToArticles(this.state.data);
 
     function stateTemplate(sourceName) {
       return (
@@ -154,13 +185,18 @@ class ClusterViz extends Component {
     resetSourcesButton.addEventListener("click", e => {
       e.stopPropagation();
       typeFilterList = exists;
+      this.setState({
+        filteredSources: new Set(exists)
+      })
       // $(":checkbox").prop("checked", false);
       const list = document.querySelectorAll("input[type=checkbox]");
       for (let item of list) {
         item.checked = false;
       }
-      console.log(typeFilterList);
+      console.log("typeFilterList:", typeFilterList);
+      console.log("this.state.filteredSources:", this.state.filteredSources);
       filtered = false;
+      // this.applyFilterToArticles(this.state.data);
       // set_focus();
     });
 
@@ -187,7 +223,7 @@ class ClusterViz extends Component {
 
     document
       .querySelector(".dropdown-list")
-      .addEventListener("change", function(e) {
+      .addEventListener("change", (e) => {
         if (e.target.type === "checkbox") {
           if (!filtered) {
             typeFilterList = [];
@@ -201,12 +237,20 @@ class ClusterViz extends Component {
             typeFilterList.splice(typeFilterList.indexOf("foo"), 1);
             if (typeFilterList.length === 0) {
               typeFilterList = exists;
+              this.setState({
+                filteredSources: new Set(exists)
+              })
               filtered = false;
             }
             // set_focus();
           }
 
-          console.log(typeFilterList);
+          this.setState({
+            filteredSources: new Set(typeFilterList)
+          })
+      console.log("typeFilterList:", typeFilterList);
+      console.log("this.state.filteredSources:", this.state.filteredSources);
+      // this.applyFilterToArticles(this.state.data);
         }
         return false;
       });
@@ -487,7 +531,14 @@ class ClusterViz extends Component {
       }
 
       typeFilterList = exists;
-      console.log(typeFilterList);
+      this.setState({
+        filteredSources: new Set(exists)
+      })
+
+
+      console.log("typeFilterList:", typeFilterList);
+      console.log("this.state.filteredSources:", this.state.filteredSources);
+      // this.applyFilterToArticles(this.state.data);
 
       function stateTemplate(sourceName) {
         return (
@@ -511,12 +562,17 @@ class ClusterViz extends Component {
       resetSourcesButton.addEventListener("click", e => {
         e.stopPropagation();
         typeFilterList = exists;
+        this.setState({
+          filteredSources: new Set(exists)
+        })
         // $(":checkbox").prop("checked", false);
         const list = document.querySelectorAll("input[type=checkbox]");
         for (let item of list) {
           item.checked = false;
         }
-        console.log(typeFilterList);
+        console.log("typeFilterList:", typeFilterList);
+        console.log("this.state.filteredSources:", this.state.filteredSources);
+        // this.applyFilterToArticles(this.state.data);
         filtered = false;
         set_focus();
       });
@@ -548,6 +604,9 @@ class ClusterViz extends Component {
           if (e.target.type === "checkbox") {
             if (!filtered) {
               typeFilterList = [];
+              this.setState({
+                filteredSources: new Set()
+              })
               filtered = true;
             }
 
@@ -558,12 +617,17 @@ class ClusterViz extends Component {
               typeFilterList.splice(typeFilterList.indexOf("foo"), 1);
               if (typeFilterList.length === 0) {
                 typeFilterList = exists;
+              this.setState({
+                filteredSources: new Set(exists)
+              })
                 filtered = false;
               }
               set_focus();
             }
 
-            console.log(typeFilterList);
+            console.log("typeFilterList:", typeFilterList);
+            console.log("this.state.filteredSources:", this.state.filteredSources);
+            // this.applyFilterToArticles(this.state.data);
           }
           return false;
         });
