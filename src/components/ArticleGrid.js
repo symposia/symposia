@@ -72,17 +72,6 @@ class ArticleGrid extends React.Component {
     alignItems: "flex-start",
   };
 
-// chooseOpacity(value) {
-//   if (value.filterOut) {
-//     return this.props.filteredCard;
-//   } else {
-//     return this.props.card;
-//   }
-// }
-
-  componentDidUpdate() {
-    console.log("FilteredSources: ", this.props.filteredSources)
-  }
 
   filterOut(value) {
     console.log("AritcleGrid:", value.filterOut)
@@ -98,21 +87,6 @@ class ArticleGrid extends React.Component {
     // nodeImages.style("opacity", function(o) {
     //   return typeFilterList.includes(o.sourceName) ? 1 : highlight_trans;
     // });
-  }
-
-  applyFilterToArticles(data) {
-    let result = data;
-    if (this.props.filteredSources != null) {
-      console.log(this.props.filteredSources)
-      Object.keys(result).forEach(key => {
-        let article = result[key]
-        console.log(key, ": ", article);   // the value of the current key.
-        if (this.state.filteredSources.has(article.sourceName)) {
-          article["filterOut"] = true
-        }
-      });
-    }
-    return result;
   }
 
   render() {

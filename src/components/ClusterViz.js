@@ -63,7 +63,7 @@ class ClusterViz extends Component {
     if (this.state.filteredSources != null) {
       Object.keys(result).forEach(key => {
         let article = result[key]
-        console.log(key, ": ", article);   // the value of the current key.
+        // console.log(key, ": ", article);   // the value of the current key.
         if (this.state.filteredSources.has(article.sourceName)) {
           article["filterOut"] = true
         } else {
@@ -93,15 +93,15 @@ class ClusterViz extends Component {
           ? 
         <div>
           <h2>Cluster 1</h2>
-          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[2])} />
+          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[2])} />
           <h2>Cluster 2</h2>
-          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[1])} />
+          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[1])} />
           <h2>Cluster 3</h2>
-          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[0])} />
+          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[0])} />
           <h2>Cluster 4</h2>
-          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[3])} />
+          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[3])} />
           <h2>Cluster 5</h2>
-          <ArticleGrid filteredSources={this.state.filteredSources} articles={this.applyFilterToArticles(this.state.data[4])} />
+          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[4])} />
         </div>
           :
           <div></div>
