@@ -45,7 +45,7 @@ class Popup extends React.Component {
             <div id="popup-container">
                 <div>
                     <button id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
-                    <a href={article.url}>
+                    <a target="_blank" rel="noopener noreferrer" href={article.url}>
                         <h1 id='popup-title'>{article.title}</h1>
                     </a>
                 </div>
