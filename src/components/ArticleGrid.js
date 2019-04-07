@@ -6,6 +6,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import "./ArticleGrid.css";
 
 const styles = theme => ({
   root: {
@@ -24,7 +25,7 @@ const styles = theme => ({
   },
   card: {
     maxWidth: 100,
-    maxHeight: 100
+    maxHeight: 100,
   },
   cardsmall: {
     maxWidth: 40,
@@ -39,8 +40,9 @@ const styles = theme => ({
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: "cover"
   },
-  filteredmedia: {
-    objectFit: "cover",
+  filteredCard: {
+    maxWidth: 100,
+    maxHeight: 100,
     opacity: 0.2
   },
   content: {
@@ -65,13 +67,6 @@ function getDomain(url) {
   return result;
 }
 
-function chooseOpacity(value) {
-  if (value.filtered) {
-    return styles.filteredmedia;
-  } else {
-    return styles.media;
-  }
-}
 
 class ArticleGrid extends React.Component {
   state = {
@@ -96,6 +91,9 @@ class ArticleGrid extends React.Component {
     })
   }
 
+  filterOut(value) {
+    return value.filterOut ? "" : " filter-out"
+  }
 
   render() {
     const { classes } = this.props;
@@ -111,17 +109,17 @@ class ArticleGrid extends React.Component {
             alignItems={alignItems}
             direction={direction}
             justify={justify}
-            xs={12}
+            // xs={12}
           >
             {this.props.articles.map((value, index) => (
-              <Grid key={value.title} item>
-                <Card className={classes.cardsmall} onClick={this.articlePopUp}>
+              <Grid key={index} item>
+                <Card className={classes.cardsmall + this.filterOut(value)} onClick={this.articlePopUp}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
                       alt={value.sourceName}
                       height="40"
-                      className={chooseOpacity(value)}
+                      // className={classes.media}
                       image={"http://logo.clearbit.com/" + getDomain(value.url)}
                       title={value.title}
                       data-index={index}
@@ -133,7 +131,7 @@ class ArticleGrid extends React.Component {
           </Grid>
         </Grid>
       );
-    } else if (this.props.zoomLevel == 1) {
+    } else if (this.props.zoomLevel === 1) {
       return (
         <Grid item xs={"auto"}>
           <Grid
@@ -146,14 +144,14 @@ class ArticleGrid extends React.Component {
             xs={12}
           >
             {this.props.articles.map((value, index) => (
-              <Grid key={value.title} item>        
-                <Card className={classes.card} onClick={this.articlePopUp}>
+              <Grid key={index} item>        
+                <Card className={classes.card + this.filterOut(value)} onClick={this.articlePopUp}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
                       alt={value.sourceName}
                       height="100"
-                      className={chooseOpacity(value)}
+                      // className={chooseOpacity(value)}
                       image={"http://logo.clearbit.com/" + getDomain(value.url)}
                       title={value.title}
                       data-index={index}
@@ -165,7 +163,7 @@ class ArticleGrid extends React.Component {
           </Grid>
         </Grid>
       );
-    } else if (this.props.zoomLevel == 2) { 
+    } else if (this.props.zoomLevel === 2) { 
       return (
         <Grid item xs={"auto"}>
           <Grid
@@ -177,8 +175,8 @@ class ArticleGrid extends React.Component {
             justify={justify}
           >
             {this.props.articles.map((value, index) => (
-              <Grid key={value.title} item>
-                <Card className={classes.cardbig} onClick={this.articlePopUp}>
+              <Grid key={index} item>
+                <Card className={classes.cardbig + this.filterOut(value)} onClick={this.articlePopUp}>
                   <CardActionArea>
                     <CardContent className={classes.content}>
                       {/* <Typography gutterBottom variant="h5" component="h2" /> */}

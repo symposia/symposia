@@ -29,8 +29,8 @@ class TagGrid extends React.Component {
     const { classes } = this.props;
     return (
       <Grid container spacing={16} className={classes.root}>
-        {this.props.tags.map(value => (
-          <Grid key={value} item>
+        {this.props.tags.map((value, index) => (
+          <Grid key={index} item>
             <Paper
               className={classes.paper}
               // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}

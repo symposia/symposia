@@ -14,7 +14,8 @@ class ClusterViz extends Component {
       data: null,
       title: "",
       popupData: null,
-      zoomLevel: 0
+      zoomLevel: 0,
+      filteredSources: null
     };
 
     this.handlePopup = this.handlePopup.bind(this);
@@ -26,7 +27,7 @@ class ClusterViz extends Component {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
-    console.log(last_segment);
+    // console.log(last_segment);
     let title;
     switch (last_segment) {
       case "huawei":
@@ -48,6 +49,7 @@ class ClusterViz extends Component {
     Promise.all([d3.json(dataURL), d3.json(tagURL)]).then(data => {
       this.setState({ data: this.seperateClusters(data[0]), tags: data[1], title: title });
       this.filter(this.state.data);
+      // this.applyFilterToArticles(dataWithSeparatedClusters)
     });
   }
 
@@ -77,24 +79,38 @@ class ClusterViz extends Component {
     this.setState({popupData: null});
   }
 
-  // componentDidUpdate() {
-  //   this.setupVisiaulization();
-  // }
+
+  applyFilterToAllArticles(data) {
+    if (this.state.filteredSources == null) {
+      return data;
+    }
+    let result = data;
+    Object.keys(result).forEach(resultKey => {
+      let cluster = result[resultKey]
+      Object.keys(cluster).forEach(clusterKey => {
+        let article = cluster[clusterKey]
+        if (this.state.filteredSources.has(article.sourceName)) {
+          article["filterOut"] = true
+        } else {
+          article.filterOut = false
+        }
+      });
+    })
+    return result;
+  }
 
   render() {
-    const data = this.state.data;
+    let data = this.applyFilterToAllArticles(this.state.data)
     const tags = this.state.tags;
-    console.log(tags, typeof(tags));
+    // console.log(tags, typeof(tags));
     console.log(data, typeof(data));
 
-    if (!data) {
-      return null;
-    }
+    if (!data) { return null }
 
     return (
       <div id="cluster-viz-container">
         <div id="title-container">
-          <h1 id="title">{this.state.title}</h1>
+          <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
         </div>
         <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}/>
         {/* <div id="tooltip-container" className="second" /> */}
@@ -148,8 +164,13 @@ class ClusterViz extends Component {
       })
     }
 
+    this.setState({
+      filteredSources: new Set(exists)
+    })
     typeFilterList = exists;
-    console.log(typeFilterList);
+    // console.log("typeFilterList:", typeFilterList);
+    // console.log("this.state.filteredSources:", this.state.filteredSources);
+    // this.applyFilterToArticles(this.state.data);
 
     function stateTemplate(sourceName) {
       return (
@@ -173,13 +194,18 @@ class ClusterViz extends Component {
     resetSourcesButton.addEventListener("click", e => {
       e.stopPropagation();
       typeFilterList = exists;
+      this.setState({
+        filteredSources: new Set(exists)
+      })
       // $(":checkbox").prop("checked", false);
       const list = document.querySelectorAll("input[type=checkbox]");
       for (let item of list) {
         item.checked = false;
       }
-      console.log(typeFilterList);
+      // console.log("typeFilterList:", typeFilterList);
+      // console.log("this.state.filteredSources:", this.state.filteredSources);
       filtered = false;
+      // this.applyFilterToArticles(this.state.data);
       // set_focus();
     });
 
@@ -206,7 +232,7 @@ class ClusterViz extends Component {
 
     document
       .querySelector(".dropdown-list")
-      .addEventListener("change", function(e) {
+      .addEventListener("change", (e) => {
         if (e.target.type === "checkbox") {
           if (!filtered) {
             typeFilterList = [];
@@ -220,12 +246,20 @@ class ClusterViz extends Component {
             typeFilterList.splice(typeFilterList.indexOf("foo"), 1);
             if (typeFilterList.length === 0) {
               typeFilterList = exists;
+              this.setState({
+                filteredSources: new Set(exists)
+              })
               filtered = false;
             }
             // set_focus();
           }
 
-          console.log(typeFilterList);
+          this.setState({
+            filteredSources: new Set(typeFilterList)
+          })
+      // console.log("typeFilterList:", typeFilterList);
+      // console.log("this.state.filteredSources:", this.state.filteredSources);
+      // this.applyFilterToArticles(this.state.data);
         }
         return false;
       });
