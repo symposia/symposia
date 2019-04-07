@@ -5,6 +5,9 @@ import $ from "jquery";
 import "./ClusterViz.css";
 import ArticleGrid from "./ArticleGrid";
 import TagGrid from "./TagGrid";
+import ZoomSlider from "./ZoomSlider";
+import StoryGrid from "./StoryGrid";
+import { Zoom } from "@material-ui/core";
 import Popup from "./Popup";
 
 class ClusterViz extends Component {
@@ -14,13 +17,13 @@ class ClusterViz extends Component {
       data: null,
       title: "",
       popupData: null,
+      zoomLevel: 0
     };
 
     this.handlePopup = this.handlePopup.bind(this);
     this.handlePopupExit = this.handlePopupExit.bind(this);
+    this.changeZoomLevelchangeZoomLevel = this.changeZoomLevel.bind(this);
   }
-
-
 
   componentDidMount() {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
@@ -41,12 +44,23 @@ class ClusterViz extends Component {
         break;
       default:
     }
-    const dataURL = `/data/${last_segment}.json`;
+    const dataURL = `/data/articles/${last_segment}.json`;
     d3.json(dataURL).then(data => {
       this.setState({ data: this.seperateClusters(data), title: title });
       this.filter(this.state.data);
     });
   }
+
+  // changeZoomLevel(zoomLevel) {
+  //   this.setState({
+  //     zoomLevel: zoomLevel
+  //   })
+  // }
+
+  changeZoomLevel = (event, value) => {
+    this.setState({ zoomLevel: value });
+    console.log(this.state.zoomLevel);
+  };
 
   seperateClusters(data) {
     let clusteredArticles = {};
@@ -66,7 +80,6 @@ class ClusterViz extends Component {
 
   handlePopupExit () {
     console.log('clicked popup exit');
-
     this.setState({popupData: null});
   }
 
@@ -87,30 +100,7 @@ class ClusterViz extends Component {
         <div id="title-container">
           <h1 id="title">{this.state.title}</h1>
         </div>
-        <div>
-          {/* <svg ref="anchor" /> */}
-          {/* { data.map((cluster, index) => (
-            <div key={index}>
-              <h2> Cluster {index + 1} </h2>
-              <ArticleGrid handlePopup={this.handlePopup} articles={cluster} />
-            </div>
-        ))} */}
-          <h2>Cluster 1</h2>
-          <ArticleGrid handlePopup={this.handlePopup} articles={data[2]} />
-          <h2>Cluster 2</h2>
-          <ArticleGrid handlePopup={this.handlePopup} articles={data[1]} />
-          <h2>Cluster 3</h2>
-          <ArticleGrid handlePopup={this.handlePopup} articles={data[0]} />
-          <h2>Cluster 4</h2>
-          <ArticleGrid handlePopup={this.handlePopup} articles={data[3]} />
-          <h2>Cluster 5</h2>
-          <ArticleGrid handlePopup={this.handlePopup} articles={data[4]} />
-          {/* <div id="reset-zoom-container">
-            <button id="reset-zoom" className="my-btn">
-              Reset Zoom
-            </button>
-          </div> */}
-        </div>
+        <StoryGrid data={data} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}/>
         {/* <div id="tooltip-container" className="second" /> */}
         <div id="filter-container" className="dropdown-list">
           <input
@@ -128,6 +118,8 @@ class ClusterViz extends Component {
           >
             Reset
           </button>
+          <h4>Zoom</h4>
+          <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
         </div>
         {
           this.state.popupData != null ?

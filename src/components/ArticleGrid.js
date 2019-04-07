@@ -29,6 +29,15 @@ const styles = theme => ({
     maxWidth: 100,
     maxHeight: 100
   },
+  cardsmall: {
+    maxWidth: 50,
+    maxHeight: 50
+  },
+  cardbig: {
+    width: 300,
+    height: 200,
+    margin: 20
+  },
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: "cover"
@@ -40,8 +49,6 @@ const styles = theme => ({
   content: {
     height: 100,
     wordWrap: "break-word"
-    // overflow: wrap
-    // overflow-wrap: break-word
   }
 });
 
@@ -74,7 +81,6 @@ class ArticleGrid extends React.Component {
     direction: "row",
     justify: "flex-start",
     alignItems: "flex-start",
-
   };
 
   articlePopUp = (event, value) => {
@@ -83,7 +89,6 @@ class ArticleGrid extends React.Component {
     const article = this.props.articles[index]
     console.log(article)
     this.props.handlePopup(article)
-
   }
 
   set_focus(typeFilterList) {
@@ -92,50 +97,128 @@ class ArticleGrid extends React.Component {
         value["filtered"] = true;
       }
     })
-    // nodeImages.style("opacity", function(o) {
-    //   return typeFilterList.includes(o.sourceName) ? 1 : highlight_trans;
-    // });
   }
 
 
   render() {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;
-    return (
-      <Grid
-        container
-        spacing={16}
-        className={classes.demo+this.props.articles.length}
-        alignItems={alignItems}
-        direction={direction}
-        justify={justify}
-        xs={12}
-      >
-        {this.props.articles.map((value, index) => (
-          <Grid key={value.title} item>
-            {/* <Paper
-              className={classes.paper}
-              // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
-            >
-              {value.sourceName}
-            </Paper> */}
-            <Card className={classes.card} onClick={this.articlePopUp}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  alt={value.sourceName}
-                  className={chooseOpacity(value)}
-                  height="100"
-                  image={"http://logo.clearbit.com/" + getDomain(value.url)}
-                  title={value.title}
-                  data-index={index}
-                />
-              </CardActionArea>
-            </Card>
+
+    if (this.props.zoomLevel === 0) {
+      return (
+        <Grid item xs={"auto"}>
+          <Grid
+            container
+            spacing={16}
+            className={classes.demo+this.props.articles.length}
+            alignItems={alignItems}
+            direction={direction}
+            justify={justify}
+            xs={12}
+          >
+            {this.props.articles.map((value, index) => (
+              <Grid key={value.title} item>
+                {/* <Paper
+                  className={classes.paper}
+                  // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
+                >
+                  {value.sourceName}
+                </Paper> */}
+                <Card className={classes.cardsmall} onClick={this.articlePopUp}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      alt={value.sourceName}
+                      height="50"
+                      className={chooseOpacity(value)}
+                      image={"http://logo.clearbit.com/" + getDomain(value.url)}
+                      title={value.title}
+                      data-index={index}
+                    />
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    );
+        </Grid>
+      );
+    } else if (this.props.zoomLevel == 1) {
+      return (
+        <Grid item xs={"auto"}>
+          <Grid
+            container
+            spacing={16}
+            className={classes.demo+this.props.articles.length}
+            alignItems={alignItems}
+            direction={direction}
+            justify={justify}
+            xs={12}
+          >
+            {this.props.articles.map((value, index) => (
+              <Grid key={value.title} item>
+                {/* <Paper
+                  className={classes.paper}
+                  // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
+                >
+                  {value.sourceName}
+                </Paper> */}
+                <Card className={classes.card} onClick={this.articlePopUp}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      alt={value.sourceName}
+                      height="100"
+                      className={chooseOpacity(value)}
+                      image={"http://logo.clearbit.com/" + getDomain(value.url)}
+                      title={value.title}
+                      data-index={index}
+                    />
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      );
+    } else if (this.props.zoomLevel == 2) { 
+      return (
+        <Grid item xs={"auto"}>
+          <Grid
+            container
+            spacing={16}
+            className={classes.demo+this.props.articles.length}
+            alignItems={alignItems}
+            direction={direction}
+            justify={justify}
+            xs={12}
+          >
+            {this.props.articles.map((value, index) => (
+              <Grid key={value.title} item>
+                <Card className={classes.cardbig} onClick={this.articlePopUp}>
+                  <CardActionArea>
+                    <CardContent className={classes.content}>
+                      {/* <Typography gutterBottom variant="h5" component="h2" /> */}
+                      <Typography gutterBottom variant="subtitle1" component="p" data-index={index}>
+                        {value.title}
+                      </Typography>
+                    </CardContent>
+                    <CardMedia
+                      component="img"
+                      alt={value.title}
+                      height="100"
+                      className={classes.media}
+                      image={"http://logo.clearbit.com/" + getDomain(value.url)}
+                      title={value.title}
+                      data-index={index}
+                    />
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      );
+    }
   }
 }
 
