@@ -44,7 +44,7 @@ class Popup extends React.Component {
         return (
             <div id="popup-container">
                 <div>
-                    <button id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
+                    <button class='my-btn' id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
                     <a href={article.url}>
                         <h1 id='popup-title'>{article.title}</h1>
                     </a>
@@ -56,8 +56,8 @@ class Popup extends React.Component {
 
                     {/* Logo: <img src={getDomain(article.sourceName)}></img> */}
                 </div>
-                <div>
-                    <h3> {article.description} </h3>
+                <div id="popup-description">
+                    <p> {article.description} </p>
                 </div>
             </div>
         )
