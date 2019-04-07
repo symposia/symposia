@@ -85,7 +85,7 @@ class ArticleGrid extends React.Component {
     const index = event.target.attributes.getNamedItem('data-index').value
     const article = this.props.articles[index]
     console.log(article)
-    this.props.handlePopup(article)
+    this.props.handleClick(article)
   }
 
   set_focus(typeFilterList) {

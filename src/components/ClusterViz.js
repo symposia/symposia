@@ -13,13 +13,17 @@ class ClusterViz extends Component {
     this.state = {
       data: null,
       title: "",
-      popupData: null,
-      zoomLevel: 0
+      article1: null,
+      zoomLevel: 0,
+      article2: null,
+      selectSecond: false
     };
 
-    this.handlePopup = this.handlePopup.bind(this);
+    this.getFirst = this.getFirst.bind(this);
+    this.getSecond = this.getSecond.bind(this);
     this.handlePopupExit = this.handlePopupExit.bind(this);
     this.changeZoomLevelchangeZoomLevel = this.changeZoomLevel.bind(this);
+    this.selectSecond = this.selectSecond.bind(this);
   }
 
   componentDidMount() {
@@ -68,13 +72,22 @@ class ClusterViz extends Component {
     return clusteredArticles;
   }
 
-  handlePopup (Article) {
-    this.setState({popupData: Article});
+  getFirst(article) {
+    this.setState({article1: article});
+    console.log(this.state.article1);
   }
 
-  handlePopupExit () {
-    console.log('clicked popup exit');
-    this.setState({popupData: null});
+  handlePopupExit() {
+    this.setState({article1: null});
+  }
+
+  selectSecond() {
+    this.setState({selectSecond: true})
+  }
+
+  getSecond(article) {
+    this.setState({article2: article, selectSecond: false});
+    console.log(this.state.article1, this.state.article2);
   }
 
   // componentDidUpdate() {
@@ -91,39 +104,85 @@ class ClusterViz extends Component {
       return null;
     }
 
-    return (
-      <div id="cluster-viz-container">
-        <div id="title-container">
-          <h1 id="title">{this.state.title}</h1>
+    if (this.state.selectSecond) {
+      return (
+        <div id="cluster-viz-container">
+          <div id="title-container">
+            <h1 id="title">{this.state.title}</h1>
+            <h5>Please select second article</h5>
+          </div>
+          <StoryGrid data={data} tags={tags} handleClick={this.getSecond} zoomLevel={this.state.zoomLevel}/>
+          {/* <div id="tooltip-container" className="second" /> */}
+          <div id="filter-container" className="dropdown-list">
+            <input
+              type="search"
+              placeholder="Search Sources"
+              className="dropdown-search"
+            />
+            <ul id="news-sources-filter-list" />
+            <button
+              className="my-btn reset-btn"
+              type="text"
+              placeholder=""
+              aria-label="reset filters"
+              aria-describedby="basic-addon1"
+            >
+              Reset
+            </button>
+            <h4>Zoom</h4>
+            <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
+          </div>
         </div>
-        <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}/>
-        {/* <div id="tooltip-container" className="second" /> */}
-        <div id="filter-container" className="dropdown-list">
-          <input
-            type="search"
-            placeholder="Search Sources"
-            className="dropdown-search"
-          />
-          <ul id="news-sources-filter-list" />
-          <button
-            className="my-btn reset-btn"
-            type="text"
-            placeholder=""
-            aria-label="reset filters"
-            aria-describedby="basic-addon1"
-          >
-            Reset
-          </button>
-          <h4>Zoom</h4>
-          <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
+      );
+    } else {
+      console.log("not select second");
+      return (
+        <div id="cluster-viz-container">
+          <div id="title-container">
+            <h1 id="title">{this.state.title}</h1>
+          </div>
+          <StoryGrid data={data} tags={tags} handleClick={this.getFirst} zoomLevel={this.state.zoomLevel}/>
+          {/* <div id="tooltip-container" className="second" /> */}
+          <div id="filter-container" className="dropdown-list">
+            <input
+              type="search"
+              placeholder="Search Sources"
+              className="dropdown-search"
+            />
+            <ul id="news-sources-filter-list" />
+            <button
+              className="my-btn reset-btn"
+              type="text"
+              placeholder=""
+              aria-label="reset filters"
+              aria-describedby="basic-addon1"
+            >
+              Reset
+            </button>
+            <h4>Zoom</h4>
+            <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
+          </div>
+          {
+            this.state.article1 != null ?
+            <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} /> :
+            <div></div>
+          }
         </div>
-        {
-          this.state.popupData != null ?
-          <Popup handlePopupExit={this.handlePopupExit} data={this.state.popupData} /> :
-          <div></div>
-        }
-      </div>
-    );
+      );
+    }
+  }
+
+  render2() {
+    const data = this.state.data;
+    const tags = this.state.tags;
+    console.log(tags, typeof(tags));
+    console.log(data, typeof(data));
+
+    if (!data) {
+      return null;
+    }
+
+
   }
 
   filter(data) {

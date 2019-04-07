@@ -1,6 +1,19 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import "./css/Popup.css";
+import Button from '@material-ui/core/Button';
+
+const styles = theme => ({
+    button: {
+      margin: theme.spacing.unit,
+      marginBottom: "10",
+
+    },
+    input: {
+      display: 'none',
+    },
+  });
+
 
 function getDomain(url) {
     if (url == null) {
@@ -40,6 +53,7 @@ class Popup extends React.Component {
 
 
     render() {
+        const {classes} = this.props;
         const article = this.props.data
         return (
             <div id="popup-container">
@@ -48,6 +62,8 @@ class Popup extends React.Component {
                     <a href={article.url}>
                         <h1 id='popup-title'>{article.title}</h1>
                     </a>
+                    <Button variant="contained" className={classes.button} onClick={this.props.selectSecond}>Summarize</Button>
+                    <Button variant="contained" className={classes.button}>Bookmark</Button>
                 </div>
                 <div>
                     <img id='popup-logo' src={"http://logo.clearbit.com/" + getDomain(article.url)}></img>
@@ -64,4 +80,4 @@ class Popup extends React.Component {
     }
 }
 
-export default Popup;
+export default withStyles(styles)(Popup);
