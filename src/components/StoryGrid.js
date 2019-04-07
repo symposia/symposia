@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import ArticleGrid from "./ArticleGrid";
 import Grid from "@material-ui/core/Grid";
+import TagGrid from "./TagGrid";
 
 const styles = theme => ({
     root: {
@@ -18,15 +19,19 @@ class StoryGrid extends React.Component {
         return (
             <div>
                 <Grid container className={classes.root}>
-                    <h2>Cluster 1</h2>
+                    <TagGrid tags= {this.props.tags[0]} />
                     <ArticleGrid articles={this.props.data[0]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
-                    <h2>Cluster 2</h2>
+                    
+                    <TagGrid tags= {this.props.tags[1]} />
                     <ArticleGrid articles={this.props.data[1]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
-                    <h2>Cluster 3</h2>
+                    
+                    <TagGrid tags= {this.props.tags[2]} />
                     <ArticleGrid articles={this.props.data[2]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
-                    <h2>Cluster 4</h2>
+                    
+                    <TagGrid tags= {this.props.tags[3]} />
                     <ArticleGrid articles={this.props.data[3]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
-                    <h2>Cluster 5</h2>
+                    
+                    <TagGrid tags= {this.props.tags[4]} />
                     <ArticleGrid articles={this.props.data[4]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
                 </Grid>
             </div>

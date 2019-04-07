@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import "./Popup.css";
+import "./css/Popup.css";
 
 function getDomain(url) {
     if (url == null) {
