@@ -1,14 +1,14 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+// import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
+// import CardActions from "@material-ui/core/CardActions";
+// import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+// import Button from "@material-ui/core/Button";
+// import Typography from "@material-ui/core/Typography";
 
 import "./ArticleGrid.css";
 
@@ -74,20 +74,20 @@ class ArticleGrid extends React.Component {
 
 
   filterOut(value) {
-    console.log("AritcleGrid:", value.filterOut)
+    // console.log("AritcleGrid:", value.filterOut)
     return value.filterOut ? "" : " filter-out"
   }
 
-  set_focus(typeFilterList) {
-    this.props.articles.map(value => {
-      if(typeFilterList.includes(value.sourceName)) {
-        value["filtered"] = true;
-      }
-    })
-    // nodeImages.style("opacity", function(o) {
-    //   return typeFilterList.includes(o.sourceName) ? 1 : highlight_trans;
-    // });
-  }
+  // set_focus(typeFilterList) {
+  //   this.props.articles.map(value => {
+  //     if(typeFilterList.includes(value.sourceName)) {
+  //       value["filtered"] = true;
+  //     }
+  //   })
+  //   // nodeImages.style("opacity", function(o) {
+  //   //   return typeFilterList.includes(o.sourceName) ? 1 : highlight_trans;
+  //   // });
+  // }
 
   render() {
     const { classes } = this.props;

@@ -17,7 +17,7 @@ class ClusterViz extends Component {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
-    console.log(last_segment);
+    // console.log(last_segment);
     let title;
 
     switch (last_segment) {
@@ -34,7 +34,7 @@ class ClusterViz extends Component {
     }
     const dataURL = `/data/${last_segment}.json`;
     d3.json(dataURL).then(data => {
-      console.log(dataURL)
+      // console.log(dataURL)
       let dataWithSeparatedClusters = this.seperateClusters(data)
       this.setState({data: dataWithSeparatedClusters, title: title})
       this.filter(this.state.data);
@@ -77,10 +77,10 @@ class ClusterViz extends Component {
   render() {
     let data = this.state.data;
     let title = this.state.title != null ? this.state.title : "title";
-    console.log(data, typeof(data));
-    console.log(this.state.data);
+    // console.log(data, typeof(data));
+    // console.log(this.state.data);
 
-    console.log(this.state.filteredSources)
+    // console.log(this.state.filteredSources)
     // console.log("Techcrunch", this.state.data[0][0].filterOut)
 
     return (
@@ -159,8 +159,8 @@ class ClusterViz extends Component {
       filteredSources: new Set(exists)
     })
     typeFilterList = exists;
-    console.log("typeFilterList:", typeFilterList);
-    console.log("this.state.filteredSources:", this.state.filteredSources);
+    // console.log("typeFilterList:", typeFilterList);
+    // console.log("this.state.filteredSources:", this.state.filteredSources);
     // this.applyFilterToArticles(this.state.data);
 
     function stateTemplate(sourceName) {
@@ -193,8 +193,8 @@ class ClusterViz extends Component {
       for (let item of list) {
         item.checked = false;
       }
-      console.log("typeFilterList:", typeFilterList);
-      console.log("this.state.filteredSources:", this.state.filteredSources);
+      // console.log("typeFilterList:", typeFilterList);
+      // console.log("this.state.filteredSources:", this.state.filteredSources);
       filtered = false;
       // this.applyFilterToArticles(this.state.data);
       // set_focus();
@@ -248,8 +248,8 @@ class ClusterViz extends Component {
           this.setState({
             filteredSources: new Set(typeFilterList)
           })
-      console.log("typeFilterList:", typeFilterList);
-      console.log("this.state.filteredSources:", this.state.filteredSources);
+      // console.log("typeFilterList:", typeFilterList);
+      // console.log("this.state.filteredSources:", this.state.filteredSources);
       // this.applyFilterToArticles(this.state.data);
         }
         return false;
@@ -380,7 +380,7 @@ class ClusterViz extends Component {
         .attr("transform", "translate(" + x + "," + y + ") scale(" + s + ")");
     }
 
-    console.log(nodeImages);
+    // console.log(nodeImages);
 
     nodeImages.on("click", function(d) {
       resetZoom();
@@ -405,10 +405,10 @@ class ClusterViz extends Component {
         const highlightedElements = document.getElementsByClassName(
           "highlighted"
         );
-        console.log(highlightedElements);
+        // console.log(highlightedElements);
         if (highlightedElements.length > 0) {
           for (let el of highlightedElements) {
-            console.log(el);
+            // console.log(el);
             el.classList.remove("highlighted");
           }
         }
@@ -494,10 +494,10 @@ class ClusterViz extends Component {
       const highlightedElements = document.getElementsByClassName(
         "highlighted"
       );
-      console.log(highlightedElements);
+      // console.log(highlightedElements);
       if (highlightedElements.length > 0) {
         for (let el of highlightedElements) {
-          console.log(el);
+          // console.log(el);
           el.classList.remove("highlighted");
         }
       }
@@ -536,8 +536,8 @@ class ClusterViz extends Component {
       })
 
 
-      console.log("typeFilterList:", typeFilterList);
-      console.log("this.state.filteredSources:", this.state.filteredSources);
+      // console.log("typeFilterList:", typeFilterList);
+      // console.log("this.state.filteredSources:", this.state.filteredSources);
       // this.applyFilterToArticles(this.state.data);
 
       function stateTemplate(sourceName) {
@@ -570,8 +570,8 @@ class ClusterViz extends Component {
         for (let item of list) {
           item.checked = false;
         }
-        console.log("typeFilterList:", typeFilterList);
-        console.log("this.state.filteredSources:", this.state.filteredSources);
+        // console.log("typeFilterList:", typeFilterList);
+        // console.log("this.state.filteredSources:", this.state.filteredSources);
         // this.applyFilterToArticles(this.state.data);
         filtered = false;
         set_focus();
@@ -625,8 +625,8 @@ class ClusterViz extends Component {
               set_focus();
             }
 
-            console.log("typeFilterList:", typeFilterList);
-            console.log("this.state.filteredSources:", this.state.filteredSources);
+            // console.log("typeFilterList:", typeFilterList);
+            // console.log("this.state.filteredSources:", this.state.filteredSources);
             // this.applyFilterToArticles(this.state.data);
           }
           return false;
