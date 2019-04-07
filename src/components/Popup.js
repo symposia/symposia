@@ -1,6 +1,6 @@
 import React from "react";
 import "./Popup.css";
-
+import { withContext } from '../Context'
 function getDomain(url) {
     if (url == null) {
         return '';
@@ -39,13 +39,13 @@ class Popup extends React.Component {
 
 
     render() {
-        const article = this.props.data
+        const article = this.props.popupData
         return (
             <div id="popup-container">
                 <div>
                 <button id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
                     <button className='popup-buttons' id='compare-button' type='button'>Compare</button>
-                    <button className='popup-buttons' id='bookmark-button' type='button' onClick={()=>this.props.handleBookmark(article)}>Bookmark</button>
+                    <button className='popup-buttons' id='bookmark-button' type='button' onClick={() => this.props.handleBookmark(article)}>Bookmark</button>
                     
                 </div>
                 <div>
@@ -68,4 +68,4 @@ class Popup extends React.Component {
     }
 }
 
-export default Popup;
+export default withContext(Popup);

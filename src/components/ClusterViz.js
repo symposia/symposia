@@ -10,6 +10,8 @@ import Bookmark from "./Bookmark";
 
 import { PropTypes } from 'react'
 
+import { ReactContext } from '../Context'
+
 class ClusterViz extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,7 @@ class ClusterViz extends Component {
 
     this.handlePopup = this.handlePopup.bind(this);
     this.handlePopupExit = this.handlePopupExit.bind(this);
-    this.handleBookmark = this.handleBookmark.bind(this);
+    // this.handleBookmark = this.handleBookmark.bind(this);
   }
 
 
@@ -75,13 +77,8 @@ class ClusterViz extends Component {
     this.setState({popupData: null});
   }
 
-  handleBookmark(article) {
-    // var tmpBkList = this.state.bookmarkList;
-    // tmpBkList.add(article);
-
-    // console.log(tmpBkList);
-
-    // this.setState({bookmarkList: tmpBkList})
+  handleBookmark = (article) => {
+    console.log(article)
 
     this.setState({bookmark: article});
   }
@@ -92,14 +89,25 @@ class ClusterViz extends Component {
 
   render() {
     const data = this.state.data;
-    var bookmark = null;
+
+    const { bookmark, popupData} = this.state;
+    // var bookmark = null;
     // console.log(data, typeof(data));
+
 
     if (!data) {
       return null;
     }
 
     return (
+      <ReactContext.Provider 
+      value={{
+        someData:"somedata",
+        bookmark: bookmark,
+        handleBookmark: this.handleBookmark,
+        handlePopupExit:this.handlePopupExit,
+        popupData:popupData
+      }}>
       <div id="cluster-viz-container">
         <div id="title-container">
           <h1 id="title">{this.state.title}</h1>
@@ -148,17 +156,18 @@ class ClusterViz extends Component {
           </button>
         </div>
 
-        <Bookmark data={this.state.bookmark}/>
+        <Bookmark/>
         </div>
         {
           this.state.popupData != null ?
 
-          <Popup handlePopupExit={this.handlePopupExit} handleBookmark={this.handleBookmark} data={this.state.popupData} /> :
+          <Popup  /> :
 
 
           <div></div>
         }
       </div>
+      </ReactContext.Provider>
     );
   }
 
