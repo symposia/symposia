@@ -58,54 +58,64 @@ class ClusterViz extends Component {
   //   this.setupVisiaulization();
   // }
   
-  applyFilterToArticles(data) {
+  // applyFilterToArticles(data) {
+  //   let result = data;
+  //   if (this.state.filteredSources != null) {
+  //     Object.keys(result).forEach(key => {
+  //       let article = result[key]
+  //       // console.log(key, ": ", article);   // the value of the current key.
+  //       if (this.state.filteredSources.has(article.sourceName)) {
+  //         article["filterOut"] = true
+  //       } else {
+  //         article.filterOut = false
+  //       }
+  //     });
+  //   }
+  //   return result;
+  // }
+
+  applyFilterToAllArticles(data) {
+    if (this.state.filteredSources == null) {
+      return data;
+    }
     let result = data;
-    if (this.state.filteredSources != null) {
-      Object.keys(result).forEach(key => {
-        let article = result[key]
-        // console.log(key, ": ", article);   // the value of the current key.
+    Object.keys(result).forEach(resultKey => {
+      let cluster = result[resultKey]
+      Object.keys(cluster).forEach(clusterKey => {
+        let article = cluster[clusterKey]
         if (this.state.filteredSources.has(article.sourceName)) {
           article["filterOut"] = true
         } else {
           article.filterOut = false
         }
       });
-    }
+    })
     return result;
   }
 
   render() {
-    let data = this.state.data;
-    let title = this.state.title != null ? this.state.title : "title";
-    // console.log(data, typeof(data));
-    // console.log(this.state.data);
+    let data = this.applyFilterToAllArticles(this.state.data)
 
-    // console.log(this.state.filteredSources)
-    // console.log("Techcrunch", this.state.data[0][0].filterOut)
+    if (!data) { return null }
 
     return (
       <div id="cluster-viz-container">
         <div id="title-container">
-          <h1 id="title">{title}</h1>
+          <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
         </div>
           {/* <svg ref="anchor" /> */}
-          { data 
-          ? 
         <div>
           <h2>Cluster 1</h2>
-          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[2])} />
+          <ArticleGrid articles={data[2]} />
           <h2>Cluster 2</h2>
-          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[1])} />
+          <ArticleGrid articles={data[1]} />
           <h2>Cluster 3</h2>
-          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[0])} />
+          <ArticleGrid articles={data[0]} />
           <h2>Cluster 4</h2>
-          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[3])} />
+          <ArticleGrid articles={data[3]} />
           <h2>Cluster 5</h2>
-          <ArticleGrid articles={this.applyFilterToArticles(this.state.data[4])} />
+          <ArticleGrid articles={data[4]} />
         </div>
-          :
-          <div></div>
-          }
           {/* <div id="reset-zoom-container">
             <button id="reset-zoom" className="my-btn">
               Reset Zoom
