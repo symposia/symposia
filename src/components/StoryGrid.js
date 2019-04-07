@@ -19,15 +19,15 @@ class StoryGrid extends React.Component {
             <div>
                 <Grid container className={classes.root}>
                     <h2>Cluster 1</h2>
-                    <ArticleGrid articles={this.props.data[0]} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[0]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
                     <h2>Cluster 2</h2>
-                    <ArticleGrid articles={this.props.data[1]} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[1]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
                     <h2>Cluster 3</h2>
-                    <ArticleGrid articles={this.props.data[2]} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[2]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
                     <h2>Cluster 4</h2>
-                    <ArticleGrid articles={this.props.data[3]} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[3]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
                     <h2>Cluster 5</h2>
-                    <ArticleGrid articles={this.props.data[4]} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[4]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
                 </Grid>
             </div>
         );

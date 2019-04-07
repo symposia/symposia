@@ -8,19 +8,22 @@ import TagGrid from "./TagGrid";
 import ZoomSlider from "./ZoomSlider";
 import StoryGrid from "./StoryGrid";
 import { Zoom } from "@material-ui/core";
+import Popup from "./Popup";
 
 class ClusterViz extends Component {
-
   constructor(props) {
     super(props);
-    var changeZoomLevel = this.changeZoomLevel.bind(this);
-  }
+    this.state = {
+      data: null,
+      title: "",
+      popupData: null,
+      zoomLevel: 0
+    };
 
-  state = {
-    data: null,
-    title: "",
-    zoomLevel: 0
-  };
+    this.handlePopup = this.handlePopup.bind(this);
+    this.handlePopupExit = this.handlePopupExit.bind(this);
+    this.changeZoomLevelchangeZoomLevel = this.changeZoomLevel.bind(this);
+  }
 
   componentDidMount() {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
@@ -71,13 +74,22 @@ class ClusterViz extends Component {
     return clusteredArticles;
   }
 
+  handlePopup (Article) {
+    this.setState({popupData: Article});
+  }
+
+  handlePopupExit () {
+    console.log('clicked popup exit');
+    this.setState({popupData: null});
+  }
+
   // componentDidUpdate() {
   //   this.setupVisiaulization();
   // }
 
   render() {
     const data = this.state.data;
-    console.log(data, typeof(data));
+    // console.log(data, typeof(data));
 
     if (!data) {
       return null;
@@ -88,7 +100,7 @@ class ClusterViz extends Component {
         <div id="title-container">
           <h1 id="title">{this.state.title}</h1>
         </div>
-        <StoryGrid data={data} zoomLevel={this.state.zoomLevel}/>
+        <StoryGrid data={data} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}/>
         {/* <div id="tooltip-container" className="second" /> */}
         <div id="filter-container" className="dropdown-list">
           <input
@@ -109,6 +121,14 @@ class ClusterViz extends Component {
           <h4>Zoom</h4>
           <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
         </div>
+        {
+          this.state.popupData != null ?
+
+          <Popup handlePopupExit={this.handlePopupExit} data={this.state.popupData} /> :
+
+
+          <div></div>
+        }
       </div>
     );
   }
