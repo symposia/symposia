@@ -75,9 +75,7 @@ class ArticleGrid extends React.Component {
     alignItems: "flex-start",
   };
 
-  articlePopUp = (event, value) => {
-    console.log('clicked: ', event.target);
-    const index = event.target.attributes.getNamedItem('data-index').value
+  articlePopUp = (index) => {
     const article = this.props.articles[index]
     console.log(article)
     this.props.handlePopup(article)
@@ -113,7 +111,7 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>
-                <Card className={classes.cardsmall + this.filterOut(value)} onClick={this.articlePopUp}>
+                <Card className={classes.cardsmall + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -145,7 +143,7 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>        
-                <Card className={classes.card + this.filterOut(value)} onClick={this.articlePopUp}>
+                <Card className={classes.card + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -176,11 +174,11 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>
-                <Card className={classes.cardbig + this.filterOut(value)} onClick={this.articlePopUp}>
+                <Card className={classes.cardbig + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
                   <CardActionArea>
                     <CardContent className={classes.content}>
                       {/* <Typography gutterBottom variant="h5" component="h2" /> */}
-                      <Typography gutterBottom variant="subtitle1" component="p" data-index={index}>
+                      <Typography gutterBottom variant="subtitle1" component="p" >
                         {value.title}
                       </Typography>
                     </CardContent>
