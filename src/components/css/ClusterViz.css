@@ -32,29 +32,28 @@ body{font-family:"Pontano Sans",sans-serif;background-color:#151617;color:#EEE}.
   grid-area: svg;
 }
 
+#story-grid {
+  width: 80%;
+  margin-right: 20%;
+}
+
 #filter-container {
   grid-area: filter;
-
+  background-color: rgba(0,0,0,.8);
+  top: 0px;
+  left: 80%;
+  position: fixed;
+  width: 20%;
+  height: 100vh;
   padding: 12px;
   border-radius: 4px;
-  height: fit-content; 
+  height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 #filter-container > ul{
   margin: 12px auto;
-}
-
-#tooltip-container {
-  grid-area: tooltip;
-
-  margin: 0 12px;
-  padding: 0 12px;
-  background-color: rgba(255, 255, 255, 0.03);
-  border-radius: 4px;
-  height: fit-content;
 }
 
 #svg-container {
