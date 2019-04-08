@@ -1,6 +1,9 @@
 import React from "react";
 import "./Popup.css";
+import { withStyles } from "@material-ui/core/styles";
 import { withContext } from '../Context'
+
+
 function getDomain(url) {
     if (url == null) {
         return '';
@@ -8,8 +11,6 @@ function getDomain(url) {
 
     var result;
     var match;
-
-    // console.log(url);
 
     if (
         (match = url.match(
@@ -22,9 +23,6 @@ function getDomain(url) {
         }
     }
     return result;
-
-
-    // console.log(typeof(url));
 }
 
 class Popup extends React.Component {
@@ -45,7 +43,7 @@ class Popup extends React.Component {
                 <div>
                 <button id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
                     <button className='popup-buttons' id='compare-button' type='button'>Compare</button>
-                    <button className='popup-buttons' id='bookmark-button' type='button' onClick={() => this.props.handleBookmark(article)}>Bookmark</button>
+                    <button className='popup-buttons' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button>
                     
                 </div>
                 <div>

@@ -19,7 +19,8 @@ class ClusterViz extends Component {
       data: null,
       title: "",
       popupData: null,
-      bookmark: null,
+      // bookmark: null,
+      bookmarkList: new Map(),
     };
 
     this.handlePopup = this.handlePopup.bind(this);
@@ -33,7 +34,7 @@ class ClusterViz extends Component {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
-    console.log(last_segment);
+    //console.log(last_segment);
     let title;
 
     switch (last_segment) {
@@ -77,10 +78,23 @@ class ClusterViz extends Component {
     this.setState({popupData: null});
   }
 
-  handleBookmark = (article) => {
-    console.log(article)
+  handleAddBookmark = (article) => {
+    const bookmark = article;
 
-    this.setState({bookmark: article});
+    var {bookmarkList} = this.state;
+    // bookmarkElements.add(bookmark);
+
+    bookmarkList.set(article.title, article)
+
+    this.setState({bookmarkList: bookmarkList});
+  }
+
+  handleDeleteBookmark = (title) => {
+    var {bookmarkList} = this.state;
+
+    bookmarkList.delete(title);
+
+    this.setState({bookmarkList: bookmarkList});
   }
 
   // componentDidUpdate() {
@@ -90,7 +104,9 @@ class ClusterViz extends Component {
   render() {
     const data = this.state.data;
 
-    const { bookmark, popupData} = this.state;
+    const { bookmark, popupData, bookmarkList} = this.state;
+
+
     // var bookmark = null;
     // console.log(data, typeof(data));
 
@@ -104,7 +120,10 @@ class ClusterViz extends Component {
       value={{
         someData:"somedata",
         bookmark: bookmark,
-        handleBookmark: this.handleBookmark,
+        bookmarkList: bookmarkList,
+        handleAddBookmark: this.handleAddBookmark,
+        handleDeleteBookmark: this.handleDeleteBookmark,
+        handlePopup: this.handlePopup,
         handlePopupExit:this.handlePopupExit,
         popupData:popupData
       }}>

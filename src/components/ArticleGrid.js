@@ -78,10 +78,8 @@ class ArticleGrid extends React.Component {
   };
 
   articlePopUp = (event, value) => {
-    console.log('clicked: ', event.target);
     const index = event.target.attributes.getNamedItem('data-index').value
     const article = this.props.articles[index]
-    console.log(article)
     this.props.handlePopup(article)
 
   }
