@@ -1,202 +1,42 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import MarkdownElement from "@material-ui/docs/MarkdownElement";
+import ArticleGrid from "./ArticleGrid";
 import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import Paper from "@material-ui/core/Paper";
-import TagGrid from "./TagGrid.js";
-import ArticleGrid from "./ArticleGrid.js";
+import TagGrid from "./TagGrid";
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  demo: {
-    height: 240
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    height: "100%",
-    color: theme.palette.text.secondary
-  },
-  control: {
-    padding: theme.spacing.unit * 2
-  }
-});
+    root: {
+      flexGrow: 1,
+      display: "flex",
+      flexDirection: "column"
+    }
+  });
 
-class InteractiveGrid extends React.Component {
-  state = {
-    direction: "row",
-    justify: "flex-start",
-    alignItems: "flex-start"
-  };
 
-  handleChange = key => (event, value) => {
-    this.setState({
-      [key]: value
-    });
-  };
+class StoryGrid extends React.Component {
+    render() {
+        const { classes } = this.props;
+        return (
+            <div id="story-grid">
+                <Grid container className={classes.root}>
+                    <TagGrid tags= {this.props.tags[0]} />
+                    <ArticleGrid articles={this.props.data[0]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
 
-  render() {
-    const { classes } = this.props;
-    const { alignItems, direction, justify } = this.state;
+                    <TagGrid tags= {this.props.tags[1]} />
+                    <ArticleGrid articles={this.props.data[1]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
 
-    const code = `
-\`\`\`jsx
-<Grid
-  container
-  direction="${direction}"
-  justify="${justify}"
-  alignItems="${alignItems}"
->
-\`\`\`
-`;
+                    <TagGrid tags= {this.props.tags[2]} />
+                    <ArticleGrid articles={this.props.data[2]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
 
-    return (
-      <Grid container className={classes.root}>
-        <Grid item xs={10}>
-          <TagGrid tags={[0, 1, 2]} />
-          <ArticleGrid articles={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]} />
-        </Grid>
-        <Grid item xs={10}>
-          <TagGrid tags={[0, 1, 2]} />
-          <ArticleGrid articles={[0, 1, 2, 3, 4, 5]} />
-        </Grid>
-        {/* <Grid item xs={12}>
-          <Paper className={classes.control}>
-            <Grid container spacing={24}>
-              <Grid item xs={12}>
-                <FormControl component="fieldset">
-                  <FormLabel>direction</FormLabel>
-                  <RadioGroup
-                    row
-                    name="direction"
-                    aria-label="Direction"
-                    value={direction}
-                    onChange={this.handleChange("direction")}
-                  >
-                    <FormControlLabel
-                      value="row"
-                      control={<Radio />}
-                      label="row"
-                    />
-                    <FormControlLabel
-                      value="row-reverse"
-                      control={<Radio />}
-                      label="row-reverse"
-                    />
-                    <FormControlLabel
-                      value="column"
-                      control={<Radio />}
-                      label="column"
-                    />
-                    <FormControlLabel
-                      value="column-reverse"
-                      control={<Radio />}
-                      label="column-reverse"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl component="fieldset">
-                  <FormLabel>justify</FormLabel>
-                  <RadioGroup
-                    row
-                    name="justify"
-                    aria-label="Justify"
-                    value={justify}
-                    onChange={this.handleChange("justify")}
-                  >
-                    <FormControlLabel
-                      value="flex-start"
-                      control={<Radio />}
-                      label="flex-start"
-                    />
-                    <FormControlLabel
-                      value="center"
-                      control={<Radio />}
-                      label="center"
-                    />
-                    <FormControlLabel
-                      value="flex-end"
-                      control={<Radio />}
-                      label="flex-end"
-                    />
-                    <FormControlLabel
-                      value="space-between"
-                      control={<Radio />}
-                      label="space-between"
-                    />
-                    <FormControlLabel
-                      value="space-around"
-                      control={<Radio />}
-                      label="space-around"
-                    />
-                    <FormControlLabel
-                      value="space-evenly"
-                      control={<Radio />}
-                      label="space-evenly"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl component="fieldset">
-                  <FormLabel>alignItems</FormLabel>
-                  <RadioGroup
-                    row
-                    name="alignItems"
-                    aria-label="Align items"
-                    value={alignItems}
-                    onChange={this.handleChange("alignItems")}
-                  >
-                    <FormControlLabel
-                      value="flex-start"
-                      control={<Radio />}
-                      label="flex-start"
-                    />
-                    <FormControlLabel
-                      value="center"
-                      control={<Radio />}
-                      label="center"
-                    />
-                    <FormControlLabel
-                      value="flex-end"
-                      control={<Radio />}
-                      label="flex-end"
-                    />
-                    <FormControlLabel
-                      value="stretch"
-                      control={<Radio />}
-                      label="stretch"
-                    />
-                    <FormControlLabel
-                      value="baseline"
-                      control={<Radio />}
-                      label="baseline"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-            </Grid> */}
-          {/* </Paper> */}
-        {/* </Grid> */}
-        <Grid item xs={12}>
-          <MarkdownElement text={code} />
-        </Grid>
-      </Grid>
-    );
-  }
+                    <TagGrid tags= {this.props.tags[3]} />
+                    <ArticleGrid articles={this.props.data[3]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
+
+                    <TagGrid tags= {this.props.tags[4]} />
+                    <ArticleGrid articles={this.props.data[4]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
+                </Grid>
+            </div>
+        );
+    };
 }
 
-InteractiveGrid.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(InteractiveGrid);
+export default withStyles(styles)(StoryGrid);

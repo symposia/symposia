@@ -1,8 +1,7 @@
 import React from "react";
-import "./Popup.css";
 import { withStyles } from "@material-ui/core/styles";
+import "./css/Popup.css";
 import { withContext } from '../Context'
-
 
 function getDomain(url) {
     if (url == null) {
@@ -40,26 +39,25 @@ class Popup extends React.Component {
         const article = this.props.popupData
         return (
             <div id="popup-container">
-                <div>
-                <button id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
-                    <button className='popup-buttons' id='compare-button' type='button'>Compare</button>
-                    <button className='popup-buttons' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button>
-                    
-                </div>
-                <div>
-                    <a href={article.url}>
+                <div class="popup-row">
+                    <button class='my-btn' id='compare-button' type='button'>Compare</button>
+                    <button class='my-btn' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button>
+                    <button class='my-btn' id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
+                    {/* <button className='popup-buttons' id='compare-button' type='button'>Compare</button>
+                    <button className='popup-buttons' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button> */}
+                    <a target="_blank" rel="noopener noreferrer" href={article.url}>
                         <h1 id='popup-title'>{article.title}</h1>
                     </a>
                 </div>
-                <div>
+                <div class="popup-row">
                     <img id='popup-logo' src={"http://logo.clearbit.com/" + getDomain(article.url)}></img>
 
                     <h1 id='popup-date'>{article.date}</h1>
 
                     {/* Logo: <img src={getDomain(article.sourceName)}></img> */}
                 </div>
-                <div>
-                    <h3> {article.description} </h3>
+                <div class="popup-row" id="popup-description">
+                    <p> {article.description} </p>
                 </div>
             </div>
         )
