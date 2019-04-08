@@ -6,6 +6,7 @@ import "./css/ClusterViz.css";
 import ZoomSlider from "./ZoomSlider";
 import StoryGrid from "./StoryGrid";
 import Popup from "./Popup";
+import SummarizerModal from "./SummarizerModal";
 
 class ClusterViz extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class ClusterViz extends Component {
       article2: null,
       tags: null,
       summaries: null,
-      selectSecond: false
+      selectSecond: false,
+      showSummarizerModal: false,
     };
 
     this.getFirst = this.getFirst.bind(this);
@@ -26,6 +28,7 @@ class ClusterViz extends Component {
     this.handlePopupExit = this.handlePopupExit.bind(this);
     this.changeZoomLevelchangeZoomLevel = this.changeZoomLevel.bind(this);
     this.selectSecond = this.selectSecond.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
   }
 
   componentDidMount() {
@@ -89,12 +92,18 @@ class ClusterViz extends Component {
     let summaries = this.state.summaries;
     console.log(summaries[article1["title"]]["who"]);
     console.log(summaries[article2["title"]]["who"]);
-    this.setState({article2: article2, selectSecond: false});
+    this.setState({article2: article2, selectSecond: false, showSummarizerModal: true});
   }
 
   // componentDidUpdate() {
   //   this.setupVisiaulization();
   // }
+  
+  handleModalClose() {
+    this.setState({
+      showSummarizerModal: false
+    })
+  }
 
   render() {
     const data = this.state.data;
@@ -166,10 +175,20 @@ class ClusterViz extends Component {
             <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
           </div>
           {
-            this.state.article1 != null ?
+            this.state.article1 != null && this.state.showSummarizerModal == false ?
             <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} /> :
             <div></div>
           }
+          {
+            this.state.showSummarizerModal ? 
+            <SummarizerModal 
+              handleModalClose={this.handleModalClose} 
+              article1={this.state.article1} 
+              article2={this.state.article2}
+              summary1={this.state.summaries[this.state.article1.title]}
+              summary2={this.state.summaries[this.state.article2.title]}
+            /> 
+          : <div></div> }
         </div>
       );
     }
