@@ -16,6 +16,8 @@ class ClusterViz extends Component {
       article1: null,
       zoomLevel: 0,
       article2: null,
+      tags: null,
+      summaries: null,
       selectSecond: false
     };
 
@@ -30,7 +32,6 @@ class ClusterViz extends Component {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
-    console.log(last_segment);
     let title;
     switch (last_segment) {
       case "huawei":
@@ -46,18 +47,17 @@ class ClusterViz extends Component {
     }
     const dataURL = `/data/articles/${last_segment}.json`;
     const tagURL = `/data/tags/${last_segment}-tags.json`;
+    const summaryURL = `/data/summaries/${last_segment}-summary.json`;
     // const dataURL = `/data/articles/${last_segment}.json`;
 
-    console.log(dataURL, tagURL);
-    Promise.all([d3.json(dataURL), d3.json(tagURL)]).then(data => {
-      this.setState({ data: this.seperateClusters(data[0]), tags: data[1], title: title });
+    Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
+      this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
       this.filter(this.state.data);
     });
   }
 
   changeZoomLevel = (event, value) => {
     this.setState({ zoomLevel: value });
-    console.log(this.state.zoomLevel);
   };
 
   seperateClusters(data) {
@@ -74,7 +74,6 @@ class ClusterViz extends Component {
 
   getFirst(article) {
     this.setState({article1: article});
-    console.log(this.state.article1);
   }
 
   handlePopupExit() {
@@ -85,9 +84,12 @@ class ClusterViz extends Component {
     this.setState({selectSecond: true})
   }
 
-  getSecond(article) {
-    this.setState({article2: article, selectSecond: false});
-    console.log(this.state.article1, this.state.article2);
+  getSecond(article2) {
+    let article1 = this.state.article1;
+    let summaries = this.state.summaries;
+    console.log(summaries[article1["title"]]["who"]);
+    console.log(summaries[article2["title"]]["who"]);
+    this.setState({article2: article2, selectSecond: false});
   }
 
   // componentDidUpdate() {
@@ -97,8 +99,10 @@ class ClusterViz extends Component {
   render() {
     const data = this.state.data;
     const tags = this.state.tags;
-    console.log(tags, typeof(tags));
-    console.log(data, typeof(data));
+    const summaries = this.state.summaries;
+    // console.log(tags, typeof(tags));
+    // console.log(data, typeof(data));
+    // console.log(summaries, typeof(summaries));
 
     if (!data) {
       return null;
@@ -135,7 +139,6 @@ class ClusterViz extends Component {
         </div>
       );
     } else {
-      console.log("not select second");
       return (
         <div id="cluster-viz-container">
           <div id="title-container">
@@ -172,19 +175,6 @@ class ClusterViz extends Component {
     }
   }
 
-  render2() {
-    const data = this.state.data;
-    const tags = this.state.tags;
-    console.log(tags, typeof(tags));
-    console.log(data, typeof(data));
-
-    if (!data) {
-      return null;
-    }
-
-
-  }
-
   filter(data) {
     var newsSources = [];
     var exists = [];
@@ -208,7 +198,6 @@ class ClusterViz extends Component {
     }
 
     typeFilterList = exists;
-    console.log(typeFilterList);
 
     function stateTemplate(sourceName) {
       return (
