@@ -120,7 +120,7 @@ class Bookmark extends React.Component {
                 justify={justify}
                 xs={12}
             >
-                <Typography className='bookmark-heading' component="p" variant="p">Bookmarks</Typography>
+                {/* <Typography className='bookmark-heading' component="p" variant="p">Bookmarks</Typography> */}
                 {Array.from(bookmarkList.values()).map((value, index) => (
                     <Grid key={value.title} item onClick={()=>this.props.handlePopup(value)}>
                         <Card className={classes.card}>

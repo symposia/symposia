@@ -153,27 +153,28 @@ class ClusterViz extends Component {
         <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}/>
         {/* <div id="tooltip-container" className="second" /> */}
         <div id="filter-bookmark-container">
-        <div id="filter-container" className="dropdown-list">
-          <input
-            type="search"
-            placeholder="Search Sources"
-            className="dropdown-search"
-          />
-          <ul id="news-sources-filter-list" />
-          <button
-            className="my-btn reset-btn"
-            type="text"
-            placeholder=""
-            aria-label="reset filters"
-            aria-describedby="basic-addon1"
-          >
-            Reset
-          </button>
-          <h4>Zoom</h4>
-          <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
-          <h4>Bookmark</h4>
-          <Bookmark />
-        </div>
+          <div id="filter-container" className="dropdown-list">
+            <h4>Filter</h4>
+            <input
+              type="search"
+              placeholder="Search Sources"
+              className="dropdown-search"
+            />
+            <ul id="news-sources-filter-list" />
+            <button
+              className="my-btn reset-btn"
+              type="text"
+              placeholder=""
+              aria-label="reset filters"
+              aria-describedby="basic-addon1"
+            >
+              Reset
+            </button>
+            <h4>Zoom</h4>
+            <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
+            <h4>Bookmark</h4>
+            <Bookmark />
+          </div>
         </div>
         {
           this.state.popupData != null ?

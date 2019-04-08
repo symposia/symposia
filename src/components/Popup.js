@@ -40,14 +40,16 @@ class Popup extends React.Component {
         return (
             <div id="popup-container">
                 <div class="popup-row">
-                    <button class='my-btn' id='compare-button' type='button'>Compare</button>
-                    <button class='my-btn' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button>
                     <button class='my-btn' id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
                     {/* <button className='popup-buttons' id='compare-button' type='button'>Compare</button>
                     <button className='popup-buttons' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button> */}
                     <a target="_blank" rel="noopener noreferrer" href={article.url}>
                         <h1 id='popup-title'>{article.title}</h1>
                     </a>
+                </div>
+                <div class="popup-row">
+                    <button class='my-btn' id='compare-button' type='button'>Compare</button>
+                    <button class='my-btn' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button>
                 </div>
                 <div class="popup-row">
                     <img id='popup-logo' src={"http://logo.clearbit.com/" + getDomain(article.url)}></img>
