@@ -52,6 +52,7 @@ body{font-family:"Pontano Sans",sans-serif;background-color:#151617;color:#EEE}.
   flex-direction: column;
   align-items: center;
 }
+
 #filter-container > ul{
   margin: 12px auto;
 }

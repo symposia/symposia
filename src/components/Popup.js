@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import "./css/Popup.css";
+import { withContext } from '../Context'
 
 function getDomain(url) {
     if (url == null) {
@@ -9,8 +10,6 @@ function getDomain(url) {
 
     var result;
     var match;
-
-    // console.log(url);
 
     if (
         (match = url.match(
@@ -23,9 +22,6 @@ function getDomain(url) {
         }
     }
     return result;
-
-
-    // console.log(typeof(url));
 }
 
 class Popup extends React.Component {
@@ -40,11 +36,15 @@ class Popup extends React.Component {
 
 
     render() {
-        const article = this.props.data
+        const article = this.props.popupData
         return (
             <div id="popup-container">
                 <div class="popup-row">
+                    <button class='my-btn' id='compare-button' type='button'>Compare</button>
+                    <button class='my-btn' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button>
                     <button class='my-btn' id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
+                    {/* <button className='popup-buttons' id='compare-button' type='button'>Compare</button>
+                    <button className='popup-buttons' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button> */}
                     <a target="_blank" rel="noopener noreferrer" href={article.url}>
                         <h1 id='popup-title'>{article.title}</h1>
                     </a>
@@ -64,4 +64,4 @@ class Popup extends React.Component {
     }
 }
 
-export default Popup;
+export default withContext(Popup);

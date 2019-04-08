@@ -6,6 +6,11 @@ import "./css/ClusterViz.css";
 import ZoomSlider from "./ZoomSlider";
 import StoryGrid from "./StoryGrid";
 import Popup from "./Popup";
+import Bookmark from "./Bookmark";
+
+import { PropTypes } from 'react'
+
+import { ReactContext } from '../Context'
 
 class ClusterViz extends Component {
   constructor(props) {
@@ -14,20 +19,22 @@ class ClusterViz extends Component {
       data: null,
       title: "",
       popupData: null,
+      // bookmark: null,
+      bookmarkList: new Map(),
       zoomLevel: 0,
       filteredSources: null
     };
 
     this.handlePopup = this.handlePopup.bind(this);
     this.handlePopupExit = this.handlePopupExit.bind(this);
-    this.changeZoomLevelchangeZoomLevel = this.changeZoomLevel.bind(this);
+    // this.handleBookmark = this.handleBookmark.bind(this);
+    this.changeZoomLevel = this.changeZoomLevel.bind(this);
   }
 
   componentDidMount() {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
-    // console.log(last_segment);
     let title;
     switch (last_segment) {
       case "huawei":
@@ -70,13 +77,32 @@ class ClusterViz extends Component {
     return clusteredArticles;
   }
 
-  handlePopup (Article) {
-    this.setState({popupData: Article});
+  handlePopup (article) {
+    this.setState({popupData: article});
   }
 
   handlePopupExit () {
     console.log('clicked popup exit');
     this.setState({popupData: null});
+  }
+
+  handleAddBookmark = (article) => {
+    const bookmark = article;
+
+    var {bookmarkList} = this.state;
+    // bookmarkElements.add(bookmark);
+
+    bookmarkList.set(article.title, article)
+
+    this.setState({bookmarkList: bookmarkList});
+  }
+
+  handleDeleteBookmark = (title) => {
+    var {bookmarkList} = this.state;
+
+    bookmarkList.delete(title);
+
+    this.setState({bookmarkList: bookmarkList});
   }
 
 
@@ -104,16 +130,29 @@ class ClusterViz extends Component {
     const tags = this.state.tags;
     // console.log(tags, typeof(tags));
     console.log(data, typeof(data));
+    const { bookmark, popupData, bookmarkList} = this.state;
 
     if (!data) { return null }
 
     return (
+      <ReactContext.Provider 
+      value={{
+        someData:"somedata",
+        bookmark: bookmark,
+        bookmarkList: bookmarkList,
+        handleAddBookmark: this.handleAddBookmark,
+        handleDeleteBookmark: this.handleDeleteBookmark,
+        handlePopup: this.handlePopup,
+        handlePopupExit:this.handlePopupExit,
+        popupData:popupData
+      }}>
       <div id="cluster-viz-container">
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
         </div>
         <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}/>
         {/* <div id="tooltip-container" className="second" /> */}
+        <div id="filter-bookmark-container">
         <div id="filter-container" className="dropdown-list">
           <input
             type="search"
@@ -132,6 +171,9 @@ class ClusterViz extends Component {
           </button>
           <h4>Zoom</h4>
           <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
+          <h4>Bookmark</h4>
+          <Bookmark />
+        </div>
         </div>
         {
           this.state.popupData != null ?
@@ -139,6 +181,7 @@ class ClusterViz extends Component {
           <div></div>
         }
       </div>
+      </ReactContext.Provider>
     );
   }
 

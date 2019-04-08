@@ -1,0 +1,20 @@
+.bookmark-title {
+    max-height: 73.6px;
+    overflow: hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4 !important;
+    /* -webkit-box-orient: vertical !important;   */
+}
+
+.close-button svg {
+    margin-top: 0;
+}
+
+p {
+    font-size: 15px;
+}
+
+.bookmark-heading {
+    font-size: 24px;
+    text-align: center;
+}
