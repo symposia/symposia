@@ -20,19 +20,19 @@ class StoryGrid extends React.Component {
             <div id="story-grid">
                 <Grid container className={classes.root}>
                     <TagGrid tags= {this.props.tags[0]} />
-                    <ArticleGrid articles={this.props.data[0]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[0]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
 
                     <TagGrid tags= {this.props.tags[1]} />
-                    <ArticleGrid articles={this.props.data[1]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[1]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
 
                     <TagGrid tags= {this.props.tags[2]} />
-                    <ArticleGrid articles={this.props.data[2]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[2]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
 
                     <TagGrid tags= {this.props.tags[3]} />
-                    <ArticleGrid articles={this.props.data[3]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[3]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
 
                     <TagGrid tags= {this.props.tags[4]} />
-                    <ArticleGrid articles={this.props.data[4]} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
+                    <ArticleGrid articles={this.props.data[4]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
                 </Grid>
             </div>
         );

@@ -7,10 +7,9 @@ import ZoomSlider from "./ZoomSlider";
 import StoryGrid from "./StoryGrid";
 import Popup from "./Popup";
 import Bookmark from "./Bookmark";
-
 import { PropTypes } from 'react'
-
 import { ReactContext } from '../Context'
+import SummarizerModal from "./SummarizerModal";
 
 class ClusterViz extends Component {
   constructor(props) {
@@ -19,16 +18,24 @@ class ClusterViz extends Component {
       data: null,
       title: "",
       popupData: null,
-      // bookmark: null,
       bookmarkList: new Map(),
       zoomLevel: 0,
-      filteredSources: null
+      filteredSources: null,
+      article1: null,
+      article2: null,
+      tags: null,
+      summaries: null,
+      selectSecond: false,
+      showSummarizerModal: false,
     };
 
-    this.handlePopup = this.handlePopup.bind(this);
+    this.getFirst = this.getFirst.bind(this);
+    this.getSecond = this.getSecond.bind(this);
     this.handlePopupExit = this.handlePopupExit.bind(this);
-    // this.handleBookmark = this.handleBookmark.bind(this);
     this.changeZoomLevel = this.changeZoomLevel.bind(this);
+    this.selectSecond = this.selectSecond.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.handlePopup = this.handlePopup.bind(this);
   }
 
   componentDidMount() {
@@ -50,11 +57,11 @@ class ClusterViz extends Component {
     }
     const dataURL = `/data/articles/${last_segment}.json`;
     const tagURL = `/data/tags/${last_segment}-tags.json`;
+    const summaryURL = `/data/summaries/${last_segment}-summary.json`;
     // const dataURL = `/data/articles/${last_segment}.json`;
 
-    console.log(dataURL, tagURL);
-    Promise.all([d3.json(dataURL), d3.json(tagURL)]).then(data => {
-      this.setState({ data: this.seperateClusters(data[0]), tags: data[1], title: title });
+    Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
+      this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
       this.filter(this.state.data);
       // this.applyFilterToArticles(dataWithSeparatedClusters)
     });
@@ -62,7 +69,6 @@ class ClusterViz extends Component {
 
   changeZoomLevel = (event, value) => {
     this.setState({ zoomLevel: value });
-    console.log(this.state.zoomLevel);
   };
 
   seperateClusters(data) {
@@ -81,9 +87,25 @@ class ClusterViz extends Component {
     this.setState({popupData: article});
   }
 
-  handlePopupExit () {
-    console.log('clicked popup exit');
-    this.setState({popupData: null});
+  getFirst(article) {
+    this.setState({article1: article});
+  }
+
+  handlePopupExit() {
+    this.setState({article1: null, popupData: null});
+  }
+
+  selectSecond() {
+    console.log("selectSecond: true")
+    this.setState({selectSecond: true})
+  }
+
+  getSecond(article2) {
+    let article1 = this.state.article1;
+    let summaries = this.state.summaries;
+    console.log(summaries[article1["title"]]["who"]);
+    console.log(summaries[article2["title"]]["who"]);
+    this.setState({article2: article2, selectSecond: false, showSummarizerModal: true});
   }
 
   handleAddBookmark = (article) => {
@@ -124,13 +146,20 @@ class ClusterViz extends Component {
     })
     return result;
   }
+  
+  handleModalClose() {
+    this.setState({
+      showSummarizerModal: false
+    })
+  }
 
   render() {
     let data = this.applyFilterToAllArticles(this.state.data)
     const tags = this.state.tags;
     // console.log(tags, typeof(tags));
-    console.log(data, typeof(data));
+    // console.log(data, typeof(data));
     const { bookmark, popupData, bookmarkList} = this.state;
+    const summaries = this.state.summaries;
 
     if (!data) { return null }
 
@@ -150,14 +179,35 @@ class ClusterViz extends Component {
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
         </div>
-        <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}/>
+                  {this.state.selectSecond ? 
+        <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
+                 handleClick={
+                    this.getSecond
+                } 
+        /> :
+        <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
+                 handleClick={
+                    this.getFirst
+                } 
+        />
+                    }
         {/* <div id="tooltip-container" className="second" /> */}
 
         {
-          this.state.popupData != null ?
-          <Popup handlePopupExit={this.handlePopupExit} data={this.state.popupData} /> :
+          this.state.popupData != null && this.state.showSummarizerModal == false && this.state.selectSecond == false ?
+          <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} /> :
           <div></div>
         }
+                 {
+            this.state.showSummarizerModal ? 
+            <SummarizerModal 
+              handleModalClose={this.handleModalClose} 
+              article1={this.state.article1} 
+              article2={this.state.article2}
+              summary1={this.state.summaries[this.state.article1.title]}
+              summary2={this.state.summaries[this.state.article2.title]}
+            /> 
+          : <div></div> } 
       </div>
       <div id="filter-bookmark-container">
         <div id="filter-container" className="dropdown-list">
@@ -183,6 +233,7 @@ class ClusterViz extends Component {
         <h4>Bookmark</h4>
         <Bookmark />
       </div>
+
       </ReactContext.Provider>
     );
   }
@@ -213,9 +264,6 @@ class ClusterViz extends Component {
       filteredSources: new Set(exists)
     })
     typeFilterList = exists;
-    // console.log("typeFilterList:", typeFilterList);
-    // console.log("this.state.filteredSources:", this.state.filteredSources);
-    // this.applyFilterToArticles(this.state.data);
 
     function stateTemplate(sourceName) {
       return (

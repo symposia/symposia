@@ -81,6 +81,7 @@ class ArticleGrid extends React.Component {
     //const index = event.target.attributes.getNamedItem('data-index').value;
     const article = this.props.articles[index];
     this.props.handlePopup(article);
+    this.props.handleClick(article);
   }
 
   set_focus(typeFilterList) {
@@ -141,7 +142,7 @@ class ArticleGrid extends React.Component {
             alignItems={alignItems}
             direction={direction}
             justify={justify}
-            xs={12}
+            // xs={12}
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>        

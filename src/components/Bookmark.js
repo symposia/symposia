@@ -118,7 +118,7 @@ class Bookmark extends React.Component {
                 alignItems={alignItems}
                 direction={direction}
                 justify={justify}
-                xs={12}
+                // xs={12}
             >
                 {/* <Typography className='bookmark-heading' component="p" variant="p">Bookmarks</Typography> */}
                 {Array.from(bookmarkList.values()).map((value, index) => (
@@ -138,7 +138,7 @@ class Bookmark extends React.Component {
                                 />
                             </CardActionArea>
                             <CardContent className={classes.content}>
-                                <Typography component="p" variant="p" style={{color: 'black', WebkitBoxOrient: "vertical"}} className="bookmark-title">
+                                <Typography component="p" variant="body1" style={{color: 'black', WebkitBoxOrient: "vertical"}} className="bookmark-title">
                                         {value.title}
                                 </Typography>
                             </CardContent>
