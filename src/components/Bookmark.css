@@ -1,3 +1,23 @@
+#bookmark-container {
+  height: 20vh;
+  overflow: auto;
+}
+
+#bookmark-container::-webkit-scrollbar-thumb {
+    visibility: hidden;
+}
+#bookmark-container:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+#bookmark-container::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.8);
+}
+
+#bookmark-container::-webkit-scrollbar {
+  width: 5px;
+}
+
 .bookmark-title {
     max-height: 73.6px;
     overflow: hidden;
@@ -10,7 +30,7 @@
     margin-top: 0;
 }
 
-p {
+.bookmark-card p {
     font-size: 15px;
 }
 

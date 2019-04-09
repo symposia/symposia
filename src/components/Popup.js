@@ -39,8 +39,8 @@ class Popup extends React.Component {
         const article = this.props.popupData
         return (
             <div id="popup-container">
+                <button class='my-btn' id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
                 <div class="popup-row">
-                    <button class='my-btn' id='exit-popup' type='button' onClick={this.props.handlePopupExit}>X</button>
                     {/* <button className='popup-buttons' id='compare-button' type='button'>Compare</button>
                     <button className='popup-buttons' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button> */}
                     <a target="_blank" rel="noopener noreferrer" href={article.url}>
@@ -48,14 +48,10 @@ class Popup extends React.Component {
                     </a>
                 </div>
                 <div class="popup-row">
+                    <img id='popup-logo' src={"http://logo.clearbit.com/" + getDomain(article.url)}></img>
+                    <h1 id='popup-date'>{article.date}</h1>
                     <button class='my-btn' id='compare-button' type='button'>Compare</button>
                     <button class='my-btn' id='bookmark-button' type='button' onClick={() => this.props.handleAddBookmark(article)}>Bookmark</button>
-                </div>
-                <div class="popup-row">
-                    <img id='popup-logo' src={"http://logo.clearbit.com/" + getDomain(article.url)}></img>
-
-                    <h1 id='popup-date'>{article.date}</h1>
-
                     {/* Logo: <img src={getDomain(article.sourceName)}></img> */}
                 </div>
                 <div class="popup-row" id="popup-description">

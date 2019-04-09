@@ -72,10 +72,10 @@ function getDomain(url) {
     if (url == null) {
         return '';
     }
-  
+
     var result;
     var match;
-    
+
     if (
         (match = url.match(
         /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im
@@ -89,8 +89,8 @@ function getDomain(url) {
     return result;
   }
 
-class Bookmark extends React.Component { 
-    
+class Bookmark extends React.Component {
+
     // constructor(props) {
     //     super(props);
     //     this.state= {
@@ -110,8 +110,8 @@ class Bookmark extends React.Component {
         const { alignItems, direction, justify } = this.state;
 
         return (
-            
-            <Grid
+
+            <Grid id="bookmark-container"
                 container
                 spacing={16}
                 // className={classes.demo+this.props.articles.length}
@@ -122,7 +122,7 @@ class Bookmark extends React.Component {
             >
                 {/* <Typography className='bookmark-heading' component="p" variant="p">Bookmarks</Typography> */}
                 {Array.from(bookmarkList.values()).map((value, index) => (
-                    <Grid key={value.title} item onClick={()=>this.props.handlePopup(value)}>
+                    <Grid className="bookmark-card" key={value.title} item onClick={()=>this.props.handlePopup(value)}>
                         <Card className={classes.card}>
                             {/* <div className={classes.details}> */}
                             <CardActionArea>
@@ -145,7 +145,7 @@ class Bookmark extends React.Component {
                             <CardActions className={classes.actions} disableActionSpacing>
                                 <IconButton className='close-button' aria-label="Add to favorites" onClick={()=>this.props.handleDeleteBookmark(value.title)}>
                                     <CloseIcon />
-                                </IconButton>                           
+                                </IconButton>
                             </CardActions>
                         </Card>
                     </Grid>

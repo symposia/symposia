@@ -135,7 +135,7 @@ class ClusterViz extends Component {
     if (!data) { return null }
 
     return (
-      <ReactContext.Provider 
+      <ReactContext.Provider
       value={{
         someData:"somedata",
         bookmark: bookmark,
@@ -152,35 +152,36 @@ class ClusterViz extends Component {
         </div>
         <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}/>
         {/* <div id="tooltip-container" className="second" /> */}
-        <div id="filter-bookmark-container">
-          <div id="filter-container" className="dropdown-list">
-            <h4>Filter</h4>
-            <input
-              type="search"
-              placeholder="Search Sources"
-              className="dropdown-search"
-            />
-            <ul id="news-sources-filter-list" />
-            <button
-              className="my-btn reset-btn"
-              type="text"
-              placeholder=""
-              aria-label="reset filters"
-              aria-describedby="basic-addon1"
-            >
-              Reset
-            </button>
-            <h4>Zoom</h4>
-            <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
-            <h4>Bookmark</h4>
-            <Bookmark />
-          </div>
-        </div>
+
         {
           this.state.popupData != null ?
           <Popup handlePopupExit={this.handlePopupExit} data={this.state.popupData} /> :
           <div></div>
         }
+      </div>
+      <div id="filter-bookmark-container">
+        <div id="filter-container" className="dropdown-list">
+          <h4>Filter</h4>
+          <input
+            type="search"
+            placeholder="Search Sources"
+            className="dropdown-search"
+          />
+          <ul id="news-sources-filter-list" />
+          <button
+            className="my-btn reset-btn"
+            type="text"
+            placeholder=""
+            aria-label="reset filters"
+            aria-describedby="basic-addon1"
+          >
+            Reset
+          </button>
+        </div>
+        <h4>Zoom</h4>
+        <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
+        <h4>Bookmark</h4>
+        <Bookmark />
       </div>
       </ReactContext.Provider>
     );

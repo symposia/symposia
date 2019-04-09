@@ -1,11 +1,15 @@
 #popup-container {
-    width: 80%;
+    width: 78%;
     height: 30%;
     background-color: rgba(0,0,0,.8);
     z-index: 100;
     position: fixed;
     bottom: 0;
-    font-family: "PT serif", sans-serif;
+}
+
+#popup-container .my-btn {
+  margin-right: 1vh;
+  margin-left: 1vh;
 }
 
 #popup-logo {
@@ -19,18 +23,18 @@
 }
 
 #popup-title {
-    font-size: 28pt;
+    font-size: 24pt;
     text-decoration: underline;
 }
 
 
 #popup-date {
     display: inline-flex;
-    font-size: 22pt;
+    font-size: 16pt;
 }
 
 #popup-description  {
-  font-size: 16pt;
+  font-size: 12pt;
   padding-left: 20px;
   padding-right: 20px;
 
@@ -38,11 +42,11 @@
 
 #exit-popup {
     float: right;
-    margin-right: 2vh;
-    margin-left: 2vh;
-    background-color: #00cec9;
-    border: 1px solid #00cec9;
-    box-shadow: inset 0px -3px 7px 0px #00cec9;
+    margin-top: 1vh;
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    box-shadow: none;
 }
 
 @media screen and (max-width: 1440px) {
