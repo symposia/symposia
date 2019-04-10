@@ -11,6 +11,7 @@ import { PropTypes } from 'react'
 import { ReactContext } from '../Context'
 import SummarizerModal from "./SummarizerModal";
 
+
 class ClusterViz extends Component {
   constructor(props) {
     super(props);
@@ -83,7 +84,7 @@ class ClusterViz extends Component {
     return clusteredArticles;
   }
 
-  handlePopup (article) {
+  handlePopup(article) {
     this.setState({
       popupData: article,
     });
