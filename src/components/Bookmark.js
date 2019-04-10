@@ -15,7 +15,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Fab from '@material-ui/core/Fab';
 
 
-import "./Bookmark.css";
+import "./css/Bookmark.css";
 
 const styles = theme => ({
     root: {
@@ -40,24 +40,31 @@ const styles = theme => ({
     },
     card: {
       width: "100%",
-      height: "100%",
+      height: "100px",
       display: 'flex',
+      marginTop: '10px',
+      marginBottom: '10px'
     },
     media: {
       // ⚠️ object-fit is not supported by IE 11.
-      objectFit: "cover",
-      width: '30%'
+      objectFit: "contain"
     },
     filteredmedia: {
       objectFit: "cover",
       opacity: 0.2
     },
     content: {
-      height: 100,
-      wordWrap: "break-word",
+      wordWrap: "break-word"
     },
     cover: {
-        width: 'auto',
+      objectFit: "scale-down",
+      width: '100%',
+      height: '100px',
+      marginLeft: '10px'
+      // margin: 'auto'
+    },
+    actionArea: {
+      margin: "none"
     },
     // CloseIcon: {
     //     position:'relative',
@@ -122,26 +129,26 @@ class Bookmark extends React.Component {
             >
                 {/* <Typography className='bookmark-heading' component="p" variant="p">Bookmarks</Typography> */}
                 {Array.from(bookmarkList.values()).map((value, index) => (
-                    <Grid className="bookmark-card" key={value.title} item onClick={()=>this.props.handlePopup(value)}>
+                    <Grid className="bookmark-card" key={value.title} >
                         <Card className={classes.card}>
                             {/* <div className={classes.details}> */}
-                            <CardActionArea>
-                                <CardMedia
-                                component="img"
-                                alt={value.sourceName}
-                                className={classes.cover}
+                              <CardActionArea item onClick={()=>this.props.handlePopup(value)}
+                              className={classes.actionArea}>
+                                  <CardMedia
+                                  component="img"
+                                  alt={value.sourceName}
+                                  className={classes.cover}
 
-                                height="100"
-                                image={"http://logo.clearbit.com/" + getDomain(value.url)}
-                                title={value.title}
-                                data-index={index}
-                                />
-                            </CardActionArea>
-                            <CardContent className={classes.content}>
-                                <Typography component="p" variant="body1" style={{color: 'black', WebkitBoxOrient: "vertical"}} className="bookmark-title">
-                                        {value.title}
-                                </Typography>
-                            </CardContent>
+                                  image={"http://logo.clearbit.com/" + getDomain(value.url)}
+                                  title={value.title}
+                                  data-index={index}
+                                  />
+                              </CardActionArea>
+                              <CardContent className={classes.content}>
+                                  <Typography component="p" variant="body1" style={{color: 'black', WebkitBoxOrient: "vertical"}} className="bookmark-title">
+                                          {value.title}
+                                  </Typography>
+                              </CardContent>
                             <CardActions className={classes.actions} disableActionSpacing>
                                 <IconButton className='close-button' aria-label="Add to favorites" onClick={()=>this.props.handleDeleteBookmark(value.title)}>
                                     <CloseIcon />

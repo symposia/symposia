@@ -1,6 +1,9 @@
 #bookmark-container {
-  height: 20vh;
+  height: 100%;
+  width: 80%;
+  margin-top: 5%;
   overflow: auto;
+  overflow-x: hidden;
 }
 
 #bookmark-container::-webkit-scrollbar-thumb {
@@ -19,11 +22,10 @@
 }
 
 .bookmark-title {
-    max-height: 73.6px;
-    overflow: hidden;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 4 !important;
-    /* -webkit-box-orient: vertical !important;   */
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 4 !important;
+  /* -webkit-box-orient: vertical !important;   */
 }
 
 .close-button svg {
@@ -37,4 +39,7 @@
 .bookmark-heading {
     font-size: 24px;
     text-align: center;
+}
+
+@media screen and (max-width: 1200px) {
 }

@@ -6,7 +6,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import "./ArticleGrid.css";
+import "./css/ArticleGrid.css";
 
 const styles = theme => ({
   root: {
@@ -38,7 +38,7 @@ const styles = theme => ({
   },
   media: {
     // ⚠️ object-fit is not supported by IE 11.
-    objectFit: "cover"
+    objectFit: "scale-down"
   },
   filteredCard: {
     maxWidth: 100,
@@ -120,7 +120,7 @@ class ArticleGrid extends React.Component {
                       component="img"
                       alt={value.sourceName}
                       height="40"
-                      // className={classes.media}
+                      className={classes.media}
                       image={"http://logo.clearbit.com/" + getDomain(value.url)}
                       title={value.title}
                       data-index={index}
@@ -145,7 +145,7 @@ class ArticleGrid extends React.Component {
             // xs={12}
           >
             {this.props.articles.map((value, index) => (
-              <Grid key={index} item>        
+              <Grid key={index} item>
                 <Card className={classes.card + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
                   <CardActionArea>
                     <CardMedia
@@ -153,6 +153,7 @@ class ArticleGrid extends React.Component {
                       alt={value.sourceName}
                       height="100"
                       // className={chooseOpacity(value)}
+                      className={classes.media}
                       image={"http://logo.clearbit.com/" + getDomain(value.url)}
                       title={value.title}
                       data-index={index}
@@ -164,7 +165,7 @@ class ArticleGrid extends React.Component {
           </Grid>
         </Grid>
       );
-    } else if (this.props.zoomLevel === 2) { 
+    } else if (this.props.zoomLevel === 2) {
       return (
         <Grid item xs={"auto"}>
           <Grid
