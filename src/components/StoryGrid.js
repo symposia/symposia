@@ -32,7 +32,7 @@ class StoryGrid extends React.Component {
                     <ArticleGrid articles={this.props.data[3]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
 
                     <TagGrid tags= {this.props.tags[4]} />
-                    <ArticleGrid articles={this.props.data[4]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel} />
+                    <ArticleGrid articles={this.props.data[4]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} zoomLevel={this.props.zoomLevel}/>
                 </Grid>
             </div>
         );
