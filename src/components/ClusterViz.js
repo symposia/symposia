@@ -156,7 +156,7 @@ class ClusterViz extends Component {
     })
     return result;
   }
-  
+
   handleModalClose() {
     this.setState({
       showSummarizerModal: false
@@ -201,15 +201,15 @@ class ClusterViz extends Component {
           <div></div>
         }
                  {
-            this.state.showSummarizerModal ? 
-            <SummarizerModal 
-              handleModalClose={this.handleModalClose} 
-              article1={this.state.article1} 
+            this.state.showSummarizerModal ?
+            <SummarizerModal
+              handleModalClose={this.handleModalClose}
+              article1={this.state.article1}
               article2={this.state.article2}
               summary1={this.state.summaries[this.state.article1.title]}
               summary2={this.state.summaries[this.state.article2.title]}
-            /> 
-          : <div></div> } 
+            />
+          : <div></div> }
       </div>
       <div id="filter-bookmark-container">
         <div id="filter-container" className="dropdown-list">

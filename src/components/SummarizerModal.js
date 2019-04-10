@@ -31,7 +31,7 @@ class SummarizerModal extends Component {
           <ArticleInSummarizerModal article={this.props.article1} summary={this.props.summary1}/>
           <ArticleInSummarizerModal article={this.props.article2} summary={this.props.summary2}/>
         </div>
-        <button className="summarizer-modal-close-button" onClick={this.props.handleModalClose}>Close</button>
+        <button className="summarizer-modal-close-button my-btn" onClick={this.props.handleModalClose}>Close</button>
       </div>
     );
   }
@@ -65,11 +65,11 @@ class ArticleInSummarizerModal extends Component {
         <img alt="article logo" src={"http://logo.clearbit.com/" + getDomain(article.url)} />
         <h1 className="summarized-article-title"> {article.title} </h1>
         <div className="summarized-article-date"> {article.date} </div>
-        <div> Who: {summary.who} </div>
-        <div> What: {summary.what} </div>
-        <div> Where: {summary.where} </div>
-        <div> Why: {summary.why} </div>
-        <div> How: {summary.how} </div>
+        <div className="summary-text"> Who: {summary.who} </div>
+        <div className="summary-text"> What: {summary.what} </div>
+        <div className="summary-text"> Where: {summary.where} </div>
+        <div className="summary-text"> Why: {summary.why} </div>
+        <div className="summary-text"> How: {summary.how} </div>
       </div>
     );
   }
