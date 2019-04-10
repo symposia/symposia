@@ -1,15 +1,25 @@
 .summarizer-modal-container {
   /* use the following to adjust the modal relative to the browser window" */
   position: fixed;
-  height: calc(100% - 200px);
-  width: calc(100% - 400px);
+  height: 80%;
+  width: 60%;
   top: 50%;
-  left: 10px;
+  left: 10%;
   transform: translate(0, -50%);
 
   background-color: rgba(0, 0, 0, 0.8);
   padding: 40px;
   border-radius: 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.summary-text {
+  font-size: 16pt;
+}
+
+.summarizer-modal-container::-webkit-scrollbar-track  {
+  background: rgba(0,0,0,.8);
 }
 
 .summarizer-modal-articles {

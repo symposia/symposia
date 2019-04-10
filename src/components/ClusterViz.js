@@ -84,6 +84,7 @@ class ClusterViz extends Component {
   }
 
   handlePopup (article) {
+    console.log(article);
     this.setState({popupData: article});
   }
 
@@ -146,7 +147,7 @@ class ClusterViz extends Component {
     })
     return result;
   }
-  
+
   handleModalClose() {
     this.setState({
       showSummarizerModal: false
@@ -179,16 +180,16 @@ class ClusterViz extends Component {
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
         </div>
-                  {this.state.selectSecond ? 
+                  {this.state.selectSecond ?
         <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
                  handleClick={
                     this.getSecond
-                } 
+                }
         /> :
         <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
                  handleClick={
                     this.getFirst
-                } 
+                }
         />
                     }
         {/* <div id="tooltip-container" className="second" /> */}
@@ -199,15 +200,15 @@ class ClusterViz extends Component {
           <div></div>
         }
                  {
-            this.state.showSummarizerModal ? 
-            <SummarizerModal 
-              handleModalClose={this.handleModalClose} 
-              article1={this.state.article1} 
+            this.state.showSummarizerModal ?
+            <SummarizerModal
+              handleModalClose={this.handleModalClose}
+              article1={this.state.article1}
               article2={this.state.article2}
               summary1={this.state.summaries[this.state.article1.title]}
               summary2={this.state.summaries[this.state.article2.title]}
-            /> 
-          : <div></div> } 
+            />
+          : <div></div> }
       </div>
       <div id="filter-bookmark-container">
         <div id="filter-container" className="dropdown-list">
@@ -230,7 +231,7 @@ class ClusterViz extends Component {
         </div>
         <h4>Zoom</h4>
         <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
-        <h4>Bookmark</h4>
+        <h4>Bookmarks</h4>
         <Bookmark />
       </div>
 
