@@ -84,10 +84,19 @@ class ClusterViz extends Component {
   }
 
   handlePopup (article) {
-    this.setState({popupData: article});
+    this.setState({
+      popupData: article,
+    });
+
+    if (!this.state.selectSecond) {
+      this.setState({
+        article1: article
+      })
+    }
   }
 
   getFirst(article) {
+    console.log("getFirst()")
     this.setState({article1: article});
   }
 
@@ -101,6 +110,7 @@ class ClusterViz extends Component {
   }
 
   getSecond(article2) {
+    console.log("getSecond()")
     let article1 = this.state.article1;
     let summaries = this.state.summaries;
     console.log(summaries[article1["title"]]["who"]);
@@ -161,6 +171,8 @@ class ClusterViz extends Component {
     const { bookmark, popupData, bookmarkList} = this.state;
     const summaries = this.state.summaries;
 
+    const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
+
     if (!data) { return null }
 
     return (
@@ -179,22 +191,12 @@ class ClusterViz extends Component {
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
         </div>
-                  {this.state.selectSecond ? 
         <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
-                 handleClick={
-                    this.getSecond
-                } 
-        /> :
-        <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
-                 handleClick={
-                    this.getFirst
-                } 
-        />
-                    }
+                 handleClick={handleCompare} />
         {/* <div id="tooltip-container" className="second" /> */}
 
         {
-          this.state.popupData != null && this.state.showSummarizerModal == false && this.state.selectSecond == false ?
+          this.state.popupData != null && this.state.showSummarizerModal === false && this.state.selectSecond === false ?
           <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} /> :
           <div></div>
         }
@@ -231,7 +233,7 @@ class ClusterViz extends Component {
         <h4>Zoom</h4>
         <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
         <h4>Bookmark</h4>
-        <Bookmark />
+        <Bookmark handleCompare={handleCompare} />
       </div>
 
       </ReactContext.Provider>
