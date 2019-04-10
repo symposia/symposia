@@ -111,6 +111,11 @@ class Bookmark extends React.Component {
         alignItems: "flex-start",
     }
 
+    handleClick(article) {
+      this.props.handlePopup(article);
+      this.props.handleCompare(article)
+    }
+
 
     render() {
         const {bookmarkList, classes} = this.props;
@@ -129,7 +134,7 @@ class Bookmark extends React.Component {
             >
                 {/* <Typography className='bookmark-heading' component="p" variant="p">Bookmarks</Typography> */}
                 {Array.from(bookmarkList.values()).map((value, index) => (
-                    <Grid className="bookmark-card" key={value.title} >
+                    <Grid className="bookmark-card" key={value.title} item onClick={()=>this.handleClick(value)}>
                         <Card className={classes.card}>
                             {/* <div className={classes.details}> */}
                               <CardActionArea item onClick={()=>this.props.handlePopup(value)}
