@@ -27,11 +27,13 @@ class SummarizerModal extends Component {
   render() {
     return (
       <div className="summarizer-modal-container">
+        <div className="close-button-container">
+          <button className="summarizer-modal-close-button my-btn" onClick={this.props.handleModalClose}>Close</button>
+        </div>
         <div className="summarizer-modal-articles">
           <ArticleInSummarizerModal article={this.props.article1} summary={this.props.summary1}/>
           <ArticleInSummarizerModal article={this.props.article2} summary={this.props.summary2}/>
         </div>
-        <button className="summarizer-modal-close-button my-btn" onClick={this.props.handleModalClose}>Close</button>
       </div>
     );
   }
@@ -61,15 +63,42 @@ class ArticleInSummarizerModal extends Component {
     }
 
     return (
-      <div className="summarized-article-container">
-        <img alt="article logo" src={"http://logo.clearbit.com/" + getDomain(article.url)} />
-        <h1 className="summarized-article-title"> {article.title} </h1>
-        <div className="summarized-article-date"> {article.date} </div>
-        <div className="summary-text"> Who: {summary.who} </div>
-        <div className="summary-text"> What: {summary.what} </div>
-        <div className="summary-text"> Where: {summary.where} </div>
-        <div className="summary-text"> Why: {summary.why} </div>
-        <div className="summary-text"> How: {summary.how} </div>
+      <div className="article-summary-container">
+        <img className="article-summary-logo" alt="article logo" src={"http://logo.clearbit.com/" + getDomain(article.url)} />
+        <h1 className="article-summary-title"> {article.title} </h1>
+        <div className="article-summary-date"> {article.date} </div>
+        <div className="summary-text">
+          <div className="summary-label"> 
+            Who: 
+          </div>
+          <div className="summary-value">
+            {summary.who} 
+          </div>
+          <div className="summary-label"> 
+            What: 
+          </div>
+          <div className="summary-value">
+            {summary.what} 
+          </div>
+          <div className="summary-label"> 
+            Where: 
+          </div>
+          <div className="summary-value">
+            {summary.where} 
+          </div>
+          <div className="summary-label"> 
+            Why: 
+          </div>
+          <div className="summary-value">
+            {summary.why} 
+          </div>
+          <div className="summary-label"> 
+            How: 
+          </div>
+          <div className="summary-value">
+            {summary.how} 
+          </div>
+        </div>
       </div>
     );
   }
