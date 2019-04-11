@@ -1,0 +1,86 @@
+#popup-container {
+    width: 78%;
+    height: 30%;
+    background-color: rgba(0,0,0,.8);
+    z-index: 100;
+    position: fixed;
+    bottom: 0;
+}
+
+#popup-container .my-btn {
+  margin-right: 1vh;
+  margin-left: 1vh;
+}
+
+#popup-logo {
+    width: 5%;
+    height: 5%;
+    background-color: white;
+    vertical-align: middle;
+    margin-right: 1%;
+    margin-left: 1%;
+
+}
+
+#popup-title {
+    font-size: 24pt;
+    text-decoration: underline;
+}
+
+
+#popup-date {
+    display: inline-flex;
+    font-size: 16pt;
+}
+
+#popup-description  {
+  font-size: 12pt;
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+
+#exit-popup {
+    float: right;
+    margin-top: 1vh;
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    box-shadow: none;
+}
+
+@media screen and (max-width: 1440px) {
+  #popup-title  {
+    font-size: 24pt;
+  }
+
+  #popup-description  {
+    font-size: 16pt;
+  }
+
+  #popup-date   {
+    font-size: 20pt;
+  }
+
+}
+
+@media screen and (max-width: 1280px) {
+  #popup-title  {
+    font-size: 18pt;
+  }
+
+  #popup-description  {
+    font-size: 14pt;
+  }
+
+  #popup-date   {
+    font-size: 16pt;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  #popup-container  {
+    height: 40%;
+  }
+}

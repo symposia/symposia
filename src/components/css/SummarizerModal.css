@@ -1,0 +1,75 @@
+.summarizer-modal-container {
+  /* use the following to adjust the modal relative to the browser window" */
+  position: fixed;
+  height: 80%;
+  width: 60%;
+  top: 50%;
+  left: 10%;
+  transform: translate(0, -50%);
+
+  background-color: rgba(0, 0, 0, 0.95);
+  padding: 40px;
+  border-radius: 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-text {
+  font-size: 16pt;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 10px;
+  flex: 1 0 auto;
+}
+
+.summary-label {
+  text-align: right;
+  font-weight: bold;
+}
+
+.summarizer-modal-container::-webkit-scrollbar-track  {
+  background: rgba(0,0,0,.8);
+}
+
+.summarizer-modal-articles {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 40px;
+  grid-template-rows: auto;
+  flex: 1 0 auto;
+}
+
+.article-summary-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.article-summary-title, .article-summary-date {
+  text-align: center;
+}
+
+.article-summary-title {
+  display: flex;
+  align-items: center;
+  height: 120px;
+}
+
+.article-summary-date {
+  margin-bottom: 20px;
+}
+
+.article-summary-logo {
+  width: 100px; 
+}
+
+.close-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,45 @@
+#bookmark-container {
+  height: 100%;
+  width: 80%;
+  margin-top: 5%;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+#bookmark-container::-webkit-scrollbar-thumb {
+    visibility: hidden;
+}
+#bookmark-container:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+#bookmark-container::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.8);
+}
+
+#bookmark-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.bookmark-title {
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 4 !important;
+  /* -webkit-box-orient: vertical !important;   */
+}
+
+.close-button svg {
+    margin-top: 0;
+}
+
+.bookmark-card p {
+    font-size: 15px;
+}
+
+.bookmark-heading {
+    font-size: 24px;
+    text-align: center;
+}
+
+@media screen and (max-width: 1200px) {
+}
