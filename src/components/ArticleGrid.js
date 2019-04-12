@@ -6,6 +6,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 import "./css/ArticleGrid.css";
 
 const styles = theme => ({
@@ -114,6 +115,7 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>
+                <Tooltip title={value.title}>
                 <Card className={classes.cardsmall + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
                   <CardActionArea>
                     <CardMedia
@@ -127,6 +129,7 @@ class ArticleGrid extends React.Component {
                     />
                   </CardActionArea>
                 </Card>
+                </Tooltip>
               </Grid>
             ))}
           </Grid>
@@ -146,6 +149,7 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>
+                <Tooltip title={value.title}>
                 <Card className={classes.card + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
                   <CardActionArea>
                     <CardMedia
@@ -160,6 +164,7 @@ class ArticleGrid extends React.Component {
                     />
                   </CardActionArea>
                 </Card>
+                </Tooltip>
               </Grid>
             ))}
           </Grid>
