@@ -21,7 +21,7 @@
   font-size: 16pt;
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(5, auto);
   grid-gap: 10px;
   flex: 1 0 auto;
 }
