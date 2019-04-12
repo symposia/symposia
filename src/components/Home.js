@@ -12,8 +12,8 @@ class Home extends Component {
     return (
       <div id="home-container">
         <section id="hero">
-          <h1>Find the Balance</h1>
-          <h2>the truth is in the spectrum</h2>
+          <h1>Symposia</h1>
+          <h2>A Bird’s Eye Perspective of the News</h2>
         </section>
         <section id="featured-stories">
           <StoryCard
