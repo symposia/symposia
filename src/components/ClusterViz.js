@@ -37,6 +37,7 @@ class ClusterViz extends Component {
     this.selectSecond = this.selectSecond.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
     this.handlePopup = this.handlePopup.bind(this);
+    this.cancelCompare = this.cancelCompare.bind(this);
   }
 
   componentDidMount() {
@@ -138,6 +139,9 @@ class ClusterViz extends Component {
     this.setState({bookmarkList: bookmarkList});
   }
 
+  cancelCompare() {
+    this.setState({selectSecond: false})
+  }
 
   applyFilterToAllArticles(data) {
     if (this.state.filteredSources == null) {
@@ -160,7 +164,8 @@ class ClusterViz extends Component {
 
   handleModalClose() {
     this.setState({
-      showSummarizerModal: false
+      showSummarizerModal: false,
+      article1: null 
     })
   }
 
@@ -197,12 +202,11 @@ class ClusterViz extends Component {
         {/* <div id="tooltip-container" className="second" /> */}
 
         {
-          this.state.popupData != null && this.state.showSummarizerModal === false && this.state.selectSecond === false ?
-          <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} /> :
-          <div></div>
+          this.state.article1 != null && this.state.showSummarizerModal === false && this.state.selectSecond === false &&
+          <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} /> 
         }
-                 {
-            this.state.showSummarizerModal ?
+        {
+            this.state.showSummarizerModal &&
             <SummarizerModal
               handleModalClose={this.handleModalClose}
               article1={this.state.article1}
@@ -210,7 +214,16 @@ class ClusterViz extends Component {
               summary1={this.state.summaries[this.state.article1.title]}
               summary2={this.state.summaries[this.state.article2.title]}
             />
-          : <div></div> }
+        }
+        {
+          this.state.selectSecond &&
+          <div id="select-second-prompt">
+            <p>
+              Please Select a second article compare.
+            </p>
+            <button className="my-btn" onClick={this.cancelCompare}>Cancel</button>
+          </div>
+        }
       </div>
       <div id="filter-bookmark-container">
         <div id="filter-container" className="dropdown-list">

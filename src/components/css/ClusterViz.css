@@ -436,3 +436,14 @@ color:#EEE;
 #svg-container > svg {
   margin-top: 0;
 }
+
+#select-second-prompt {
+  position: fixed;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0,0,0,.95);
+  padding: 30px;
+
+}
