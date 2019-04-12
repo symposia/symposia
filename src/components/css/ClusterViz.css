@@ -321,6 +321,7 @@ color:#EEE;
 
 #title-container {
   grid-area: title;
+  margin-right: 20%;
 }
 
 #svg-container {
