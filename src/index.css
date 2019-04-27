@@ -19,15 +19,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  color: rgba(255, 255, 255, 0.65);
-  background-color: #151617;
+  color: #707070;
+  background-color: ##FFFFFF;
 }
 
 /* Header Colors */
-h1,
-a {
-  color: white;
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

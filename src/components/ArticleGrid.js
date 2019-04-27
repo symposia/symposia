@@ -11,7 +11,8 @@ import "./css/ArticleGrid.css";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    backgroundImage: "./images/sri-lanka-mourns-014.jpg"
   },
   demo: {
     height: 240

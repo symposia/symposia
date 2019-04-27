@@ -165,93 +165,8 @@ class ClusterViz extends Component {
   handleModalClose() {
     this.setState({
       showSummarizerModal: false,
-      article1: null 
+      article1: null
     })
-  }
-
-  render() {
-    let data = this.applyFilterToAllArticles(this.state.data)
-    const tags = this.state.tags;
-    // console.log(tags, typeof(tags));
-    // console.log(data, typeof(data));
-    const { bookmark, popupData, bookmarkList} = this.state;
-    const summaries = this.state.summaries;
-
-    const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
-
-    if (!data) { return null }
-
-    return (
-      <ReactContext.Provider
-      value={{
-        someData:"somedata",
-        bookmark: bookmark,
-        bookmarkList: bookmarkList,
-        handleAddBookmark: this.handleAddBookmark,
-        handleDeleteBookmark: this.handleDeleteBookmark,
-        handlePopup: this.handlePopup,
-        handlePopupExit:this.handlePopupExit,
-        popupData:popupData
-      }}>
-      <div id="cluster-viz-container">
-        <div id="title-container">
-          <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
-        </div>
-        <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
-                 handleClick={handleCompare} />
-        {/* <div id="tooltip-container" className="second" /> */}
-
-        {
-          this.state.article1 != null && this.state.showSummarizerModal === false && this.state.selectSecond === false &&
-          <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} /> 
-        }
-        {
-            this.state.showSummarizerModal &&
-            <SummarizerModal
-              handleModalClose={this.handleModalClose}
-              article1={this.state.article1}
-              article2={this.state.article2}
-              summary1={this.state.summaries[this.state.article1.title]}
-              summary2={this.state.summaries[this.state.article2.title]}
-            />
-        }
-        {
-          this.state.selectSecond &&
-          <div id="select-second-prompt">
-            <p>
-              Please Select a second article compare.
-            </p>
-            <button className="my-btn" onClick={this.cancelCompare}>Cancel</button>
-          </div>
-        }
-      </div>
-      <div id="filter-bookmark-container">
-        <div id="filter-container" className="dropdown-list">
-          <h4>Filter</h4>
-          <input
-            type="search"
-            placeholder="Search Sources"
-            className="dropdown-search"
-          />
-          <ul id="news-sources-filter-list" />
-          <button
-            className="my-btn reset-btn"
-            type="text"
-            placeholder=""
-            aria-label="reset filters"
-            aria-describedby="basic-addon1"
-          >
-            Reset
-          </button>
-        </div>
-        <h4>Zoom</h4>
-        <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
-        <h4>Bookmark</h4>
-        <Bookmark handleCompare={handleCompare} />
-      </div>
-
-      </ReactContext.Provider>
-    );
   }
 
   filter(data) {
@@ -372,6 +287,90 @@ class ClusterViz extends Component {
         }
         return false;
       });
+  }
+  render() {
+    let data = this.applyFilterToAllArticles(this.state.data)
+    const tags = this.state.tags;
+    // console.log(tags, typeof(tags));
+    // console.log(data, typeof(data));
+    const { bookmark, popupData, bookmarkList} = this.state;
+    const summaries = this.state.summaries;
+
+    const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
+
+    if (!data) { return null }
+
+    return (
+      <ReactContext.Provider
+      value={{
+        someData:"somedata",
+        bookmark: bookmark,
+        bookmarkList: bookmarkList,
+        handleAddBookmark: this.handleAddBookmark,
+        handleDeleteBookmark: this.handleDeleteBookmark,
+        handlePopup: this.handlePopup,
+        handlePopupExit:this.handlePopupExit,
+        popupData:popupData
+      }}>
+      <div id="cluster-viz-container">
+        <div id="title-container">
+          <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
+        </div>
+        <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
+                 handleClick={handleCompare} />
+        {/* <div id="tooltip-container" className="second" /> */}
+
+        {
+          this.state.article1 != null && this.state.showSummarizerModal === false && this.state.selectSecond === false &&
+          <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} />
+        }
+        {
+            this.state.showSummarizerModal &&
+            <SummarizerModal
+              handleModalClose={this.handleModalClose}
+              article1={this.state.article1}
+              article2={this.state.article2}
+              summary1={this.state.summaries[this.state.article1.title]}
+              summary2={this.state.summaries[this.state.article2.title]}
+            />
+        }
+        {
+          this.state.selectSecond &&
+          <div id="select-second-prompt">
+            <p>
+              Please Select a second article compare.
+            </p>
+            <button className="my-btn" onClick={this.cancelCompare}>Cancel</button>
+          </div>
+        }
+      </div>
+      <div id="filter-bookmark-container">
+        <div id="filter-container" className="dropdown-list">
+          <h4>Filter</h4>
+          <input
+            type="search"
+            placeholder="Search Sources"
+            className="dropdown-search"
+          />
+          <ul id="news-sources-filter-list" />
+          <button
+            className="my-btn reset-btn"
+            type="text"
+            placeholder=""
+            aria-label="reset filters"
+            aria-describedby="basic-addon1"
+          >
+            Reset
+          </button>
+        </div>
+        <h4>Zoom</h4>
+        <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
+        <h4>Bookmark</h4>
+        <Bookmark handleCompare={handleCompare} />
+      </div>
+
+      </ReactContext.Provider>
+    );
   }
 }
 

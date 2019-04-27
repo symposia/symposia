@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import Chip from '@material-ui/core/Chip';
 
 const styles = theme => ({
   root: {
@@ -16,8 +16,10 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     height: "100%",
-    color:  "white",
-    backgroundColor: "#6c5ce7"
+    color: "#707070",
+    backgroundColor: "#FFFFFF",
+    fontSize: "21px"
+
   },
   control: {
     padding: theme.spacing.unit * 2
@@ -31,12 +33,13 @@ class TagGrid extends React.Component {
       <Grid container spacing={16} className={classes.root}>
         {this.props.tags.map((value, index) => (
           <Grid key={index} item>
-            <Paper
+            <Chip
+              label={value}
               className={classes.paper}
               // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
+              variant="outlined"
             >
-              {value}
-            </Paper>
+            </Chip>
           </Grid>
         ))}
       </Grid>

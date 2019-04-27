@@ -14,6 +14,9 @@ class Home extends Component {
         <section id="hero">
           <h1>Symposia</h1>
           <h2>A Bird’s Eye Perspective of the News</h2>
+          <Link to="/about">
+            How it Works
+          </Link>
         </section>
         <section id="featured-stories">
           <StoryCard
