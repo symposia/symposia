@@ -18,7 +18,7 @@ const styles = theme => ({
     height: "100%",
     color: "#707070",
     backgroundColor: "#FFFFFF",
-    fontSize: "21px"
+    fontSize: "20px"
 
   },
   control: {

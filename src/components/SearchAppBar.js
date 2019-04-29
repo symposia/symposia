@@ -13,6 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 const styles = theme => ({
   root: {
     width: '100%',
+    backgroundColor: '#8331FE',
   },
   grow: {
     flexGrow: 1,
@@ -20,6 +21,7 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+    verticalAlign: 'center'
   },
   title: {
     display: 'none',
@@ -74,13 +76,13 @@ function SearchAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar classes={{root: classes.root}} position="static">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            Material-UI
+            Symposia
           </Typography>
           <div className={classes.grow} />
           <div className={classes.search}>

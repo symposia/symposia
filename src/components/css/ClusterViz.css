@@ -239,14 +239,6 @@ margin-bottom:10px;
 top:1px;
 }
 
-svg {
-vertical-align:center;
-overflow:hidden;
-border:1px solid rgba(0,0,0,0.125);
-border-radius:.25rem;
-margin:30px auto auto;
-}
-
 h1 {
 font-size:32pt;
 font-weight:700;
@@ -319,7 +311,6 @@ color:#EEE;
 
 #title-container {
   grid-area: title;
-  margin-right: 20%;
 }
 
 #svg-container {
