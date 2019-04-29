@@ -8,11 +8,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import "./css/ArticleGrid.css";
+import Image from '../images/sri-lanka-mourns-014.jpg';
+import {theme} from '../App.js';
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    backgroundImage: "./images/sri-lanka-mourns-014.jpg"
+    flexGrow: 1
   },
   demo: {
     height: 240
@@ -26,21 +27,19 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2
   },
   card: {
-    maxWidth: 100,
-    maxHeight: 100,
-  },
-  cardsmall: {
-    maxWidth: 40,
-    maxHeight: 40
-  },
-  cardbig: {
-    width: 300,
-    height: 200,
-    margin: 20
+    width: 400,
+    height: 300,
+    margin: 24,
+    alignItems: '',
+    backgroundImage: `url(${Image})`,
+    backgroundSize: 'cover',
+    position: 'relative'
   },
   media: {
     // ⚠️ object-fit is not supported by IE 11.
-    objectFit: "scale-down"
+    objectFit: "scale-down",
+    width: 50,
+    marginLeft: 108
   },
   filteredCard: {
     maxWidth: 100,
@@ -48,8 +47,24 @@ const styles = theme => ({
     opacity: 0.2
   },
   content: {
-    height: 100,
-    wordWrap: "break-word"
+    height: "100%",
+    wordWrap: "break-word",
+    backgroundColor: 'rgb(0, 0, 0, 0.5)'
+  },
+  cardtitle: {
+    color: 'white',
+    fontSize: '16px'
+  },
+  metadata:  {
+    fontSize: '12px',
+    display: 'flex',
+    color: 'white'
+  },
+  details:  {
+    display: 'flex',
+    position: 'absolute',
+    bottom: '24px',
+    left: '24px'
   }
 });
 
@@ -101,9 +116,7 @@ class ArticleGrid extends React.Component {
   render() {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;
-
-    if (this.props.zoomLevel === 0) {
-      return (
+    return (
         <Grid item xs={"auto"}>
           <Grid
             container
@@ -112,103 +125,38 @@ class ArticleGrid extends React.Component {
             alignItems={alignItems}
             direction={direction}
             justify={justify}
-            // xs={12}
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>
-                <Tooltip title={value.title}>
-                <Card className={classes.cardsmall + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      alt={value.sourceName}
-                      height="40"
-                      className={classes.media}
-                      image={"http://logo.clearbit.com/" + getDomain(value.url)}
-                      title={value.title}
-                      data-index={index}
-                    />
-                  </CardActionArea>
-                </Card>
-                </Tooltip>
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      );
-    } else if (this.props.zoomLevel === 1) {
-      return (
-        <Grid item xs={"auto"}>
-          <Grid
-            container
-            spacing={16}
-            className={classes.demo+this.props.articles.length}
-            alignItems={alignItems}
-            direction={direction}
-            justify={justify}
-            // xs={12}
-          >
-            {this.props.articles.map((value, index) => (
-              <Grid key={index} item>
-                <Tooltip title={value.title}>
                 <Card className={classes.card + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      alt={value.sourceName}
-                      height="100"
-                      // className={chooseOpacity(value)}
-                      className={classes.media}
-                      image={"http://logo.clearbit.com/" + getDomain(value.url)}
-                      title={value.title}
-                      data-index={index}
-                    />
-                  </CardActionArea>
-                </Card>
-                </Tooltip>
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      );
-    } else if (this.props.zoomLevel === 2) {
-      return (
-        <Grid item xs={"auto"}>
-          <Grid
-            container
-            spacing={16}
-            className={classes.demo+this.props.articles.length}
-            alignItems={alignItems}
-            direction={direction}
-            justify={justify}
-          >
-            {this.props.articles.map((value, index) => (
-              <Grid key={index} item>
-                <Card className={classes.cardbig + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
-                  <CardActionArea>
                     <CardContent className={classes.content}>
                       {/* <Typography gutterBottom variant="h5" component="h2" /> */}
-                      <Typography gutterBottom variant="subtitle1" component="p" >
+                      <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >
                         {value.title}
                       </Typography>
+                      <div className={classes.details}>
+                        <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" >
+                          The author
+                          The date
+                          The Sentiment
+                        </Typography>
+                        <CardMedia
+                            component="img"
+                            alt={value.title}
+                            height="50"
+                            className={classes.media}
+                            image={"http://logo.clearbit.com/" + getDomain(value.url)}
+                            title={value.title}
+                            data-index={index}
+                        />
+                      </div>
                     </CardContent>
-                    <CardMedia
-                      component="img"
-                      alt={value.title}
-                      height="100"
-                      className={classes.media}
-                      image={"http://logo.clearbit.com/" + getDomain(value.url)}
-                      title={value.title}
-                      data-index={index}
-                    />
-                  </CardActionArea>
                 </Card>
               </Grid>
             ))}
           </Grid>
         </Grid>
       );
-    }
   }
 }
 
