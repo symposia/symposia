@@ -68,6 +68,7 @@ const styles = theme => ({
   }
 });
 
+//Retrieves the URL of the article and returns the result.
 function getDomain(url) {
   var result;
   var match;
@@ -91,15 +92,6 @@ class ArticleGrid extends React.Component {
     justify: "flex-start",
     alignItems: "flex-start",
   };
-
-  articlePopUp = (index) => {
-    console.log(index);
-    //console.log(event, value);
-    //const index = event.target.attributes.getNamedItem('data-index').value;
-    const article = this.props.articles[index];
-    this.props.handlePopup(article);
-    this.props.handleClick(article);
-  }
 
   set_focus(typeFilterList) {
     this.props.articles.map(value => {
@@ -128,7 +120,7 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>
-                <Card className={classes.card + this.filterOut(value)} onClick={() => this.articlePopUp(index)}>
+                <Card className={classes.card + this.filterOut(value)} onClick={() => console.log("go to article page")}>
                     <CardContent className={classes.content}>
                       {/* <Typography gutterBottom variant="h5" component="h2" /> */}
                       <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >

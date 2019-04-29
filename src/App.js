@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
 import ClusterViz from "./components/ClusterViz";
-
 import logo from "./logo.png";
 
 class App extends Component {

@@ -327,11 +327,11 @@ color:#EEE;
 }
 
 #story-grid {
-  width: 80%;
-  margin-right: 20%;
+  width: 100%;
 }
 
 #filter-bookmark-container {
+  display: none;
   height: 100%;
   width: 20%;
   grid-area: filter;
@@ -346,7 +346,6 @@ color:#EEE;
   /* padding: 12px; */
   border-radius: 4px;
   /* height: fit-content; */
-  display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: hidden;

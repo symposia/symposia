@@ -10,9 +10,10 @@ import Bookmark from "./Bookmark";
 import { PropTypes } from 'react'
 import { ReactContext } from '../Context'
 import SummarizerModal from "./SummarizerModal";
-
+import SearchAppBar from "./SearchAppBar";
 
 class ClusterViz extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +21,6 @@ class ClusterViz extends Component {
       title: "",
       popupData: null,
       bookmarkList: new Map(),
-      zoomLevel: 0,
       filteredSources: null,
       article1: null,
       article2: null,
@@ -32,12 +32,8 @@ class ClusterViz extends Component {
 
     this.getFirst = this.getFirst.bind(this);
     this.getSecond = this.getSecond.bind(this);
-    this.handlePopupExit = this.handlePopupExit.bind(this);
-    this.changeZoomLevel = this.changeZoomLevel.bind(this);
     this.selectSecond = this.selectSecond.bind(this);
-    this.handleModalClose = this.handleModalClose.bind(this);
-    this.handlePopup = this.handlePopup.bind(this);
-    this.cancelCompare = this.cancelCompare.bind(this);
+
   }
 
   componentDidMount() {
@@ -45,6 +41,8 @@ class ClusterViz extends Component {
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
     let title;
+
+    //handling click actions on homepage of articles
     switch (last_segment) {
       case "huawei":
         title = "Huawei CFO Arrest";
@@ -60,18 +58,12 @@ class ClusterViz extends Component {
     const dataURL = `/data/articles/${last_segment}.json`;
     const tagURL = `/data/tags/${last_segment}-tags.json`;
     const summaryURL = `/data/summaries/${last_segment}-summary.json`;
-    // const dataURL = `/data/articles/${last_segment}.json`;
 
     Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
       this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
       this.filter(this.state.data);
-      // this.applyFilterToArticles(dataWithSeparatedClusters)
     });
   }
-
-  changeZoomLevel = (event, value) => {
-    this.setState({ zoomLevel: value });
-  };
 
   seperateClusters(data) {
     let clusteredArticles = {};
@@ -85,25 +77,9 @@ class ClusterViz extends Component {
     return clusteredArticles;
   }
 
-  handlePopup(article) {
-    this.setState({
-      popupData: article,
-    });
-
-    if (!this.state.selectSecond) {
-      this.setState({
-        article1: article
-      })
-    }
-  }
-
   getFirst(article) {
     console.log("getFirst()")
     this.setState({article1: article});
-  }
-
-  handlePopupExit() {
-    this.setState({article1: null, popupData: null});
   }
 
   selectSecond() {
@@ -120,28 +96,28 @@ class ClusterViz extends Component {
     this.setState({article2: article2, selectSecond: false, showSummarizerModal: true});
   }
 
-  handleAddBookmark = (article) => {
-    const bookmark = article;
+  // handleAddBookmark = (article) => {
+  //   const bookmark = article;
+  //
+  //   var {bookmarkList} = this.state;
+  //   // bookmarkElements.add(bookmark);
+  //
+  //   bookmarkList.set(article.title, article)
+  //
+  //   this.setState({bookmarkList: bookmarkList});
+  // }
+  //
+  // handleDeleteBookmark = (title) => {
+  //   var {bookmarkList} = this.state;
+  //
+  //   bookmarkList.delete(title);
+  //
+  //   this.setState({bookmarkList: bookmarkList});
+  // }
 
-    var {bookmarkList} = this.state;
-    // bookmarkElements.add(bookmark);
-
-    bookmarkList.set(article.title, article)
-
-    this.setState({bookmarkList: bookmarkList});
-  }
-
-  handleDeleteBookmark = (title) => {
-    var {bookmarkList} = this.state;
-
-    bookmarkList.delete(title);
-
-    this.setState({bookmarkList: bookmarkList});
-  }
-
-  cancelCompare() {
-    this.setState({selectSecond: false})
-  }
+  // cancelCompare() {
+  //   this.setState({selectSecond: false})
+  // }
 
   applyFilterToAllArticles(data) {
     if (this.state.filteredSources == null) {
@@ -162,25 +138,12 @@ class ClusterViz extends Component {
     return result;
   }
 
-  handleModalClose() {
-    this.setState({
-      showSummarizerModal: false,
-      article1: null
-    })
-  }
-
+  //Filters out the selected sources.
   filter(data) {
     var newsSources = [];
     var exists = [];
     var filtered = false;
     var typeFilterList;
-
-    // function set_focus() {
-    //   nodeImages.style("opacity", function(o) {
-    //     return typeFilterList.includes(o.sourceName) ? 1 : highlight_trans;
-    //   });
-    // }
-
     for (let el in data) {
       var articles = data[el];
       Object.values(articles).forEach(node => {
@@ -221,16 +184,12 @@ class ClusterViz extends Component {
       this.setState({
         filteredSources: new Set(exists)
       })
-      // $(":checkbox").prop("checked", false);
+
       const list = document.querySelectorAll("input[type=checkbox]");
       for (let item of list) {
         item.checked = false;
       }
-      // console.log("typeFilterList:", typeFilterList);
-      // console.log("this.state.filteredSources:", this.state.filteredSources);
       filtered = false;
-      // this.applyFilterToArticles(this.state.data);
-      // set_focus();
     });
 
     const dropdownSearchInput = document.querySelector(".dropdown-search");
@@ -239,11 +198,6 @@ class ClusterViz extends Component {
       var target = $(this);
       var dropdownList = target.closest(".dropdown-list");
       var search = target.val().toLowerCase();
-
-      // if (!search) {
-      //   dropdownList.find(".label-text").show();
-      //   return false;
-      // }
 
       dropdownList.find(".list-item").each(function() {
         var text = $(this)
@@ -275,24 +229,20 @@ class ClusterViz extends Component {
               })
               filtered = false;
             }
-            // set_focus();
           }
 
           this.setState({
             filteredSources: new Set(typeFilterList)
           })
-      // console.log("typeFilterList:", typeFilterList);
-      // console.log("this.state.filteredSources:", this.state.filteredSources);
-      // this.applyFilterToArticles(this.state.data);
         }
         return false;
       });
   }
+
+
   render() {
     let data = this.applyFilterToAllArticles(this.state.data)
     const tags = this.state.tags;
-    // console.log(tags, typeof(tags));
-    // console.log(data, typeof(data));
     const { bookmark, popupData, bookmarkList} = this.state;
     const summaries = this.state.summaries;
 
@@ -312,12 +262,13 @@ class ClusterViz extends Component {
         handlePopupExit:this.handlePopupExit,
         popupData:popupData
       }}>
+
+      <SearchAppBar />
       <div id="cluster-viz-container">
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
         </div>
-        <StoryGrid data={data} tags={tags} handlePopup={this.handlePopup} zoomLevel={this.state.zoomLevel}
-                 handleClick={handleCompare} />
+        <StoryGrid data={data} tags={tags} />
         {/* <div id="tooltip-container" className="second" /> */}
 
         {
@@ -344,7 +295,7 @@ class ClusterViz extends Component {
           </div>
         }
       </div>
-      <div id="filter-bookmark-container">
+      <div visibility="hidden" id="filter-bookmark-container">
         <div id="filter-container" className="dropdown-list">
           <h4>Filter</h4>
           <input
@@ -363,11 +314,8 @@ class ClusterViz extends Component {
             Reset
           </button>
         </div>
-        <h4>Zoom</h4>
-        <ZoomSlider sliderHandler = {this.changeZoomLevel}/>
-        <h4>Bookmark</h4>
-        <Bookmark handleCompare={handleCompare} />
       </div>
+
 
       </ReactContext.Provider>
     );
