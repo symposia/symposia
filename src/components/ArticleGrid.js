@@ -38,8 +38,11 @@ const styles = theme => ({
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: "scale-down",
-    width: 50,
-    marginLeft: 108
+    height: 75,
+    width: 75,
+    marginLeft: 108,
+    backgroundColor: 'white',
+    marginRight: 24
   },
   filteredCard: {
     maxWidth: 100,
@@ -135,7 +138,6 @@ class ArticleGrid extends React.Component {
                         <CardMedia
                             component="img"
                             alt={value.title}
-                            height="50"
                             className={classes.media}
                             image={"http://logo.clearbit.com/" + getDomain(value.url)}
                             title={value.title}
