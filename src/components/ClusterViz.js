@@ -11,6 +11,7 @@ import { PropTypes } from 'react'
 import { ReactContext } from '../Context'
 import SummarizerModal from "./SummarizerModal";
 import SearchAppBar from "./SearchAppBar";
+import FilterBar from "./FilterBar";
 
 class ClusterViz extends Component {
 
@@ -264,6 +265,7 @@ class ClusterViz extends Component {
       }}>
 
       <SearchAppBar />
+      <FilterBar />
       <div id="cluster-viz-container">
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
