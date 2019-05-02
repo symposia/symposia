@@ -44,7 +44,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/about/" component={About} />
             <Route
-              path="/cluster/"
+              path="/story/"
               render={() => <ClusterViz width={1440} height={600} />}
             />
           </main>
