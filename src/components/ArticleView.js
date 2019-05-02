@@ -11,6 +11,8 @@ class ArticleView extends Component {
   render() {
     let article = this.props.article;
     let author = article.authors.length > 0 ? "By " + article.authors[0].name : null
+    let relatedArticles = this.props.relatedArticles;
+
     return (
       <div className="article-view-container">
         <div className="article-view-exit-container">
@@ -33,7 +35,7 @@ class ArticleView extends Component {
               <p> {author} </p>
             </div>
             <div className="concepts">
-              {article.concepts.slice(0,5).map((concept, index) => {
+              {article.concepts.slice(0,4).map((concept, index) => {
                 return <ArticleConcept key={index} concept={concept} />
               })}
             </div>
@@ -50,7 +52,13 @@ class ArticleView extends Component {
           </div>
         </div>
         <div>
-          <p>sidebar</p>
+          <h3>Related Articles</h3>
+          <div className="av-related-articles">
+          {relatedArticles.map((article, index) => {
+            return <RelatedArticle key={index} article={article} />
+          })}
+              
+          </div>
         </div>
       </div>
     )
@@ -66,6 +74,18 @@ class ArticleConcept extends Component {
       </div>
     )
   }
+}
+
+class RelatedArticle extends Component {
+  render() {
+    let article = this.props.article
+    return (
+      <div>
+        Title: {article.title} 
+      </div>
+    )
+  }
+
 }
 
 export default ArticleView;

@@ -48,6 +48,7 @@ class ClusterViz extends Component {
     let last_segment = segment_array.pop();
     let title;
     let oldData = false;
+    let validURL = false;
 
     //handling click actions on homepage of articles
     switch (last_segment) {
@@ -65,15 +66,19 @@ class ClusterViz extends Component {
         break;
       case "avengers-endgame":
         title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
+        validURL = true
         break;
       case "sri-lanka-attacks":
         title = "Sri Lanka Attacks"
+        validURL = true
         break;
       case "joe-biden-2020":
         title = "Joe Biden Announces 2020 Presidential Campaign"
+        validURL = true
         break;
       case "ukraine-elections":
         title = "Comedian wins Ukranian Presidential Elections"
+        validURL = true
         break;
       default:
     }
@@ -89,7 +94,7 @@ class ClusterViz extends Component {
         console.log(this.state.data);
         console.log(this.state.tags);
       });
-    } else {
+    } else if (validURL) {
       const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/articles/${last_segment}.json`
       fetch(dataURL)
         .then(resp => resp.json())
@@ -311,7 +316,8 @@ class ClusterViz extends Component {
 
 
   render() {
-    let data = this.applyFilterToAllArticles(this.state.data)
+    const data = this.state.data 
+    if (!data) {return null}
     const tags = this.state.tags;
     const { bookmark, popupData, bookmarkList} = this.state;
     const summaries = this.state.summaries;
@@ -320,7 +326,11 @@ class ClusterViz extends Component {
 
     let filterBar = <FilterBar />
     let storyGrid = <StoryGrid data={data} tags={tags} setArticle={this.setArticleToView}/>
-    let articleView = <ArticleView article={this.state.articleToView} exitView={this.leaveArticleView}/>
+    let articleView = <ArticleView 
+      article={this.state.articleToView} 
+      exitView={this.leaveArticleView}
+      relatedArticles={data[4].splice(0,4)}
+      />
     let title = (
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>

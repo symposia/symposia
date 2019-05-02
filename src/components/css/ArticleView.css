@@ -20,9 +20,11 @@
 }
 
 .av-image {
-  display:flex;
-  justify-content: center;
   margin: 40px 0;
+}
+
+.av-image > img {
+  width: 100%;
 }
 
 .av-details {
@@ -37,4 +39,10 @@
 
 .concepts {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.av-title > h1{
+  margin-left: 40px;
 }
