@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import $ from "jquery";
-
 import "./css/ClusterViz.css";
 import ZoomSlider from "./ZoomSlider";
 import StoryGrid from "./StoryGrid";
@@ -38,32 +37,64 @@ class ClusterViz extends Component {
   }
 
   componentDidMount() {
-    let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
-    let segment_array = segment_str.split("/");
-    let last_segment = segment_array.pop();
-    let title;
+    // let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
+    // let segment_array = segment_str.split("/");
+    // let last_segment = segment_array.pop();
+    // let title;
 
-    //handling click actions on homepage of articles
-    switch (last_segment) {
-      case "huawei":
-        title = "Huawei CFO Arrest";
-        break;
-      case "shutdown":
-        title = "US Government Shutdown";
-        break;
-      case "venezuela":
-        title = "Venezeulan Crisis";
-        break;
-      default:
-    }
-    const dataURL = `/data/articles/${last_segment}.json`;
-    const tagURL = `/data/tags/${last_segment}-tags.json`;
-    const summaryURL = `/data/summaries/${last_segment}-summary.json`;
+    // //handling click actions on homepage of articles
+    // switch (last_segment) {
+    //   case "huawei":
+    //     title = "Huawei CFO Arrest";
+    //     break;
+    //   case "shutdown":
+    //     title = "US Government Shutdown";
+    //     break;
+    //   case "venezuela":
+    //     title = "Venezeulan Crisis";
+    //     break;
+    //   default:
+    // }
+    // const dataURL = `/data/articles/${last_segment}.json`;
+    // const tagURL = `/data/tags/${last_segment}-tags.json`;
+    // const summaryURL = `/data/summaries/${last_segment}-summary.json`;
 
-    Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
-      this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
+    // Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
+    //   this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
+    //   this.filter(this.state.data);
+    // });
+
+    let title = "Sri Lanka Terrorist Attacks";
+    let last_segment = "sri-lanka";
+    const dataURL = `/data/ER-articles/${last_segment}-cluster.json`;
+    Promise.resolve(d3.json(dataURL)).then(data => {
+      console.log(data);
+      this.setState({data: this.getArticles(data), tags: this.getConcepts(data)})
       this.filter(this.state.data);
-    });
+    })
+    //console.log(this.seperateClusters(data))
+  }
+
+  getArticles(data) {
+    let articles = {};
+    let i = 0;
+    Object.values(data).forEach(entry => {
+      articles[i] = entry.articles;
+      i = i + 1;
+    })
+
+    return articles;
+  }
+
+  getConcepts(data) { 
+    let concepts = {};
+    let i = 0;
+    Object.values(data).forEach(entry => {
+      concepts[i] = entry.concepts;
+      i = i + 1;
+    })
+
+    return concepts;
   }
 
   seperateClusters(data) {
@@ -75,6 +106,7 @@ class ClusterViz extends Component {
         clusteredArticles[entry.clust] = [entry];
       }
     });
+    console.log(clusteredArticles)
     return clusteredArticles;
   }
 
@@ -146,6 +178,7 @@ class ClusterViz extends Component {
     var filtered = false;
     var typeFilterList;
     for (let el in data) {
+      console.log(el);
       var articles = data[el];
       Object.values(articles).forEach(node => {
         if (!exists.includes(node.sourceName)) {
@@ -242,7 +275,8 @@ class ClusterViz extends Component {
 
 
   render() {
-    let data = this.applyFilterToAllArticles(this.state.data)
+    let data = this.applyFilterToAllArticles(this.state.data);
+    //let data = this.state.data;
     const tags = this.state.tags;
     const { bookmark, popupData, bookmarkList} = this.state;
     const summaries = this.state.summaries;

@@ -11,6 +11,8 @@ import "./css/ArticleGrid.css";
 import Image from '../images/sri-lanka-mourns-014.jpg';
 import {theme} from '../App.js';
 
+let u = Image;
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -31,7 +33,6 @@ const styles = theme => ({
     height: 300,
     margin: 24,
     alignItems: '',
-    backgroundImage: `url(${Image})`,
     backgroundSize: 'cover',
     position: 'relative'
   },
@@ -123,17 +124,17 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>
-                <Card className={classes.card + this.filterOut(value)} onClick={() => console.log("go to article page")}>
-                    <CardContent className={classes.content}>
+                <Card style={{backgroundImage: `url(${value.image})`}} className={classes.card + this.filterOut(value)} onClick={() => console.log("go to article page")}>
+                    <CardContent  className={classes.content}>
                       {/* <Typography gutterBottom variant="h5" component="h2" /> */}
                       <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >
                         {value.title}
                       </Typography>
                       <div className={classes.details}>
                         <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" >
-                          The author
-                          The date
-                          The Sentiment
+                          An author
+                          {value.date}
+                          {value.sentiment}
                         </Typography>
                         <CardMedia
                             component="img"
