@@ -12,6 +12,7 @@ import { ReactContext } from '../Context'
 import SummarizerModal from "./SummarizerModal";
 import SearchAppBar from "./SearchAppBar";
 import FilterBar from "./FilterBar";
+import ArticleView from "./ArticleView"
 
 class ClusterViz extends Component {
 
@@ -29,11 +30,13 @@ class ClusterViz extends Component {
       summaries: null,
       selectSecond: false,
       showSummarizerModal: false,
+      articleToView: null,
     };
 
     this.getFirst = this.getFirst.bind(this);
     this.getSecond = this.getSecond.bind(this);
     this.selectSecond = this.selectSecond.bind(this);
+    this.setArticleToView = this.setArticleToView.bind(this)
 
   }
 
@@ -101,6 +104,11 @@ class ClusterViz extends Component {
     }
 
   }
+
+  setArticleToView(article) {
+    this.setState({articleToView: article})
+  }
+
   createFakeConcepts() {
     let concepts = {}
     for (let i=0;i<5;i++) {
@@ -304,6 +312,22 @@ class ClusterViz extends Component {
 
     const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
 
+  
+    let 
+      filterBar,
+      articleView,
+      storyGrid 
+
+    if (this.state.articleToView) {
+      filterBar = null
+      storyGrid = null
+      articleView = <ArticleView article={this.state.articleToView}/>
+    } else {
+      filterBar = <FilterBar />
+      storyGrid = <StoryGrid data={data} tags={tags} setArticle={this.setArticleToView}/>
+      articleView = null
+    }
+
     if (!data) { return null }
 
     return (
@@ -320,14 +344,14 @@ class ClusterViz extends Component {
       }}>
 
       <SearchAppBar />
-      <FilterBar />
+      {filterBar}
       <div id="cluster-viz-container">
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
         </div>
-        <StoryGrid data={data} tags={tags} />
         {/* <div id="tooltip-container" className="second" /> */}
-
+        {storyGrid}
+        {articleView}
         {
           this.state.article1 != null && this.state.showSummarizerModal === false && this.state.selectSecond === false &&
           <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} />
