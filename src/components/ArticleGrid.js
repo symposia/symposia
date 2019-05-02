@@ -31,7 +31,6 @@ const styles = theme => ({
     height: 300,
     margin: 24,
     alignItems: '',
-    backgroundImage: `url(${Image})`,
     backgroundSize: 'cover',
     position: 'relative'
   },
@@ -105,7 +104,8 @@ class ArticleGrid extends React.Component {
   }
 
   filterOut(value) {
-    return value.filterOut ? "" : " filter-out"
+    return ""
+    // return value.filterOut ? "" : " filter-out"
   }
 
   render() {
@@ -123,7 +123,11 @@ class ArticleGrid extends React.Component {
           >
             {this.props.articles.map((value, index) => (
               <Grid key={index} item>
-                <Card className={classes.card + this.filterOut(value)} onClick={() => console.log("go to article page")}>
+                <Card 
+                  className={classes.card + this.filterOut(value)} 
+                  onClick={() => console.log("go to article page")}
+                  style={{backgroundImage: `url(${value.image})`}}
+                >
                     <CardContent className={classes.content}>
                       {/* <Typography gutterBottom variant="h5" component="h2" /> */}
                       <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >

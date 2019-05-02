@@ -404,6 +404,7 @@ color:#EEE;
   grid-column: 1/-1;
   padding: 12px;
   text-align: center;
+  margin-top: 50px;
 }
 
 @media screen and (max-width: 600px) {

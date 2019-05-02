@@ -81,14 +81,44 @@ class ClusterViz extends Component {
       Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
         this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
         this.filter(this.state.data);
+        console.log(this.state.data);
+        console.log(this.state.tags);
       });
     } else {
       const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/articles/${last_segment}.json`
       fetch(dataURL)
         .then(resp => resp.json())
-        .then(json => console.log(json))
+        .then(rawArticles => {
+          let clusteredArticles = this.createFakeClusters(rawArticles)
+          console.log(clusteredArticles)
+          this.setState({
+            data: clusteredArticles,
+            tags: this.createFakeConcepts(),
+            title: title
+          })
+          console.log()
+        })
     }
 
+  }
+  createFakeConcepts() {
+    let concepts = {}
+    for (let i=0;i<5;i++) {
+      concepts[i] = [`concept ${i+1}.1`, `concept ${i+1}.2`]
+    }
+    return concepts
+  }
+
+  createFakeClusters(data) {
+    let clusteredArticles = {}
+    Object.values(data).forEach((entry, index) => {
+      if (clusteredArticles[index%5]) {
+        clusteredArticles[index%5].push(entry)
+      } else {
+        clusteredArticles[index%5] = [entry]
+      }
+    })
+    return clusteredArticles;
   }
 
   seperateClusters(data) {
