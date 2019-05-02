@@ -1,0 +1,13 @@
+.article-view-container {
+  display: grid;
+  grid-template-columns: auto 400px;
+}
+
+.article-view-exit-container {
+  grid-column: 1/3;
+}
+
+.av-main-header {
+  display: grid;
+  grid-template-columns: 50px auto;
+}
