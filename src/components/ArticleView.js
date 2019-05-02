@@ -21,7 +21,7 @@ class ArticleView extends Component {
           <div className="av-main-header">
             <div className="av-news-source">
               <img
-                src={"http://logo.clearbit.com/" + article.source.uri}
+                src={"http://logo.clearbit.com/" + getDomain(article.source.uri)}
                 alt="news source"
               />
             </div>
@@ -96,12 +96,33 @@ class RelatedArticle extends Component {
             return <ArticleConcept key={index} concept={concept} />;
           })}
         </div>
-        <div className="ra-author">
+        {author != null ? <div className="ra-author">
           {author}
-        </div>
+        </div> : <div></div>}
       </div>
     );
   }
 }
 
 export default ArticleView;
+
+function getDomain(url) {
+  if (url == null) {
+      return '';
+  }
+
+  var result;
+  var match;
+
+  if (
+      (match = url.match(
+      /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im
+      ))
+  ) {
+      result = match[1];
+      if ((match = result.match(/^[^\.]+\.(.*\..*\..+)$/))) {
+      result = match[1];
+      }
+  }
+  return result;
+}
