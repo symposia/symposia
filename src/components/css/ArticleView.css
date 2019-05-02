@@ -46,3 +46,10 @@
 .av-title > h1{
   margin-left: 40px;
 }
+
+.related-article {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px gray solid;
+  border-radius: 8px;
+}
