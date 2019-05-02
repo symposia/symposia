@@ -270,7 +270,7 @@ font-size:16pt;
 color:#EEE;
 }
 
-@media screen and min-width 1900px{
+@media screen and (min-width:1900px){
   __col-md-1 {
   flex-basis:50%;
   }
