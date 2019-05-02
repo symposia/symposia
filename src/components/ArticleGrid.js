@@ -116,7 +116,7 @@ class ArticleGrid extends React.Component {
           <Grid
             container
             spacing={16}
-            className={classes.demo+this.props.articles.length}
+            className={classes.demo+this.props.articles.length+" article-grid"}
             alignItems={alignItems}
             direction={direction}
             justify={justify}

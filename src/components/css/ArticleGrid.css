@@ -1,3 +1,16 @@
 .filter-out {
   opacity: 0.2;
 }
+
+.article-grid {
+  display:flex;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  max-width: 1400px;
+}
+
+/* .article-grid::after {
+  content: "";
+  flex: ;
+} */
