@@ -7,10 +7,5 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  max-width: 1400px;
+  margin: auto;
 }
-
-/* .article-grid::after {
-  content: "";
-  flex: ;
-} */

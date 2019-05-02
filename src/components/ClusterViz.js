@@ -36,7 +36,9 @@ class ClusterViz extends Component {
     this.getFirst = this.getFirst.bind(this);
     this.getSecond = this.getSecond.bind(this);
     this.selectSecond = this.selectSecond.bind(this);
+
     this.setArticleToView = this.setArticleToView.bind(this)
+    this.leaveArticleView = this.leaveArticleView.bind(this)
 
   }
 
@@ -103,6 +105,10 @@ class ClusterViz extends Component {
         })
     }
 
+  }
+
+  leaveArticleView() {
+    this.setState({articleToView: null})
   }
 
   setArticleToView(article) {
@@ -312,21 +318,14 @@ class ClusterViz extends Component {
 
     const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
 
-  
-    let 
-      filterBar,
-      articleView,
-      storyGrid 
-
-    if (this.state.articleToView) {
-      filterBar = null
-      storyGrid = null
-      articleView = <ArticleView article={this.state.articleToView}/>
-    } else {
-      filterBar = <FilterBar />
-      storyGrid = <StoryGrid data={data} tags={tags} setArticle={this.setArticleToView}/>
-      articleView = null
-    }
+    let filterBar = <FilterBar />
+    let storyGrid = <StoryGrid data={data} tags={tags} setArticle={this.setArticleToView}/>
+    let articleView = <ArticleView article={this.state.articleToView} exitView={this.leaveArticleView}/>
+    let title = (
+        <div id="title-container">
+          <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
+        </div>
+    )
 
     if (!data) { return null }
 
@@ -344,14 +343,11 @@ class ClusterViz extends Component {
       }}>
 
       <SearchAppBar />
-      {filterBar}
+      {!this.state.articleToView ? filterBar : null}
       <div id="cluster-viz-container">
-        <div id="title-container">
-          <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
-        </div>
-        {/* <div id="tooltip-container" className="second" /> */}
-        {storyGrid}
-        {articleView}
+        {!this.state.articleToView ? title : null}
+        {!this.state.articleToView ? storyGrid : null}
+        {this.state.articleToView ? articleView : null}
         {
           this.state.article1 != null && this.state.showSummarizerModal === false && this.state.selectSecond === false &&
           <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} />

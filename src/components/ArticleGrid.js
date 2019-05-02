@@ -112,10 +112,9 @@ class ArticleGrid extends React.Component {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;
     return (
-        <Grid item xs={"auto"}>
+        <Grid item >
           <Grid
             container
-            spacing={16}
             className={classes.demo+this.props.articles.length+" article-grid"}
             alignItems={alignItems}
             direction={direction}

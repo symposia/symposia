@@ -294,14 +294,15 @@ color:#EEE;
 #cluster-viz-container {
   justify-content: center;
   padding: 12px;
+  margin-top: 64px;
 
-  display: grid;
+  /* display: grid;
   grid-template-columns: auto min-content;
   grid-template-rows: auto;
   grid-template-areas:
     "title title"
     "svg filter"
-    "tooltip .";
+    "tooltip ."; */
 }
 
 #title-container {
