@@ -289,10 +289,10 @@ class FilterBar extends React.Component {
                       <ClickAwayListener onClickAway={this.handleClose}>
                         <MenuList>
 
-                          //Attach Source data here
+                          {/* //Attach Source data here */}
                           {[0, 1, 2, 3].map(value => (
-                          <MenuItem>
-                            <ListItem key={value} role={undefined} dense button onClick={this.handleFilterToggle(value)}>
+                          <MenuItem key={value}>
+                            <ListItem  role={undefined} dense button onClick={this.handleFilterToggle(value)}>
                               <Checkbox
                                 checked={this.state.checked.indexOf(value) !== -1}
                                 tabIndex={-1}
