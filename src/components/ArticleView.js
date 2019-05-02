@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import "./css/ArticleView.css";
 
 class ArticleView extends Component {
-  componentDidMount() {
-    console.log(this.props.article);
-  }
-
   render() {
     let article = this.props.article;
     let author =
@@ -48,12 +44,7 @@ class ArticleView extends Component {
               <p>sentiment: {article.sentiment}</p>
             </div>
           </div>
-          <div className="av-text">
-            <p>{article.body}</p>
-            <a href={article.url} target="_blank" rel="noopener noreferrer">
-              Read More...
-            </a>
-          </div>
+          <ArticleText article={this.props.article} />
         </div>
         <div>
           <h3>Related Articles</h3>
@@ -125,4 +116,90 @@ function getDomain(url) {
       }
   }
   return result;
+}
+
+class ArticleText extends Component {
+  generateOrderOfConcepts(concepts) {
+    let orderOfConcepts = {}
+    let prevWordLength = 0
+    concepts.forEach((concept) => {
+      this.getCharIndexOfConcept(concept, orderOfConcepts, prevWordLength)
+    })
+    return this.generateTextBlocks(orderOfConcepts)
+  }
+
+  generateTextBlocks(orderOfConcepts) {
+    let body = this.props.article.body
+    let textBlocksIndices = []
+    let start = 0
+    for (let key in orderOfConcepts) {
+      textBlocksIndices.push({start: start, end: key})
+      start = parseInt(key) + orderOfConcepts[key].label.eng.length
+    }
+    textBlocksIndices.push({start: start, end: body.length})
+
+    // console.log("OrderOfConcepts:", orderOfConcepts)
+
+    let bodySlices = []
+    textBlocksIndices.forEach((pair) => {
+      bodySlices.push(body.slice(pair.start, parseInt(pair.end)))
+
+      // if (index < textBlocksIndices.length - 1) {
+      //   let nextConcept = orderOfConcepts[pair.end]
+      //   let word = nextConcept.label.eng
+      // }
+    })
+    let keys = Object.keys(orderOfConcepts)
+
+    let annotatedText = (
+      <p>
+        {bodySlices.map((slice, index) => {
+          let conceptPhrase = null
+          if (index < bodySlices.length - 1) {
+            let key = keys[index]
+            let concept = orderOfConcepts[key]
+            conceptPhrase = (
+              <span className="concept-phrase" href={concept.uri}>{concept.label.eng}</span>
+            )
+          } else {
+            conceptPhrase = null
+          }
+
+          return (
+            <span key={index}>
+              {slice}
+              {conceptPhrase}
+            </span>
+          )
+        })}
+      </p>
+    )
+
+    return annotatedText
+  }
+
+  getCharIndexOfConcept(concept, dict, prevWordLength) {
+    let phrase = concept.label.eng
+    let articleBody = this.props.article.body
+    let index = articleBody.indexOf(phrase) 
+    if (index >= 0) {
+      dict[index] = concept
+    }
+  }
+
+  render() {
+    let article = this.props.article
+    let concepts = article.concepts
+    let annotatedBody = this.generateOrderOfConcepts(concepts)
+    console.log(annotatedBody)
+    let body = annotatedBody ? annotatedBody : article.body
+    return (
+          <div className="av-text">
+            {body}
+            <a href={article.url} target="_blank" rel="noopener noreferrer">
+              Read More...
+            </a>
+          </div>
+    )
+  }
 }

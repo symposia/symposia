@@ -62,3 +62,10 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.concept-phrase {
+  font-weight: bold;
+  text-decoration: underline;
+  color: green;
+  /* text-decoration-color: ; */
+}
