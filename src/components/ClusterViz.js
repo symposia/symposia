@@ -18,6 +18,8 @@ class ClusterViz extends Component {
     super(props);
     this.state = {
       data: null,
+      sources: null,
+      days: 30,
       title: "",
       popupData: null,
       bookmarkList: new Map(),
@@ -33,7 +35,8 @@ class ClusterViz extends Component {
     this.getFirst = this.getFirst.bind(this);
     this.getSecond = this.getSecond.bind(this);
     this.selectSecond = this.selectSecond.bind(this);
-
+    this.setFilterSource = this.setFilterSource.bind(this);
+    this.setDayFilter = this.setDayFilter.bind(this);
   }
 
   componentDidMount() {
@@ -68,13 +71,11 @@ class ClusterViz extends Component {
     let last_segment = "sri-lanka";
     const dataURL = `/data/ER-articles/${last_segment}-cluster.json`;
     Promise.resolve(d3.json(dataURL)).then(data => {
-      console.log(data);
-      this.setState({data: this.getArticles(data), tags: this.getConcepts(data)})
-      this.filter(this.state.data);
+      this.setState({data: this.getArticles(data), tags: this.getConcepts(data), sources: this.getSources(data)});
     })
     //console.log(this.seperateClusters(data))
   }
-
+  
   getArticles(data) {
     let articles = {};
     let i = 0;
@@ -92,9 +93,19 @@ class ClusterViz extends Component {
     Object.values(data).forEach(entry => {
       concepts[i] = entry.concepts;
       i = i + 1;
-    })
+    });
 
     return concepts;
+  }
+
+  getSources(data) {
+    let sourceSet = new Set();
+    Object.values(data).forEach(entry => {
+      Object.values(entry.articles).forEach(article => {
+        sourceSet.add(article.source.title);
+      });
+    });
+    return Array.from(sourceSet);
   }
 
   seperateClusters(data) {
@@ -106,7 +117,6 @@ class ClusterViz extends Component {
         clusteredArticles[entry.clust] = [entry];
       }
     });
-    console.log(clusteredArticles)
     return clusteredArticles;
   }
 
@@ -157,126 +167,31 @@ class ClusterViz extends Component {
       return data;
     }
     let result = data;
-    Object.keys(result).forEach(resultKey => {
-      let cluster = result[resultKey]
-      Object.keys(cluster).forEach(clusterKey => {
-        let article = cluster[clusterKey]
-        if (this.state.filteredSources.has(article.sourceName)) {
+    Object.values(result).forEach(entry => {
+      Object.values(entry).forEach(article => {
+        if (this.state.filteredSources.includes(article.source.title)) {
           article["filterOut"] = true
         } else {
           article.filterOut = false
         }
       });
-    })
+    });
+    console.log(result);
     return result;
   }
 
-  //Filters out the selected sources.
-  filter(data) {
-    var newsSources = [];
-    var exists = [];
-    var filtered = false;
-    var typeFilterList;
-    for (let el in data) {
-      console.log(el);
-      var articles = data[el];
-      Object.values(articles).forEach(node => {
-        if (!exists.includes(node.sourceName)) {
-          exists.push(node.sourceName);
-          newsSources.push({ sourceName: node.sourceName, url: node.url });
-        }
-      })
-    }
-
-    this.setState({
-      filteredSources: new Set(exists)
-    })
-    typeFilterList = exists;
-
-    function stateTemplate(sourceName) {
-      return (
-        '<div class="list-item container__row">' +
-        `<input class="cbx" id="${sourceName}"  name="${sourceName}" type="checkbox">` +
-        `<label class="source-check" for="${sourceName}"><span class="slider"></span></label>` +
-        `<div class="label-text">${sourceName}</div>` +
-        "</div>"
-      );
-    }
-
-    // Populate list with states
-    newsSources.forEach(function(s) {
-      document
-        .getElementById("news-sources-filter-list")
-        .insertAdjacentHTML("beforeend", stateTemplate(s.sourceName));
-    });
-
-    // Events
-    const resetSourcesButton = document.querySelector(".reset-btn");
-    resetSourcesButton.addEventListener("click", e => {
-      e.stopPropagation();
-      typeFilterList = exists;
-      this.setState({
-        filteredSources: new Set(exists)
-      })
-
-      const list = document.querySelectorAll("input[type=checkbox]");
-      for (let item of list) {
-        item.checked = false;
-      }
-      filtered = false;
-    });
-
-    const dropdownSearchInput = document.querySelector(".dropdown-search");
-    dropdownSearchInput.addEventListener("input", function(e) {
-      e.stopPropagation();
-      var target = $(this);
-      var dropdownList = target.closest(".dropdown-list");
-      var search = target.val().toLowerCase();
-
-      dropdownList.find(".list-item").each(function() {
-        var text = $(this)
-          .text()
-          .toLowerCase();
-        var match = text.indexOf(search) > -1;
-        $(this).toggle(match);
-      });
-    });
-
-    document
-      .querySelector(".dropdown-list")
-      .addEventListener("change", (e) => {
-        if (e.target.type === "checkbox") {
-          if (!filtered) {
-            typeFilterList = [];
-            filtered = true;
-          }
-
-          if (e.target.checked) {
-            typeFilterList.push(d3.select(e.target).attr("name"));
-            // set_focus();
-          } else {
-            typeFilterList.splice(typeFilterList.indexOf("foo"), 1);
-            if (typeFilterList.length === 0) {
-              typeFilterList = exists;
-              this.setState({
-                filteredSources: new Set(exists)
-              })
-              filtered = false;
-            }
-          }
-
-          this.setState({
-            filteredSources: new Set(typeFilterList)
-          })
-        }
-        return false;
-      });
+  setFilterSource(checkedSources) {
+    this.setState({filteredSources: checkedSources});
   }
 
+  setDayFilter(days) {
+    this.setState({days: days})
+    console.log(this.state.days);
+  }
 
   render() {
-    let data = this.applyFilterToAllArticles(this.state.data);
-    //let data = this.state.data;
+    const data = this.applyFilterToAllArticles(this.state.data);
+    const sources = this.state.sources;
     const tags = this.state.tags;
     const { bookmark, popupData, bookmarkList} = this.state;
     const summaries = this.state.summaries;
@@ -286,74 +201,16 @@ class ClusterViz extends Component {
     if (!data) { return null }
 
     return (
-      <ReactContext.Provider
-      value={{
-        someData:"somedata",
-        bookmark: bookmark,
-        bookmarkList: bookmarkList,
-        handleAddBookmark: this.handleAddBookmark,
-        handleDeleteBookmark: this.handleDeleteBookmark,
-        handlePopup: this.handlePopup,
-        handlePopupExit:this.handlePopupExit,
-        popupData:popupData
-      }}>
-
-      <SearchAppBar />
-      <FilterBar />
-      <div id="cluster-viz-container">
-        <div id="title-container">
-          <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
-        </div>
-        <StoryGrid data={data} tags={tags} />
-        {/* <div id="tooltip-container" className="second" /> */}
-
-        {
-          this.state.article1 != null && this.state.showSummarizerModal === false && this.state.selectSecond === false &&
-          <Popup handlePopupExit={this.handlePopupExit} selectSecond={this.selectSecond} data={this.state.article1} />
-        }
-        {
-            this.state.showSummarizerModal &&
-            <SummarizerModal
-              handleModalClose={this.handleModalClose}
-              article1={this.state.article1}
-              article2={this.state.article2}
-              summary1={this.state.summaries[this.state.article1.title]}
-              summary2={this.state.summaries[this.state.article2.title]}
-            />
-        }
-        {
-          this.state.selectSecond &&
-          <div id="select-second-prompt">
-            <p>
-              Please Select a second article compare.
-            </p>
-            <button className="my-btn" onClick={this.cancelCompare}>Cancel</button>
+      <div>
+        <SearchAppBar />
+        <FilterBar sources={sources} filterSource={this.setFilterSource} filterDate={this.setDayFilter}/>
+        <div id="cluster-viz-container">
+          <div id="title-container">
+            <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
           </div>
-        }
-      </div>
-      <div visibility="hidden" id="filter-bookmark-container">
-        <div id="filter-container" className="dropdown-list">
-          <h4>Filter</h4>
-          <input
-            type="search"
-            placeholder="Search Sources"
-            className="dropdown-search"
-          />
-          <ul id="news-sources-filter-list" />
-          <button
-            className="my-btn reset-btn"
-            type="text"
-            placeholder=""
-            aria-label="reset filters"
-            aria-describedby="basic-addon1"
-          >
-            Reset
-          </button>
+          <StoryGrid data={data} tags={tags} />
         </div>
       </div>
-
-
-      </ReactContext.Provider>
     );
   }
 }

@@ -106,7 +106,7 @@ class ArticleGrid extends React.Component {
   }
 
   filterOut(value) {
-    return value.filterOut ? "" : " filter-out"
+    return value.filterOut ? "filter-out" : ""
   }
 
   render() {
@@ -123,8 +123,8 @@ class ArticleGrid extends React.Component {
             justify={justify}
           >
             {this.props.articles.map((value, index) => (
-              <Grid key={index} item>
-                <Card style={{backgroundImage: `url(${value.image})`}} className={classes.card + this.filterOut(value)} onClick={() => console.log("go to article page")}>
+              <Grid key={index} item className={this.filterOut(value)}>
+                <Card style={{backgroundImage: `url(${value.image})`}} className={classes.card} onClick={() => console.log("go to article page")}>
                     <CardContent  className={classes.content}>
                       {/* <Typography gutterBottom variant="h5" component="h2" /> */}
                       <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >
@@ -132,7 +132,6 @@ class ArticleGrid extends React.Component {
                       </Typography>
                       <div className={classes.details}>
                         <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" >
-                          An author
                           {value.date}
                           {value.sentiment}
                         </Typography>

@@ -124,10 +124,10 @@ const styles = theme => ({
 class FilterBar extends React.Component {
   state = {
     selectedValue: 'a',
-    days: 5,
+    days: 30,
     open: false,
     range: 1,
-    checked: [0],
+    checked: []
   };
 
   //toggle for the source filters
@@ -143,8 +143,9 @@ class FilterBar extends React.Component {
     }
 
     this.setState({
-      checked: newChecked,
+      checked: newChecked
     });
+    this.props.filterSource(newChecked);
   };
 
   handleRangeChange = (event, range) => {
@@ -152,10 +153,9 @@ class FilterBar extends React.Component {
   };
 
   handleInputChange = prop => event => {
-  this.setState({ [prop]: event.target.value });
-  console.log(this.state.days);
-};
-
+    this.setState({ [prop]: event.target.value });
+    this.props.filterDate(this.state.days);
+  };
 
   handleChange = event => {
     this.setState({ selectedValue: event.target.value });
@@ -177,7 +177,8 @@ class FilterBar extends React.Component {
     const { classes } = this.props;
     const { range } = this.state;
     const { open } = this.state;
-
+    const sources  = this.props.sources;
+    console.log(sources);
 
     return (
       <div className={classes.root}>
@@ -192,7 +193,7 @@ class FilterBar extends React.Component {
                   max: "30",
                   step: "1",
                 }}
-                defaultValue="5"
+                defaultValue="30"
                 onChange={this.handleInputChange('days')}
                 className={classes.textField}
                 InputLabelProps={{
@@ -204,7 +205,7 @@ class FilterBar extends React.Component {
                 }}
               />
             </form>
-              <Slider
+              {/* <Slider
               className={classes.daterange}
                 classes={{ container: classes.slider }}
                 value={range}
@@ -214,13 +215,13 @@ class FilterBar extends React.Component {
                 step={1}
                 aria-labelledby="label"
                 onChange={this.handleRangeChange}
-              />
-              <Typography id="label">Date Range</Typography>
-
+              /> */}
+              {/* <Typography id="label">Date Range</Typography> */}
             {
               //Radio buttons for sentiment filtering; state needs to be modified
               //so that every button can be enabled and disabled
             }
+            <Typography id="label">Sentiment Filtering</Typography> */}
             <div className={classes.sentiment}>
               <Radio
                 checked={this.state.selectedValue === 'a'}
@@ -288,9 +289,7 @@ class FilterBar extends React.Component {
                     <Paper>
                       <ClickAwayListener onClickAway={this.handleClose}>
                         <MenuList>
-
-                          //Attach Source data here
-                          {[0, 1, 2, 3].map(value => (
+                          {sources.map(value => (
                           <MenuItem>
                             <ListItem key={value} role={undefined} dense button onClick={this.handleFilterToggle(value)}>
                               <Checkbox
@@ -298,7 +297,7 @@ class FilterBar extends React.Component {
                                 tabIndex={-1}
                                 disableRipple
                               />
-                              <ListItemText primary={`Source ${value + 1}`} />
+                              <ListItemText primary={value} />
                             </ListItem>
                           </MenuItem>
                           ))}
