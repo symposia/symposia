@@ -42,28 +42,53 @@ class ClusterViz extends Component {
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
     let title;
+    let oldData = false;
 
     //handling click actions on homepage of articles
     switch (last_segment) {
       case "huawei":
         title = "Huawei CFO Arrest";
+        oldData = true
         break;
       case "shutdown":
         title = "US Government Shutdown";
+        oldData = true
         break;
       case "venezuela":
         title = "Venezeulan Crisis";
+        oldData = true
+        break;
+      case "avengers-endgame":
+        title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
+        break;
+      case "sri-lanka-attacks":
+        title = "Sri Lanka Attacks"
+        break;
+      case "joe-biden-2020":
+        title = "Joe Biden Announces 2020 Presidential Campaign"
+        break;
+      case "ukraine-elections":
+        title = "Comedian wins Ukranian Presidential Elections"
         break;
       default:
     }
-    const dataURL = `/data/articles/${last_segment}.json`;
-    const tagURL = `/data/tags/${last_segment}-tags.json`;
-    const summaryURL = `/data/summaries/${last_segment}-summary.json`;
 
-    Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
-      this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
-      this.filter(this.state.data);
-    });
+    if (oldData) {
+      const dataURL = `/data/articles/${last_segment}.json`;
+      const tagURL = `/data/tags/${last_segment}-tags.json`;
+      const summaryURL = `/data/summaries/${last_segment}-summary.json`;
+
+      Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
+        this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
+        this.filter(this.state.data);
+      });
+    } else {
+      const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/articles/${last_segment}.json`
+      fetch(dataURL)
+        .then(resp => resp.json())
+        .then(json => console.log(json))
+    }
+
   }
 
   seperateClusters(data) {
