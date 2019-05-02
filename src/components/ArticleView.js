@@ -15,7 +15,7 @@ class ArticleView extends Component {
     return (
       <div className="article-view-container">
         <div className="article-view-exit-container">
-          <button onClick={this.props.exitView}> Back </button>
+          <button onClick={this.props.exitView}> Back to Story </button>
         </div>
         <div className="article-view-main">
           <div className="av-main-header">
@@ -59,7 +59,7 @@ class ArticleView extends Component {
           <h3>Related Articles</h3>
           <div className="av-related-articles">
             {relatedArticles.map((article, index) => {
-              return <RelatedArticle key={index} article={article} />;
+              return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
           </div>
         </div>
@@ -89,7 +89,7 @@ class RelatedArticle extends Component {
       article.authors.length > 0 ? "By " + article.authors[0].name : null;
     return (
       <div className="related-article">
-        <div className="ra-title">{article.title}</div>
+        <div className="ra-title" onClick={()=>{this.props.setView(article)}}>{article.title}</div>
         <div className="ra-sentiment">{article.sentiment}</div>
         <div className="ra-concepts">
           {article.concepts.slice(0, 4).map((concept, index) => {

@@ -57,3 +57,8 @@
 .ra-author {
   margin-top: 20px;
 }
+
+.ra-title {
+  font-weight: bold;
+  cursor: pointer;
+}

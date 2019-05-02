@@ -329,6 +329,7 @@ class ClusterViz extends Component {
     let articleView = <ArticleView 
       article={this.state.articleToView} 
       exitView={this.leaveArticleView}
+      setView={this.setArticleToView}
       relatedArticles={data[4].splice(0,4)}
       />
     let title = (
