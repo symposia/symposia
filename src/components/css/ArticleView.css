@@ -5,9 +5,36 @@
 
 .article-view-exit-container {
   grid-column: 1/3;
+  margin-bottom: 50px;
 }
+
 
 .av-main-header {
   display: grid;
-  grid-template-columns: 50px auto;
+  grid-template-columns: auto auto;
+}
+
+.article-view-main {
+  max-width: 800px;
+  margin: auto;
+}
+
+.av-image {
+  display:flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.av-details {
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: auto auto;
+}
+
+.av-text {
+  line-height: 2em;
+}
+
+.concepts {
+  display: flex;
 }

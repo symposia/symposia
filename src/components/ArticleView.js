@@ -6,8 +6,11 @@ class ArticleView extends Component {
     console.log(this.props.article)
   }
 
+
+
   render() {
     let article = this.props.article;
+    let author = article.authors.length > 0 ? "By " + article.authors[0].name : null
     return (
       <div className="article-view-container">
         <div className="article-view-exit-container">
@@ -16,37 +19,50 @@ class ArticleView extends Component {
         <div className="article-view-main">
           <div className="av-main-header">
             <div className="av-news-source">
-              <p>logo here</p>
+              <img src={"http://logo.clearbit.com/" + article.source.uri} alt="news source" />
             </div>
             <div className="av-title">
-              <p>title here</p>
+              <h1>{article.title}</h1>
             </div>
           </div>
           <div className="av-image">
-            <p>image here</p>
+            <img src={article.image} alt={article.title} />
           </div>
           <div className="av-details">
             <div className="author">
-              <p>authoer here</p>
+              <p> {author} </p>
             </div>
             <div className="concepts">
-              <p>concepts here</p>
+              {article.concepts.slice(0,5).map((concept, index) => {
+                return <ArticleConcept key={index} concept={concept} />
+              })}
             </div>
             <div className="date">
-              <p>date here</p>
+              <p>{article.date}</p>
             </div>
             <div className="sentiment">
-              <p>sentiment here</p>
+              <p>sentiment: {article.sentiment}</p>
             </div>
           </div>
           <div className="av-text">
             <p>{article.body}</p>
-            <a href={article.url} target="_blank">Read More...</a>
+            <a href={article.url} target="_blank" rel="noopener noreferrer">Read More...</a>
           </div>
         </div>
         <div>
           <p>sidebar</p>
         </div>
+      </div>
+    )
+  }
+}
+
+class ArticleConcept extends Component {
+  render() {
+    let concept = this.props.concept
+    return (
+      <div>
+        <a href={concept.uri} target="_blank" rel="noopener noreferrer"> {concept.label.eng} </a>
       </div>
     )
   }
