@@ -267,7 +267,7 @@ class ConceptSelect extends React.Component {
                 components={components}
                 value={this.state.single}
                 onChange={this.handleChange('single')}
-                placeholder="Search a country (start with a)"
+                placeholder="Search a concept"
                 isClearable
             />
         //   <div className={classes.root}>

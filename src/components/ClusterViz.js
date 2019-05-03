@@ -80,7 +80,6 @@ class ClusterViz extends Component {
       articles[i] = entry.articles;
       i = i + 1;
     })
-
     return articles;
   }
 
@@ -97,7 +96,7 @@ class ClusterViz extends Component {
   getSources(data) {
     let sourceSet = new Set();
     Object.values(data).forEach(entry => {
-      Object.values(entry).forEach(article => {
+      Object.values(entry.articles).forEach(article => {
         sourceSet.add(article.source.title);
       });
     });
@@ -294,8 +293,7 @@ class ClusterViz extends Component {
       const key = Object.keys(this.state.data)[this.state.clusterNum];
       const data = this.applyFilterToAllArticles(this.state.data);
       const articles = this.getArticles(data);
-      console.log(articles);
-      const sources = this.getSources(articles);
+      const sources = this.getSources(this.state.data);
       const tags = this.getConcepts(data);
       console.log(tags);
       const { bookmark, popupData, bookmarkList} = this.state;
