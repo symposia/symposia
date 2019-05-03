@@ -69,17 +69,17 @@ class ClusterViz extends Component {
       //   break;
       case "avengers-endgame":
         title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
-        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/avengers-rec.json"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/avengers-endgame-rec.json"
         validURL = true
         break;
       case "sri-lanka-attacks":
         title = "Sri Lanka Attacks"
-        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/sri-lanka-bombings-rec.json"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/sri-lanka-attacks-rec.json"
         validURL = true
         break;
       case "joe-biden-2020":
         title = "Joe Biden Announces 2020 Presidential Campaign"
-        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/biden-rec.json"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/joe-biden-2020-rec.json"
         validURL = true
         break;
       case "ukraine-elections":
