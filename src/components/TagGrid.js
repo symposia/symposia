@@ -29,21 +29,25 @@ const styles = theme => ({
 class TagGrid extends React.Component {
   render() {
     const { classes } = this.props;
-    return (
-      <Grid container spacing={16} className={classes.root}>
-        {this.props.tags.map((value, index) => (
-          <Grid key={index} item>
-            <Chip
-              label={value}
-              className={classes.paper}
-              // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
-              variant="outlined"
-            >
-            </Chip>
-          </Grid>
-        ))}
-      </Grid>
-    );
+    if(this.props.tags.length > 0) {
+      return (
+        <Grid container spacing={16} className={classes.root}>
+          {this.props.tags.map((value, index) => (
+            <Grid key={index} item>
+              <Chip
+                label={value}
+                className={classes.paper}
+                // style={{ paddingTop: (value + 1) * 10, paddingBottom: (value + 1) * 10 }}
+                variant="outlined"
+              >
+              </Chip>
+            </Grid>
+          ))}
+        </Grid>
+      );
+    } else {
+      return null;
+    }
   }
 }
 

@@ -32,6 +32,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import CommentIcon from '@material-ui/icons/Comment';
+import ConceptSelect from "./ConceptSelect";
 
 
 const styles = theme => ({
@@ -41,7 +42,7 @@ const styles = theme => ({
     marginTop: '64px',
   },
   grow: {
-    flexGrow: 1,
+    flexGrow: 0.5,
   },
   menuButton: {
     marginLeft: -12,
@@ -153,8 +154,10 @@ class FilterBar extends React.Component {
   };
 
   handleInputChange = prop => event => {
+    console.log("hi");
+    console.log(event.target.value);
     this.setState({ [prop]: event.target.value });
-    this.props.filterDate(this.state.days);
+    this.props.filterDate(event.target.value);
   };
 
   handleChange = event => {
@@ -178,7 +181,6 @@ class FilterBar extends React.Component {
     const { range } = this.state;
     const { open } = this.state;
     const sources  = this.props.sources;
-    console.log(sources);
 
     return (
       <div className={classes.root}>
@@ -221,7 +223,7 @@ class FilterBar extends React.Component {
               //Radio buttons for sentiment filtering; state needs to be modified
               //so that every button can be enabled and disabled
             }
-            <Typography id="label">Sentiment Filtering</Typography> */}
+            {/* <Typography id="label">Sentiment Filtering</Typography> 
             <div className={classes.sentiment}>
               <Radio
                 checked={this.state.selectedValue === 'a'}
@@ -261,10 +263,13 @@ class FilterBar extends React.Component {
                 name="radio-button-demo"
                 aria-label="E"
               />
-            </div>
+            </div> */}
             <div className={classes.grow} />
+            
+            <ConceptSelect tags={this.props.tags} filterConcept={this.props.filterConcept}/>
 
-
+            <div className={classes.grow} />
+            
             {//Filter Sources button and Window
             }
             <div className={classes.filter}>

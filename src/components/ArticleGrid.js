@@ -112,45 +112,49 @@ class ArticleGrid extends React.Component {
   render() {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;
-    return (
-        <Grid item xs={"auto"}>
-          <Grid
-            container
-            spacing={16}
-            className={classes.demo+this.props.articles.length}
-            alignItems={alignItems}
-            direction={direction}
-            justify={justify}
-          >
-            {this.props.articles.map((value, index) => (
-              <Grid key={index} item className={this.filterOut(value)}>
-                <Card style={{backgroundImage: `url(${value.image})`}} className={classes.card} onClick={() => console.log("go to article page")}>
-                    <CardContent  className={classes.content}>
-                      {/* <Typography gutterBottom variant="h5" component="h2" /> */}
-                      <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >
-                        {value.title}
-                      </Typography>
-                      <div className={classes.details}>
-                        <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" >
-                          {value.date}
-                          {value.sentiment}
+    if (this.props.articles.length > 0) {
+      return (
+          <Grid item xs={"auto"}>
+            <Grid
+              container
+              spacing={16}
+              className={classes.demo+this.props.articles.length}
+              alignItems={alignItems}
+              direction={direction}
+              justify={justify}
+            >
+              {this.props.articles.map((value, index) => (
+                <Grid key={index} item className={this.filterOut(value)}>
+                  <Card style={{backgroundImage: `url(${value.image})`}} className={classes.card} onClick={() => console.log("go to article page")}>
+                      <CardContent  className={classes.content}>
+                        {/* <Typography gutterBottom variant="h5" component="h2" /> */}
+                        <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >
+                          {value.title}
                         </Typography>
-                        <CardMedia
-                            component="img"
-                            alt={value.title}
-                            className={classes.media}
-                            image={"http://logo.clearbit.com/" + getDomain(value.url)}
-                            title={value.title}
-                            data-index={index}
-                        />
-                      </div>
-                    </CardContent>
-                </Card>
-              </Grid>
-            ))}
+                        <div className={classes.details}>
+                          <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" >
+                            {value.date}
+                            {value.sentiment}
+                          </Typography>
+                          <CardMedia
+                              component="img"
+                              alt={value.title}
+                              className={classes.media}
+                              image={"http://logo.clearbit.com/" + getDomain(value.url)}
+                              title={value.title}
+                              data-index={index}
+                          />
+                        </div>
+                      </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
-        </Grid>
-      );
+        );
+    } else {
+      return null;
+    }
   }
 }
 
