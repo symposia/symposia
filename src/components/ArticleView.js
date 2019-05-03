@@ -10,7 +10,6 @@ class ArticleView extends Component {
     let article = this.props.article;
     let author =
       article.authors.length > 0 ? "By " + article.authors[0].name : null;
-    let relatedArticles = this.props.relatedArticles;
     let recs = this.props.getRecs(article.uri)
 
     return (

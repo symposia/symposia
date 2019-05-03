@@ -20,6 +20,7 @@ class ClusterViz extends Component {
     super(props);
     this.state = {
       data: null,
+      dataForArticleView: null,
       title: "",
       popupData: null,
       bookmarkList: new Map(),
@@ -49,77 +50,74 @@ class ClusterViz extends Component {
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
     let title;
-    let oldData = false;
-    let validURL = false;
+    let dataIsClustered = false;
     let recsURL;
+    let fileName
 
     //handling click actions on homepage of articles
     switch (last_segment) {
-      // case "huawei":
-      //   title = "Huawei CFO Arrest";
-      //   oldData = true
-      //   break;
-      // case "shutdown":
-      //   title = "US Government Shutdown";
-      //   oldData = true
-      //   break;
-      // case "venezuela":
-      //   title = "Venezeulan Crisis";
-      //   oldData = true
-      //   break;
       case "avengers-endgame":
         title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/avengers-endgame-rec.json"
-        validURL = true
+        dataIsClustered = true
+        fileName = "avengers-cluster.json"
         break;
       case "sri-lanka-attacks":
         title = "Sri Lanka Attacks"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/sri-lanka-attacks-rec.json"
-        validURL = true
+        dataIsClustered = true
+        fileName = "avengers-cluster.json"
         break;
       case "joe-biden-2020":
         title = "Joe Biden Announces 2020 Presidential Campaign"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/joe-biden-2020-rec.json"
-        validURL = true
+        dataIsClustered = true
+        fileName = "avengers-cluster.json"
         break;
       case "ukraine-elections":
         title = "Comedian wins Ukranian Presidential Elections"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/ukraine-elections-rec.json"
-        validURL = true
+        dataIsClustered = true
+        fileName = "avengers-cluster.json"
         break;
       default:
     }
 
-    if (oldData) {
-      // const dataURL = `/data/articles/${last_segment}.json`;
-      // const tagURL = `/data/tags/${last_segment}-tags.json`;
-      // const summaryURL = `/data/summaries/${last_segment}-summary.json`;
-
-      // Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
-      //   this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
-      //   this.filter(this.state.data);
-      //   console.log(this.state.data);
-      //   console.log(this.state.tags);
-      // });
-    } else if (validURL) {
-      const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/articles/${last_segment}.json`
+    if (dataIsClustered) {
+      const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/clusters/${fileName}`
       fetch(dataURL)
         .then(resp => resp.json())
-        .then(rawArticles => {
-          let clusteredArticles = this.createFakeClusters(rawArticles)
-          // console.log(clusteredArticles)
+        .then(clusteredData => {
+          console.log(this.formatDataForArticleView(clusteredData))
           this.setState({
-            data: clusteredArticles,
+            data: clusteredData,
+            dataForArticleView: this.formatDataForArticleView(clusteredData),
             tags: this.createFakeConcepts(),
             title: title
           })
-          console.log()
         })
+    } else {
+      // const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/articles/${last_segment}.json`
+      // fetch(dataURL)
+      //   .then(resp => resp.json())
+      //   .then(rawArticles => {
+      //     let clusteredArticles = this.createFakeClusters(rawArticles)
+      //     // console.log(clusteredArticles)
+      //     this.setState({
+      //       data: clusteredArticles,
+      //       tags: this.createFakeConcepts(),
+      //       title: title
+      //     })
+      //   })
+    }
       fetch(recsURL)
         .then(resp => resp.json())
         .then(recs => this.createRecsDict(recs))
-    }
 
+  }
+
+  formatDataForArticleView(clusteredData) {
+    return Object.values(clusteredData).map(cluster => cluster.articles)
   }
 
   createRecsDict(recs) {
@@ -157,7 +155,7 @@ class ClusterViz extends Component {
   getArticleByURI(uri) {
     let result
     
-    Object.values(this.state.data).forEach(cluster => {
+    Object.values(this.state.dataForArticleView).forEach(cluster => {
       // console.log(cluster)
       cluster.forEach(article => {
         if (article.uri === uri) {
@@ -376,15 +374,13 @@ class ClusterViz extends Component {
   
 
   render() {
-    const data = this.state.data 
+    const data = this.state.data
+    const dataForArticleView = this.state.dataForArticleView
 
-    if (!data) {return null}
+    console.log("Original Data:", data)
+    console.log("ArticleView Data:", dataForArticleView)
 
-    // if (this.state.recs) {
-    //   // let article = this.getArticleByURI("1123380592")
-    //   // console.log(article)
-    //   console.log(this.getRecs("1123380592"))
-    // }
+    if (!data || !dataForArticleView) {return null}
 
     const tags = this.state.tags;
     const { bookmark, popupData, bookmarkList} = this.state;
@@ -393,14 +389,14 @@ class ClusterViz extends Component {
     const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
 
     let filterBar = <FilterBar />
-    let storyGrid = <StoryGrid data={data} tags={tags} setArticle={this.setArticleToView}/>
+    let storyGrid = <StoryGrid data={dataForArticleView} tags={tags} setArticle={this.setArticleToView}/>
     let articleView = <ArticleView 
       article={this.state.articleToView} 
       exitView={this.leaveArticleView}
       setView={this.setArticleToView}
-      relatedArticles={data[4].splice(0,4)}
       getRecs={this.getRecs}
       />
+
     let title = (
         <div id="title-container">
           <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
