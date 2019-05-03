@@ -186,7 +186,7 @@ class ArticleText extends Component {
   }
 
   generateConceptPopup(conceptPhrase, concept){
-    const { description, label, score, summary} = concept
+    const { description, label, score, summary, uri} = concept
 
     console.log(Object.keys(concept))
     console.log(concept)
@@ -215,7 +215,7 @@ class ArticleText extends Component {
             </Typography>
           }
         >
-        { conceptPhrase }
+        <a href={uri}>{ conceptPhrase }</a>
       </Tooltip>
 
     return conceptPhrasePopup
