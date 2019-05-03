@@ -34,13 +34,13 @@
 /* Featured Stories */
 
 #featured-stories {
-  width: 1040px;
+  width: 1400px;
   max-width: 100%;
   margin: auto;
   padding: 0 12px;
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   align-content: start;
   grid-gap: 20px;
 }

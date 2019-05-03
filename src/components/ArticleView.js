@@ -215,7 +215,7 @@ class ArticleText extends Component {
             </Typography>
           }
         >
-        <a href={uri}>{ conceptPhrase }</a>
+        <a href={uri} target="_blank" rel="noopener noreferrer">{ conceptPhrase }</a>
       </Tooltip>
 
     return conceptPhrasePopup

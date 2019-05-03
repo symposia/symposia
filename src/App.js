@@ -21,9 +21,9 @@ class App extends Component {
             </Link>
           </li>
           <li id="nav-link-2">
-            <span>
+            {/* <span>
               <Link to="/about/">About</Link>
-            </span>
+            </span> */}
             <a
               href="mailto:pvthejas@uw.edu,jyc24@uw.edu,aman.arya524@gmail.com,lndrgs@uw.edu"
               target="_blank"
