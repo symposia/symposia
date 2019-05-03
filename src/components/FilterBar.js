@@ -35,6 +35,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import CommentIcon from '@material-ui/icons/Comment';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 
 const styles = theme => ({
@@ -161,6 +163,47 @@ const styles = theme => ({
     maxHeight: 400,
     overflow: 'auto',
   },
+  search: {
+    position: 'relative',
+    width: '55%',
+    marginLeft: 40,
+    marginRight: 40,
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: '#FFFFFF',
+    '&:hover': {
+      backgroundColor: fade('#000000', 0.10),
+    },
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#8331FE'
+  },
+  inputRoot: {
+    width: '100%',
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: 120,
+      '&:focus': {
+        width: 200,
+      },
+    },
+  },
+  filterbutton: {
+    color: '#8331FE',
+  }
 });
 
 class FilterBar extends React.Component {
@@ -169,7 +212,12 @@ class FilterBar extends React.Component {
     days: 30,
     open: false,
     range: 1,
-    checked: []
+    checked: [],
+    checked1: true,
+    checked2: true,
+    checked3: true,
+    checked4: true,
+    checked5: true
   };
 
   //toggle for the source filters
@@ -199,8 +247,8 @@ class FilterBar extends React.Component {
     this.props.filterDate(this.state.days);
   };
 
-  handleChange = event => {
-    this.setState({ selectedValue: event.target.value });
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
   };
 
   //Toggle for the filter button
@@ -247,32 +295,16 @@ class FilterBar extends React.Component {
                 }}
               />
             </form>
-              {/* <Slider
-              className={classes.daterange}
-                classes={{ container: classes.slider }}
-                value={range}
-                min={0}
-                max
-                max={this.state.days}
-                step={1}
-                aria-labelledby="label"
-                onChange={this.handleRangeChange}
-              /> */}
-              {/* <Typography id="label">Date Range</Typography> */}
-            {
-              //Radio buttons for sentiment filtering; state needs to be modified
-              //so that every button can be enabled and disabled
-            }
-             */}
             <div className={classes.sentiment}>
               <FormControlLabel
                 control={
-                  <Radio
-                    checked={this.state.selectedValue === 'a'}
-                    onChange={this.handleChange}
-                    value="a"
-                    name="radio-button-demo"
-                    aria-label="A"
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    checked={this.state.checked1}
+                    onChange={this.handleChange('checked1')}
+                    value="checked1"
+                    aria-label="Very Negative"
                     classes={{
                       checked: classes.checked,
                     }}
@@ -283,12 +315,13 @@ class FilterBar extends React.Component {
               />
               <FormControlLabel
                 control={
-                  <Radio
-                    checked={this.state.selectedValue === 'b'}
-                    onChange={this.handleChange}
-                    value="b"
-                    name="radio-button-demo"
-                    aria-label="B"
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    checked={this.state.checked2}
+                    onChange={this.handleChange('checked2')}
+                    value="checked2"
+                    aria-label="Negative"
                     classes={{
                       checked: classes.checked,
                     }}
@@ -299,12 +332,13 @@ class FilterBar extends React.Component {
               />
               <FormControlLabel
                 control={
-                  <Radio
-                    checked={this.state.selectedValue === 'c'}
-                    onChange={this.handleChange}
-                    value="c"
-                    name="radio-button-demo"
-                    aria-label="C"
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    checked={this.state.checked5}
+                    onChange={this.handleChange('checked3')}
+                    value="checked3"
+                    aria-label="Very Positive"
                     classes={{
                       checked: classes.checked,
                     }}
@@ -315,12 +349,13 @@ class FilterBar extends React.Component {
               />
               <FormControlLabel
                 control={
-                  <Radio
-                    checked={this.state.selectedValue === 'd'}
-                    onChange={this.handleChange}
-                    value="d"
-                    name="radio-button-demo"
-                    aria-label="D"
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    checked={this.state.checked4}
+                    onChange={this.handleChange('checked4')}
+                    value="checked4"
+                    aria-label="Positive"
                     classes={{
                       checked: classes.checked,
                     }}
@@ -331,12 +366,13 @@ class FilterBar extends React.Component {
               />
               <FormControlLabel
                 control={
-                  <Radio
-                    checked={this.state.selectedValue === 'e'}
-                    onChange={this.handleChange}
-                    value="e"
-                    name="radio-button-demo"
-                    aria-label="E"
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    checked={this.state.checked5}
+                    onChange={this.handleChange('checked5')}
+                    value="checked5"
+                    aria-label="Very Positive"
                     classes={{
                       checked: classes.checked,
                     }}
@@ -346,9 +382,18 @@ class FilterBar extends React.Component {
                 label="Very Positive"
               />
             </div>
-            <div className={classes.grow} />
-
-
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+            />
+            </div>
             {//Filter Sources button and Window
             }
             <div className={classes.filter}>
@@ -358,8 +403,8 @@ class FilterBar extends React.Component {
                 }}
                 aria-owns={open ? 'menu-list-grow' : undefined}
                 aria-haspopup="true"
-                color="primary"
                 onClick={this.handleToggle}
+                className={classes.filterbutton}
               >
                 Filter Sources
               </Button>

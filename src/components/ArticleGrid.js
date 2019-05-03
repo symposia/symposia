@@ -11,6 +11,10 @@ import "./css/ArticleGrid.css";
 import Image from '../images/sri-lanka-mourns-014.jpg';
 import {theme} from '../App.js';
 import Divider from '@material-ui/core/Divider';
+import Lens from '@material-ui/icons/Lens';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 
 let u = Image;
 
@@ -75,10 +79,31 @@ const styles = theme => ({
   textmetadata: {
     width: 200,
     display: 'block'
-  }
+  },
+  icon: {
+    paddingBottom: 4,
+    marginRight: 8
+  },
+  sentiment:  {
+    display: 'flex',
+  },
+  vnegative:  {
+    color: red[900],
+  },
+  negative: {
+    color: red[400],
+  },
+  neutral:  {
+    color: grey[600],
+  },
+  positive: {
+    color: green[400],
+  },
+  vpositive:  {
+    color: green[800],
+  },
 });
 
-//Retrieves the URL of the article and returns the result.
 function getDomain(url) {
   var result;
   var match;
@@ -141,9 +166,12 @@ class ArticleGrid extends React.Component {
                           <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
                             {value.date}
                           </Typography>
-                          <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
-                            {value.sentiment}
-                          </Typography>
+                          <div className={classes.sentiment}>
+                            <Lens className={`${classes.icon} ${classes.negative}`} />
+                            <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
+                              {value.sentiment}
+                            </Typography>
+                          </div>
                         </div>
                         <CardMedia
                             component="img"

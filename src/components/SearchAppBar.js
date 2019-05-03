@@ -68,6 +68,13 @@ const styles = theme => ({
     width: '100%',
     backgroundColor: '#8331FE',
   },
+  titlebox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '90%'
+
+  },
   grow: {
     flexGrow: 1,
   },
@@ -301,34 +308,10 @@ class SearchAppBar extends React.Component {
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               Symposia
             </Typography>
-            <div className={classes.grow} />
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              {/* <Select
-                classes={classes}
-                // styles={selectStyles}
-                textFieldProps={{
-                  label: 'Label',
-                  InputLabelProps: {
-                    shrink: true,
-                  },
-                }}
-                options={suggestions}
-                components={components}
-                value={this.state.multi}
-                onChange={this.handleChange('multi')}
-                placeholder="Select multiple countries"
-                isMulti
-              /> */}
-              <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            />
+            <div className={classes.titlebox}>
+              <Typography className={classes.title} variant="h5" color="inherit" noWrap>
+                Sri Lanka Terror Attacks 2019
+              </Typography>
             </div>
           </Toolbar>
         </AppBar>
