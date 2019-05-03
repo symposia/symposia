@@ -133,11 +133,13 @@ class ClusterViz extends Component {
   }
 
   getRecs(key) {
-    let recURIObj = this.state.recs[key]
-
     let recObj = {}
     recObj["rec"] = [] 
     recObj["non_rec"] = []
+
+    if (!(key in this.state.recs)) {return recObj}
+    let recURIObj = this.state.recs[key]
+
 
     recURIObj.rec.forEach(uri => {
       let article = this.getArticleByURI(uri)
