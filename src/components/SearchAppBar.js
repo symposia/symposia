@@ -31,6 +31,8 @@ const styles = theme => ({
     marginRight: 20
   },
   title: {
+    color: 'white !important',
+    textDecoration: 'none',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -104,12 +106,17 @@ class SearchAppBar extends React.Component {
             <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
               <MenuIcon />
             </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Symposia
+            <Typography className={classes.title} variant="h6" noWrap>
+              <a href="/"
+                style={{
+                  color: "white",
+                  textDecoration: "none"
+                }}
+              >Symposia</a>
             </Typography>
             <div className={classes.titlebox}>
               <Typography className={classes.title} variant="h5" color="inherit" noWrap>
-                Sri Lanka Terror Attacks 2019
+                {this.props.storyTitle}
               </Typography>
             </div>
           </Toolbar>

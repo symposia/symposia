@@ -156,7 +156,11 @@ class ArticleGrid extends React.Component {
             >
               {this.props.articles.map((value, index) => (
                 <Grid key={index} item className={this.filterOut(value)}>
-                  <Card style={{backgroundImage: `url(${value.image})`}} className={classes.card} onClick={() => console.log("go to article page")}>
+                  <Card 
+                  style={{backgroundImage: `url(${value.image})`}} 
+                  className={classes.card} 
+                  onClick={() => {this.props.setArticle(value)}}
+                  >
                       <CardContent  className={classes.content}>
                         {/* <Typography gutterBottom variant="h5" component="h2" /> */}
                         <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >

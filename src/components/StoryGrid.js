@@ -19,20 +19,14 @@ class StoryGrid extends React.Component {
         return (
             <div id="story-grid">
                 <Grid container className={classes.root}>
-                    <TagGrid tags= {this.props.tags[0]} />
-                    <ArticleGrid articles={this.props.data[0]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} />
-
-                    <TagGrid tags= {this.props.tags[1]} />
-                    <ArticleGrid articles={this.props.data[1]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} />
-
-                    <TagGrid tags= {this.props.tags[2]} />
-                    <ArticleGrid articles={this.props.data[2]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} />
-
-                    <TagGrid tags= {this.props.tags[3]} />
-                    <ArticleGrid articles={this.props.data[3]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} />
-
-                    <TagGrid tags= {this.props.tags[4]} />
-                    <ArticleGrid articles={this.props.data[4]} handleClick={this.props.handleClick} handlePopup={this.props.handlePopup} />
+                    {[0,1,2,3,4].map(index => { 
+                        return (
+                            <div key={index}>
+                                <TagGrid tags= {this.props.tags[index]} />
+                                <ArticleGrid articles={this.props.data[index]} setArticle={this.props.setArticle} handlePopup={this.props.handlePopup} />
+                            </div>
+                        )
+                    })}
                 </Grid>
             </div>
         );

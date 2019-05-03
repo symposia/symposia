@@ -270,7 +270,7 @@ font-size:16pt;
 color:#EEE;
 }
 
-@media screen and min-width 1900px{
+@media screen and (min-width:1900px){
   __col-md-1 {
   flex-basis:50%;
   }
@@ -294,14 +294,15 @@ color:#EEE;
 #cluster-viz-container {
   justify-content: center;
   padding: 12px;
+  margin-top: 64px;
 
-  display: grid;
+  /* display: grid;
   grid-template-columns: auto min-content;
   grid-template-rows: auto;
   grid-template-areas:
     "title title"
     "svg filter"
-    "tooltip .";
+    "tooltip ."; */
 }
 
 #title-container {
@@ -404,6 +405,7 @@ color:#EEE;
   grid-column: 1/-1;
   padding: 12px;
   text-align: center;
+  margin-top: 50px;
 }
 
 @media screen and (max-width: 600px) {

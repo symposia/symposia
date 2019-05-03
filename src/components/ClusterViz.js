@@ -11,6 +11,7 @@ import { ReactContext } from '../Context'
 import SummarizerModal from "./SummarizerModal";
 import SearchAppBar from "./SearchAppBar";
 import FilterBar from "./FilterBar";
+import ArticleView from "./ArticleView"
 
 class ClusterViz extends Component {
 
@@ -20,12 +21,18 @@ class ClusterViz extends Component {
       data: null,
       sources: null,
       days: null,
+      dataForArticleView: null,
       title: "",
       concept: null,
       bookmarkList: new Map(),
       filteredSources: null,
       tags: null,
-      clusterNum: 0
+      clusterNum: 0,
+      summaries: null,
+      selectSecond: false,
+      showSummarizerModal: false,
+      articleToView: null,
+      recs: null
     };
 
     this.getFirst = this.getFirst.bind(this);
@@ -34,45 +41,163 @@ class ClusterViz extends Component {
     this.setFilterSource = this.setFilterSource.bind(this);
     this.setDayFilter = this.setDayFilter.bind(this);
     this.setConcept = this.setConcept.bind(this);
+    this.setArticleToView = this.setArticleToView.bind(this)
+    this.leaveArticleView = this.leaveArticleView.bind(this)
+    this.getRecs = this.getRecs.bind(this)
+
   }
 
-  componentDidMount() {
-    // let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
-    // let segment_array = segment_str.split("/");
-    // let last_segment = segment_array.pop();
-    // let title;
+  componentWillMount() {
+    let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
+    let segment_array = segment_str.split("/");
+    let last_segment = segment_array.pop();
+    let title;
+    let dataIsClustered = false;
+    let recsURL;
+    let fileName
 
-    // //handling click actions on homepage of articles
-    // switch (last_segment) {
-    //   case "huawei":
-    //     title = "Huawei CFO Arrest";
-    //     break;
-    //   case "shutdown":
-    //     title = "US Government Shutdown";
-    //     break;
-    //   case "venezuela":
-    //     title = "Venezeulan Crisis";
-    //     break;
-    //   default:
-    // }
-    // const dataURL = `/data/articles/${last_segment}.json`;
-    // const tagURL = `/data/tags/${last_segment}-tags.json`;
-    // const summaryURL = `/data/summaries/${last_segment}-summary.json`;
+    //handling click actions on homepage of articles
+    switch (last_segment) {
+      case "avengers-endgame":
+        title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/avengers-endgame-rec.json"
+        dataIsClustered = true
+        fileName = "avengers-cluster.json"
+        break;
+      case "sri-lanka-attacks":
+        title = "Sri Lanka Attacks"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/sri-lanka-attacks-rec.json"
+        dataIsClustered = true
+        fileName = "sri-lanka-cluster.json"
+        break;
+      case "joe-biden-2020":
+        title = "Joe Biden Announces 2020 Presidential Campaign"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/joe-biden-2020-rec.json"
+        dataIsClustered = true
+        fileName = "joe-biden-cluster.json"
+        break;
+      case "ukraine-elections":
+        title = "Comedian wins Ukranian Presidential Elections"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/ukraine-elections-rec.json"
+        dataIsClustered = true
+        fileName = "ukraine-cluster.json"
+        break;
+      default:
+    }
 
-    // Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
-    //   this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
-    //   this.filter(this.state.data);
-    // });
+    if (dataIsClustered) {
+      const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/clusters/${fileName}`
+      fetch(dataURL)
+        .then(resp => resp.json())
+        .then(clusteredData => {
+          console.log(this.formatDataForArticleView(clusteredData))
+          this.setState({
+            data: clusteredData,
+            dataForArticleView: this.formatDataForArticleView(clusteredData),
+            tags: this.createFakeConcepts(),
+            title: title
+          })
+        })
+    } else {
+      // const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/articles/${last_segment}.json`
+      // fetch(dataURL)
+      //   .then(resp => resp.json())
+      //   .then(rawArticles => {
+      //     let clusteredArticles = this.createFakeClusters(rawArticles)
+      //     // console.log(clusteredArticles)
+      //     this.setState({
+      //       data: clusteredArticles,
+      //       tags: this.createFakeConcepts(),
+      //       title: title
+      //     })
+      //   })
+    }
+      fetch(recsURL)
+        .then(resp => resp.json())
+        .then(recs => this.createRecsDict(recs))
 
-    let title = "Sri Lanka Terrorist Attacks";
-    let last_segment = "sri-lanka";
-    const dataURL = `/data/ER-articles/${last_segment}-cluster.json`;
-    Promise.resolve(d3.json(dataURL)).then(d => {
-      this.setState({data: d});
+  }
+
+  formatDataForArticleView(clusteredData) {
+    return Object.values(clusteredData).map(cluster => cluster.articles)
+  }
+
+  createRecsDict(recs) {
+    let recsDict = {}
+    recs.forEach(rec => {
+      let key = Object.keys(rec)[0]
+      let value = Object.values(rec)[0]
+      recsDict[key] = value
     })
-    //console.log(this.seperateClusters(data))
+    this.setState({recs: recsDict})
   }
-  
+
+  getRecs(key) {
+    let recObj = {}
+    recObj["rec"] = [] 
+    recObj["non_rec"] = []
+
+    if (!(key in this.state.recs)) {return recObj}
+    let recURIObj = this.state.recs[key]
+
+
+    recURIObj.rec.forEach(uri => {
+      let article = this.getArticleByURI(uri)
+      // console.log(typeof(uri), uri)
+      recObj["rec"].push(article)
+    })
+    recURIObj.non_rec.forEach(uri => {
+      // console.log(uri)
+      recObj["non_rec"].push(this.getArticleByURI(uri))
+    })
+
+    return recObj
+  }
+
+  getArticleByURI(uri) {
+    let result
+    
+    Object.values(this.state.dataForArticleView).forEach(cluster => {
+      // console.log(cluster)
+      cluster.forEach(article => {
+        // console.log(uri, typeof(uri))
+        if (article.uri === parseInt(uri)) {
+          // console.log("Found:", article.uri)
+          result = article
+        }
+      })
+    })
+
+    return result
+  }
+
+  leaveArticleView() {
+    this.setState({articleToView: null})
+  }
+
+  setArticleToView(article) {
+    this.setState({articleToView: article})
+  }
+
+  createFakeConcepts() {
+    let concepts = {}
+    for (let i=0;i<5;i++) {
+      concepts[i] = [`concept ${i+1}.1`, `concept ${i+1}.2`]
+    }
+    return concepts
+  }
+
+  createFakeClusters(data) {
+    let clusteredArticles = {}
+    Object.values(data).forEach((entry, index) => {
+      if (clusteredArticles[index%5]) {
+        clusteredArticles[index%5].push(entry)
+      } else {
+        clusteredArticles[index%5] = [entry]
+      }
+    })
+    return clusteredArticles;
+  }
   getArticles(data) {
     let articles = {};
     let i = 0;
@@ -286,6 +411,8 @@ class ClusterViz extends Component {
     }
   }
 
+  
+
   render() {
     if (!this.state.data) { 
       return null //should replace with spinner or sth
@@ -296,23 +423,34 @@ class ClusterViz extends Component {
       const sources = this.getSources(this.state.data);
       const tags = this.getConcepts(data);
       console.log(tags);
-      const { bookmark, popupData, bookmarkList} = this.state;
-      const summaries = this.state.summaries;
+      // const { bookmark, popupData, bookmarkList} = this.state;
+      // const summaries = this.state.summaries;
 
-      const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
+      // const dataForArticleView = this.state.dataForArticleView
+      // const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
+
+      
+      let articleView = <ArticleView 
+        article={this.state.articleToView} 
+        exitView={this.leaveArticleView}
+        setView={this.setArticleToView}
+        getRecs={this.getRecs}
+        />
+
+        let mainView =
+          <div> 
+            <FilterBar sources={sources} tags={tags} filterConcept={this.setConcept} filterSource={this.setFilterSource} filterDate={this.setDayFilter}/>
+            <div id="cluster-viz-container">
+              <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
+            </div>
+          </div>
 
       return (
         <div>
-          <SearchAppBar />
-          <FilterBar sources={sources} tags={tags} filterConcept={this.setConcept} filterSource={this.setFilterSource} filterDate={this.setDayFilter}/>
-          <div id="cluster-viz-container">
-            <div id="title-container">
-              <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
-            </div>
-            <StoryGrid data={articles} tags={tags} />
-          </div>
+            <SearchAppBar storyTitle={this.state.title} />
+          {!this.state.articleToView ? mainView : articleView}
         </div>
-      );
+      )
   }
 
     
