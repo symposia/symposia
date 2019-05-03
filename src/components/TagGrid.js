@@ -6,7 +6,7 @@ import Chip from '@material-ui/core/Chip';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 16,
+    marginTop: 88,
     marginBottom: 16,
 
   },
@@ -18,7 +18,7 @@ const styles = theme => ({
     height: "100%",
     color: "#707070",
     backgroundColor: "#FFFFFF",
-    fontSize: "20px"
+    fontSize: "16px"
 
   },
   control: {

@@ -153,7 +153,7 @@ transition:all .4s ease;
 }
 
 .dropdown-list ul::-webkit-scrollbar-thumb {
-background-color:#a29bfe;
+background-color:#8331FE;
 }
 
 .dropdown-list ul::-webkit-scrollbar {
@@ -349,7 +349,7 @@ color:#EEE;
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #a29bfe;
+  background: #8331FE;
 }
 
 /* Handle on hover */
