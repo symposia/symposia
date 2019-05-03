@@ -1,5 +1,4 @@
 import React from 'react';
-import Select from 'react-select';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,6 +15,13 @@ const styles = theme => ({
   root: {
     width: '100%',
     backgroundColor: '#8331FE',
+  },
+  titlebox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '90%'
+
   },
   grow: {
     flexGrow: 1,
@@ -101,20 +107,10 @@ class SearchAppBar extends React.Component {
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               Symposia
             </Typography>
-            <div className={classes.grow} />
-            <div className={classes.search}>
-              {/* <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div> */}
-              {/* <InputBase
-              placeholder="Search…"
-              value={this.state.concept}
-              onChange={this.handleChange('concept')}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            /> */}
+            <div className={classes.titlebox}>
+              <Typography className={classes.title} variant="h5" color="inherit" noWrap>
+                Sri Lanka Terror Attacks 2019
+              </Typography>
             </div>
           </Toolbar>
         </AppBar>

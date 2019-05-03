@@ -10,6 +10,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 import "./css/ArticleGrid.css";
 import Image from '../images/sri-lanka-mourns-014.jpg';
 import {theme} from '../App.js';
+import Divider from '@material-ui/core/Divider';
+import Lens from '@material-ui/icons/Lens';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 
 let u = Image;
 
@@ -31,7 +36,6 @@ const styles = theme => ({
   card: {
     width: 400,
     height: 300,
-    margin: 24,
     alignItems: '',
     backgroundSize: 'cover',
     position: 'relative'
@@ -41,9 +45,10 @@ const styles = theme => ({
     objectFit: "scale-down",
     height: 75,
     width: 75,
-    marginLeft: 108,
+    //needs responsiveness fix here
+    marginLeft: 85,
     backgroundColor: 'white',
-    marginRight: 24
+    marginRight: 16
   },
   filteredCard: {
     maxWidth: 100,
@@ -61,7 +66,8 @@ const styles = theme => ({
   },
   metadata:  {
     fontSize: '12px',
-    display: 'flex',
+    display: 'inline-block',
+    width: 200,
     color: 'white'
   },
   details:  {
@@ -69,10 +75,35 @@ const styles = theme => ({
     position: 'absolute',
     bottom: '24px',
     left: '24px'
-  }
+  },
+  textmetadata: {
+    width: 200,
+    display: 'block'
+  },
+  icon: {
+    paddingBottom: 4,
+    marginRight: 8
+  },
+  sentiment:  {
+    display: 'flex',
+  },
+  vnegative:  {
+    color: red[900],
+  },
+  negative: {
+    color: red[400],
+  },
+  neutral:  {
+    color: grey[600],
+  },
+  positive: {
+    color: green[400],
+  },
+  vpositive:  {
+    color: green[800],
+  },
 });
 
-//Retrieves the URL of the article and returns the result.
 function getDomain(url) {
   var result;
   var match;
@@ -132,10 +163,22 @@ class ArticleGrid extends React.Component {
                           {value.title}
                         </Typography>
                         <div className={classes.details}>
+                          <div className= {classes.textmetadata}>
+                            <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
+                              {value.date}
+                            </Typography>
+                            <div className={classes.sentiment}>
+                              <Lens className={`${classes.icon} ${classes.negative}`} />
+                              <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
+                                {value.sentiment}
+                              </Typography>
+                            </div>
+                          </div>
+                        {/* <div className={classes.details}>
                           <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" >
                             {value.date}
                             {value.sentiment}
-                          </Typography>
+                          </Typography> */}
                           <CardMedia
                               component="img"
                               alt={value.title}
