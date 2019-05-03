@@ -16,7 +16,7 @@
 
 .article-view-main {
   max-width: 800px;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .av-image {
@@ -68,4 +68,12 @@
   text-decoration: underline;
   color: green;
   /* text-decoration-color: ; */
+}
+
+.av-related-articles {
+  margin-bottom: 40px;
+}
+
+pre {
+  white-space: pre-wrap;
 }
