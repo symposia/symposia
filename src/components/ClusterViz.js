@@ -315,8 +315,11 @@ class ClusterViz extends Component {
   }
 
 
+  
+
   render() {
     const data = this.state.data 
+
     if (!data) {return null}
     const tags = this.state.tags;
     const { bookmark, popupData, bookmarkList} = this.state;

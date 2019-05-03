@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import "./css/ArticleView.css";
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 
 class ArticleView extends Component {
+  
   render() {
+    
     let article = this.props.article;
     let author =
       article.authors.length > 0 ? "By " + article.authors[0].name : null;
@@ -118,14 +122,94 @@ function getDomain(url) {
   return result;
 }
 
+function getWikiSearchText(url) {
+  if(url == null) {
+    return ''
+  }
+
+  let result = url.substring(url.lastIndexOf("/") + 1, url.length)
+  result = result.replace(/_/g, ' ')
+  
+  return result;
+}
+
 class ArticleText extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      concepts: [],
+    }  
+  }
+
+  componentDidMount(props) {
+    let concepts = this.props.article.concepts
+    
+    Object.values(concepts).forEach((entry, index) => {
+      let currConcept = concepts[index]
+      let { uri } = currConcept
+      let wikiSearchText = getWikiSearchText(uri)
+
+ 
+      fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${wikiSearchText}`)
+      .then((resp) => { resp.json()
+        .then((data) => {
+          Object.assign(currConcept, {description: data.description})
+          // currConcept = {...currConcept, ...{description: data.description}}
+          Object.assign(currConcept, {summary: data.extract_html})
+          
+          concepts[index] = currConcept
+          this.setState({concepts: concepts})  
+        })}
+      ) 
+    })
+  }
+
+
+  
   generateOrderOfConcepts(concepts) {
+    concepts = this.state.concepts
     let orderOfConcepts = {}
     let prevWordLength = 0
     concepts.forEach((concept) => {
       this.getCharIndexOfConcept(concept, orderOfConcepts, prevWordLength)
     })
     return this.generateTextBlocks(orderOfConcepts)
+  }
+
+  generateConceptPopup(conceptPhrase, concept){
+    const { description, label, score, summary} = concept
+
+    console.log(Object.keys(concept))
+    console.log(concept)
+    console.log(summary)
+
+    let conceptPhrasePopup = 
+      <Tooltip placement="top"
+          leaveTouchDelay = {1000}
+          title={
+            <Typography color="inherit">
+              <p className="popup-title">
+                {label.eng}
+              </p>
+              <p>
+                <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
+              </p>
+              <p className="popup-description">
+                {description}
+              </p>
+              <p>
+              <div className="popup-summary" dangerouslySetInnerHTML={{ __html: summary }} />
+
+                {/* {summary} */}
+              </p>
+              
+            </Typography>
+          }
+        >
+        { conceptPhrase }
+      </Tooltip>
+
+    return conceptPhrasePopup
   }
 
   generateTextBlocks(orderOfConcepts) {
@@ -154,21 +238,28 @@ class ArticleText extends Component {
     let annotatedText = (
       <p>
         {bodySlices.map((slice, index) => {
-          let conceptPhrase = null
+          let conceptPhrasePopup = null
           if (index < bodySlices.length - 1) {
+            let conceptPhrase = null
             let key = keys[index]
             let concept = orderOfConcepts[key]
             conceptPhrase = (
-              <span className="concept-phrase" href={concept.uri}>{concept.label.eng}</span>
+              <span className="concept-phrase" href={concept.uri}>
+                {concept.label.eng}
+              </span>
             )
+
+            conceptPhrasePopup = this.generateConceptPopup(conceptPhrase, concept)
+
+            // conceptPhrasePopup = conceptPhrase
           } else {
-            conceptPhrase = null
+            conceptPhrasePopup = null
           }
 
           return (
             <span key={index}>
               {slice}
-              {conceptPhrase}
+              {conceptPhrasePopup}
             </span>
           )
         })}
@@ -188,18 +279,21 @@ class ArticleText extends Component {
   }
 
   render() {
-    let article = this.props.article
-    let concepts = article.concepts
-    let annotatedBody = this.generateOrderOfConcepts(concepts)
-    console.log(annotatedBody)
-    let body = annotatedBody ? annotatedBody : article.body
-    return (
-          <div className="av-text">
-            {body}
-            <a href={article.url} target="_blank" rel="noopener noreferrer">
-              Read More...
-            </a>
-          </div>
-    )
+      let article = this.props.article
+      let concepts = this.state.concepts
+      let annotatedBody = this.generateOrderOfConcepts(concepts)
+      console.log(annotatedBody)
+      let body = annotatedBody ? annotatedBody : article.body
+      return (
+            <div className="av-text">
+              {body}
+              <a href={article.url} target="_blank" rel="noopener noreferrer">
+                Read More...
+              </a>
+            </div>
+      )
+    
   }
 }
+
+// class ArticleTextPopup

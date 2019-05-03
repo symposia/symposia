@@ -7,6 +7,8 @@ import Home from "./components/Home";
 import About from "./components/About";
 import ClusterViz from "./components/ClusterViz";
 import logo from "./logo.png";
+// import ArticleView from "./components/ArticleView";
+import ArticleViewPopup from "./components/ArticleViewPopup";
 
 class App extends Component {
   NavBar() {
@@ -47,6 +49,7 @@ class App extends Component {
               path="/story/"
               render={() => <ClusterViz width={1440} height={600} />}
             />
+            <Route path="/ArticleViewPopup/" component={ArticleViewPopup} />
           </main>
         </div>
       </Router>

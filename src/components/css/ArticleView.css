@@ -69,3 +69,12 @@
   color: green;
   /* text-decoration-color: ; */
 }
+
+.popup-title {
+  font-size: large;
+}
+
+.popup-description {
+  color: rgb(178, 180, 182);
+}
+
