@@ -21,7 +21,7 @@ class Home extends Component {
         path:"ukraine-elections"
       },
       {
-        title: "Jode Biden 2020",
+        title: "Joe Biden 2020",
         backgroundImageURL: "https://s3-us-west-2.amazonaws.com/symposia/images/joe-biden-2020.jpg",
         path:"joe-biden-2020"
       },
