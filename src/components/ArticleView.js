@@ -11,6 +11,7 @@ class ArticleView extends Component {
     let author =
       article.authors.length > 0 ? "By " + article.authors[0].name : null;
     let relatedArticles = this.props.relatedArticles;
+    let recs = this.props.getRecs(article.uri)
 
     return (
       <div className="article-view-container">
@@ -53,7 +54,15 @@ class ArticleView extends Component {
         <div>
           <h3>Related Articles</h3>
           <div className="av-related-articles">
-            {relatedArticles.map((article, index) => {
+            {recs["rec"].map((article, index) => {
+              if (!article) {return null}
+              return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
+            })}
+          </div>
+          <h3>Alternate Viewpoints</h3>
+          <div className="av-related-articles">
+            {recs["non_rec"].map((article, index) => {
+              if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
           </div>
@@ -236,7 +245,7 @@ class ArticleText extends Component {
     let keys = Object.keys(orderOfConcepts)
 
     let annotatedText = (
-      <p>
+      <pre>
         {bodySlices.map((slice, index) => {
           let conceptPhrasePopup = null
           if (index < bodySlices.length - 1) {
@@ -263,7 +272,7 @@ class ArticleText extends Component {
             </span>
           )
         })}
-      </p>
+      </pre>
     )
 
     return annotatedText

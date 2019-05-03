@@ -31,6 +31,7 @@ class ClusterViz extends Component {
       selectSecond: false,
       showSummarizerModal: false,
       articleToView: null,
+      recs: null
     };
 
     this.getFirst = this.getFirst.bind(this);
@@ -39,68 +40,74 @@ class ClusterViz extends Component {
 
     this.setArticleToView = this.setArticleToView.bind(this)
     this.leaveArticleView = this.leaveArticleView.bind(this)
+    this.getRecs = this.getRecs.bind(this)
 
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let segment_str = window.location.pathname; // return segment1/segment2/segment3/segment4
     let segment_array = segment_str.split("/");
     let last_segment = segment_array.pop();
     let title;
     let oldData = false;
     let validURL = false;
+    let recsURL;
 
     //handling click actions on homepage of articles
     switch (last_segment) {
-      case "huawei":
-        title = "Huawei CFO Arrest";
-        oldData = true
-        break;
-      case "shutdown":
-        title = "US Government Shutdown";
-        oldData = true
-        break;
-      case "venezuela":
-        title = "Venezeulan Crisis";
-        oldData = true
-        break;
+      // case "huawei":
+      //   title = "Huawei CFO Arrest";
+      //   oldData = true
+      //   break;
+      // case "shutdown":
+      //   title = "US Government Shutdown";
+      //   oldData = true
+      //   break;
+      // case "venezuela":
+      //   title = "Venezeulan Crisis";
+      //   oldData = true
+      //   break;
       case "avengers-endgame":
         title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/avengers-endgame-rec.json"
         validURL = true
         break;
       case "sri-lanka-attacks":
         title = "Sri Lanka Attacks"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/sri-lanka-attacks-rec.json"
         validURL = true
         break;
       case "joe-biden-2020":
         title = "Joe Biden Announces 2020 Presidential Campaign"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/joe-biden-2020-rec.json"
         validURL = true
         break;
       case "ukraine-elections":
         title = "Comedian wins Ukranian Presidential Elections"
+        recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/ukraine-elections-rec.json"
         validURL = true
         break;
       default:
     }
 
     if (oldData) {
-      const dataURL = `/data/articles/${last_segment}.json`;
-      const tagURL = `/data/tags/${last_segment}-tags.json`;
-      const summaryURL = `/data/summaries/${last_segment}-summary.json`;
+      // const dataURL = `/data/articles/${last_segment}.json`;
+      // const tagURL = `/data/tags/${last_segment}-tags.json`;
+      // const summaryURL = `/data/summaries/${last_segment}-summary.json`;
 
-      Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
-        this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
-        this.filter(this.state.data);
-        console.log(this.state.data);
-        console.log(this.state.tags);
-      });
+      // Promise.all([d3.json(dataURL), d3.json(tagURL), d3.json(summaryURL)]).then(data => {
+      //   this.setState({ data: this.seperateClusters(data[0]), tags: data[1], summaries: data[2],  title: title });
+      //   this.filter(this.state.data);
+      //   console.log(this.state.data);
+      //   console.log(this.state.tags);
+      // });
     } else if (validURL) {
       const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/articles/${last_segment}.json`
       fetch(dataURL)
         .then(resp => resp.json())
         .then(rawArticles => {
           let clusteredArticles = this.createFakeClusters(rawArticles)
-          console.log(clusteredArticles)
+          // console.log(clusteredArticles)
           this.setState({
             data: clusteredArticles,
             tags: this.createFakeConcepts(),
@@ -108,8 +115,59 @@ class ClusterViz extends Component {
           })
           console.log()
         })
+      fetch(recsURL)
+        .then(resp => resp.json())
+        .then(recs => this.createRecsDict(recs))
     }
 
+  }
+
+  createRecsDict(recs) {
+    let recsDict = {}
+    recs.forEach(rec => {
+      let key = Object.keys(rec)[0]
+      let value = Object.values(rec)[0]
+      recsDict[key] = value
+    })
+    this.setState({recs: recsDict})
+  }
+
+  getRecs(key) {
+    let recObj = {}
+    recObj["rec"] = [] 
+    recObj["non_rec"] = []
+
+    if (!(key in this.state.recs)) {return recObj}
+    let recURIObj = this.state.recs[key]
+
+
+    recURIObj.rec.forEach(uri => {
+      let article = this.getArticleByURI(uri)
+      // console.log(typeof(uri), uri)
+      recObj["rec"].push(article)
+    })
+    recURIObj.non_rec.forEach(uri => {
+      // console.log(uri)
+      recObj["non_rec"].push(this.getArticleByURI(uri))
+    })
+
+    return recObj
+  }
+
+  getArticleByURI(uri) {
+    let result
+    
+    Object.values(this.state.data).forEach(cluster => {
+      // console.log(cluster)
+      cluster.forEach(article => {
+        if (article.uri === uri) {
+          // console.log("Found:", article.uri)
+          result = article
+        }
+      })
+    })
+
+    return result
   }
 
   leaveArticleView() {
@@ -321,6 +379,13 @@ class ClusterViz extends Component {
     const data = this.state.data 
 
     if (!data) {return null}
+
+    // if (this.state.recs) {
+    //   // let article = this.getArticleByURI("1123380592")
+    //   // console.log(article)
+    //   console.log(this.getRecs("1123380592"))
+    // }
+
     const tags = this.state.tags;
     const { bookmark, popupData, bookmarkList} = this.state;
     const summaries = this.state.summaries;
@@ -334,6 +399,7 @@ class ClusterViz extends Component {
       exitView={this.leaveArticleView}
       setView={this.setArticleToView}
       relatedArticles={data[4].splice(0,4)}
+      getRecs={this.getRecs}
       />
     let title = (
         <div id="title-container">

@@ -16,7 +16,7 @@
 
 .article-view-main {
   max-width: 800px;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .av-image {
@@ -78,3 +78,10 @@
   color: rgb(178, 180, 182);
 }
 
+.av-related-articles {
+  margin-bottom: 40px;
+}
+
+pre {
+  white-space: pre-wrap;
+}
