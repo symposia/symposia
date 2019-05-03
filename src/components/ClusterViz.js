@@ -6,7 +6,7 @@ import ZoomSlider from "./ZoomSlider";
 import StoryGrid from "./StoryGrid";
 import Popup from "./Popup";
 import Bookmark from "./Bookmark";
-import { PropTypes } from 'react'
+import { PropTypes } from 'react';
 import { ReactContext } from '../Context'
 import SummarizerModal from "./SummarizerModal";
 import SearchAppBar from "./SearchAppBar";
@@ -19,17 +19,13 @@ class ClusterViz extends Component {
     this.state = {
       data: null,
       sources: null,
-      days: 30,
+      days: null,
       title: "",
-      popupData: null,
+      concept: null,
       bookmarkList: new Map(),
       filteredSources: null,
-      article1: null,
-      article2: null,
       tags: null,
-      summaries: null,
-      selectSecond: false,
-      showSummarizerModal: false,
+      clusterNum: 0
     };
 
     this.getFirst = this.getFirst.bind(this);
@@ -37,6 +33,7 @@ class ClusterViz extends Component {
     this.selectSecond = this.selectSecond.bind(this);
     this.setFilterSource = this.setFilterSource.bind(this);
     this.setDayFilter = this.setDayFilter.bind(this);
+    this.setConcept = this.setConcept.bind(this);
   }
 
   componentDidMount() {
@@ -70,8 +67,8 @@ class ClusterViz extends Component {
     let title = "Sri Lanka Terrorist Attacks";
     let last_segment = "sri-lanka";
     const dataURL = `/data/ER-articles/${last_segment}-cluster.json`;
-    Promise.resolve(d3.json(dataURL)).then(data => {
-      this.setState({data: this.getArticles(data), tags: this.getConcepts(data), sources: this.getSources(data)});
+    Promise.resolve(d3.json(dataURL)).then(d => {
+      this.setState({data: d});
     })
     //console.log(this.seperateClusters(data))
   }
@@ -87,21 +84,20 @@ class ClusterViz extends Component {
     return articles;
   }
 
-  getConcepts(data) { 
+  getConcepts(data) {
     let concepts = {};
     let i = 0;
     Object.values(data).forEach(entry => {
       concepts[i] = entry.concepts;
       i = i + 1;
     });
-
     return concepts;
   }
 
   getSources(data) {
     let sourceSet = new Set();
     Object.values(data).forEach(entry => {
-      Object.values(entry.articles).forEach(article => {
+      Object.values(entry).forEach(article => {
         sourceSet.add(article.source.title);
       });
     });
@@ -162,56 +158,166 @@ class ClusterViz extends Component {
   //   this.setState({selectSecond: false})
   // }
 
-  applyFilterToAllArticles(data) {
-    if (this.state.filteredSources == null) {
-      return data;
+  numDaysBetween(d1, d2) {
+    var diff = Math.abs(d1.getTime() - d2.getTime());
+    return diff / (1000 * 60 * 60 * 24);
+  };
+
+  getDate(d) {
+    if (d !== "" || d !== null) {
+      var date = d.split("/")
+      return new Date(date[2], date[0]-1, date[1])
     }
-    let result = data;
-    Object.values(result).forEach(entry => {
-      Object.values(entry).forEach(article => {
-        if (this.state.filteredSources.includes(article.source.title)) {
-          article["filterOut"] = true
-        } else {
-          article.filterOut = false
-        }
-      });
-    });
+    return new Date();
+  }
+
+  checkSource(title) {
+    return this.state.filteredSources.includes(title);
+  }
+
+  checkDate(articleDate) {
+    let dateDiff = this.numDaysBetween(this.getDate(articleDate), new Date());
+    return dateDiff <= this.state.days;
+  }
+
+  // checkSentiment(sentimentArticle) {
+  //   return 
+  // }
+
+  getLowerConcepts(articleConcepts) {
+    var lower = [];
+    for (var i = 0; i < articleConcepts.length; i++) {
+        lower.push(articleConcepts[i].toLowerCase());
+    }
+    return lower;
+  } 
+
+  checkConcept(articleConcepts) {
+    return articleConcepts.includes(this.state.concept)
+  }
+
+  getAllFilters(article, filters) {
+    let f = []
+    if(filters[0] !== null) {
+      f.push(this.checkSource(article.source.title));
+    } 
+    if(filters[1] !== null) {
+      f.push(this.checkDate(article.date));
+    }
+    if(filters[2] !== null) {
+      f.push(this.checkConcept(this.getLowerConcepts(article.conceptList)));
+    }
+    return f.every(this.checkIfTrue);
+  }
+
+  checkIfNull(filter) {
+    return filter == null;
+  }
+
+  checkIfTrue(filterResult) {
+    return filterResult == true;
+  }
+
+  applyFilterToAllArticles(data) {
+    console.log(this.state.concept);
+    console.log(data);
+    let filters = [this.state.filteredSources, this.state.days, this.state.concept];
+    if (filters.every(this.checkIfNull)) {
+      return data;
+    } 
+    let result = JSON.parse(JSON.stringify(data));
+    if (this.state.concept === null) {
+      Object.values(result).forEach(entry => {
+        Object.values(entry.articles).forEach(article => {
+          if (this.getAllFilters(article, filters)) {
+              article.filterOut = false;
+            } else {
+              article.filterOut = true;
+            }
+        });
+      })
+    } else {
+      let clust1 = Object.values(result)[0];
+      clust1.concepts = [this.state.concept];
+      let fitArticles = [];
+      Object.values(result).forEach(entry => {
+        Object.values(entry.articles).forEach(article => {
+          if (this.getAllFilters(article, filters)) {
+              fitArticles.push(article);
+          }
+        });
+      })
+      clust1.articles = fitArticles;
+
+      Object.values(result).slice(1).forEach(entry => {
+        entry.concepts = []
+        entry.articles = []
+      })
+      // Object.values(result)[0].concepts = [this.state.concept];
+      // Object.values()
+    }
     console.log(result);
     return result;
+    
   }
 
   setFilterSource(checkedSources) {
-    this.setState({filteredSources: checkedSources});
+    if (checkedSources.length > 0) {
+      this.setState({filteredSources: checkedSources});
+    } else {
+      this.setState({filteredSources: null})
+    }
   }
 
-  setDayFilter(days) {
-    this.setState({days: days})
-    console.log(this.state.days);
+  setDayFilter(day) {
+    if (day > 0) {
+      this.setState({days: day});
+    }
+  }
+
+  setConcept(concept) {
+    this.setState({concept: concept});
+  }
+
+  getTags(data) {
+    if (this.state.concept !== null) {
+      return this.state.concept;
+    } else {
+      return this.state.tags;
+    }
   }
 
   render() {
-    const data = this.applyFilterToAllArticles(this.state.data);
-    const sources = this.state.sources;
-    const tags = this.state.tags;
-    const { bookmark, popupData, bookmarkList} = this.state;
-    const summaries = this.state.summaries;
+    if (!this.state.data) { 
+      return null //should replace with spinner or sth
+    } else {
+      const key = Object.keys(this.state.data)[this.state.clusterNum];
+      const data = this.applyFilterToAllArticles(this.state.data);
+      const articles = this.getArticles(data);
+      console.log(articles);
+      const sources = this.getSources(articles);
+      const tags = this.getConcepts(data);
+      console.log(tags);
+      const { bookmark, popupData, bookmarkList} = this.state;
+      const summaries = this.state.summaries;
 
-    const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
+      const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
 
-    if (!data) { return null }
-
-    return (
-      <div>
-        <SearchAppBar />
-        <FilterBar sources={sources} filterSource={this.setFilterSource} filterDate={this.setDayFilter}/>
-        <div id="cluster-viz-container">
-          <div id="title-container">
-            <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
+      return (
+        <div>
+          <SearchAppBar />
+          <FilterBar sources={sources} tags={tags} filterConcept={this.setConcept} filterSource={this.setFilterSource} filterDate={this.setDayFilter}/>
+          <div id="cluster-viz-container">
+            <div id="title-container">
+              <h1 id="title">{this.state.title != null ? this.state.title : "title"}</h1>
+            </div>
+            <StoryGrid data={articles} tags={tags} />
           </div>
-          <StoryGrid data={data} tags={tags} />
         </div>
-      </div>
-    );
+      );
+  }
+
+    
   }
 }
 
