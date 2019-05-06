@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
+import purple from '@material-ui/core/colors/purple';
+import yellow from '@material-ui/core/colors/yellow';
 import Radio from '@material-ui/core/Radio';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
@@ -126,9 +128,9 @@ const styles = theme => ({
     marginRight: 50,
   },
   vnegative:  {
-    color: red[900],
+    color: purple[900],
     '&$checked': {
-      color: red[800],
+      color: purple[900],
     },
   },
   negative: {
@@ -150,9 +152,9 @@ const styles = theme => ({
     },
   },
   vpositive:  {
-    color: green[800],
+    color: yellow[800],
     '&$checked': {
-      color: green[700],
+      color: yellow[700],
     },
   },
   checked: {},
@@ -337,7 +339,7 @@ class FilterBar extends React.Component {
                   <Checkbox
                     icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                     checkedIcon={<CheckBoxIcon fontSize="small" />}
-                    checked={this.state.checked5}
+                    checked={this.state.checked3}
                     onChange={this.handleChange('checked3')}
                     value="checked3"
                     aria-label="Very Positive"
@@ -386,7 +388,7 @@ class FilterBar extends React.Component {
             </div> */}
             <div className={classes.grow} />
             
-            <ConceptSelect tags={this.props.tags} filterConcept={this.props.filterConcept}/>
+            <ConceptSelect conceptList={this.props.conceptList} filterConcept={this.props.filterConcept}/>
 
             <div className={classes.grow} />
             

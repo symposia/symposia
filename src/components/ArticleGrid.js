@@ -15,6 +15,8 @@ import Lens from '@material-ui/icons/Lens';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
+import purple from '@material-ui/core/colors/purple';
+import yellow from '@material-ui/core/colors/yellow';
 
 let u = Image;
 
@@ -88,7 +90,7 @@ const styles = theme => ({
     display: 'flex',
   },
   vnegative:  {
-    color: red[900],
+    color: purple[900],
   },
   negative: {
     color: red[400],
@@ -100,7 +102,7 @@ const styles = theme => ({
     color: green[400],
   },
   vpositive:  {
-    color: green[800],
+    color: yellow[800],
   },
 });
 
@@ -140,6 +142,21 @@ class ArticleGrid extends React.Component {
     return value.filterOut ? "filter-out" : ""
   }
 
+  getSentimentColor(sentiment) {
+    const { classes } = this.props;
+    if (sentiment <= -0.5) {
+      return classes.vnegative;
+    } else if (sentiment > -0.5 && sentiment <= -0.1) {
+      return classes.negative;
+    } else if (sentiment > -0.1 && sentiment <= 0.1) {
+      return classes.neutral;
+    } else if (sentiment >= 0.1 && sentiment < 0.5) {
+      return classes.positive;
+    } else if (sentiment >= 0.5) {
+      return classes.vpositive;
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;
@@ -172,7 +189,7 @@ class ArticleGrid extends React.Component {
                               {value.date}
                             </Typography>
                             <div className={classes.sentiment}>
-                              <Lens className={`${classes.icon} ${classes.negative}`} />
+                              <Lens className={`${classes.icon} ${this.getSentimentColor(value.sentiment)}`} />
                               <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
                                 {value.sentiment}
                               </Typography>
