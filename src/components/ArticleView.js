@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import "./css/ArticleView.css";
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import { getDomain } from './Helpers'
+import Lens from '@material-ui/icons/Lens';
+import red from '@material-ui/core/colors/red';
+import Button from '@material-ui/core/Button';
 
 class ArticleView extends Component {
   
@@ -15,7 +19,10 @@ class ArticleView extends Component {
     return (
       <div className="article-view-container">
         <div className="article-view-exit-container">
-          <button onClick={this.props.exitView}> Back to Story </button>
+          <Button variant="contained" onClick={this.props.exitView}> 
+            Back to Articles 
+          </Button>
+          {/* <button onClick={this.props.exitView}> Back to Story </button> */}
         </div>
         <div className="article-view-main">
           <div className="av-main-header">
@@ -51,14 +58,14 @@ class ArticleView extends Component {
           <ArticleText article={this.props.article} />
         </div>
         <div>
-          <h3>Related Articles</h3>
+          <h3>Similar Perspectives</h3>
           <div className="av-related-articles">
             {recs["rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
           </div>
-          <h3>Alternate Viewpoints</h3>
+          <h3>Alternate Prespectives</h3>
           <div className="av-related-articles">
             {recs["non_rec"].map((article, index) => {
               if (!article) {return null}
@@ -88,20 +95,31 @@ class ArticleConcept extends Component {
 class RelatedArticle extends Component {
   render() {
     let article = this.props.article;
-    let author =
+    console.log(article);
+    let authorText =
       article.authors.length > 0 ? "By " + article.authors[0].name : null;
+    let author = authorText ? <div className="ra-author">{authorText}</div> : <div></div>
+    let imageURL = article.image
     return (
-      <div className="related-article">
+      <div className="related-article" style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(${imageURL}`}} >
         <div className="ra-title" onClick={()=>{this.props.setView(article)}}>{article.title}</div>
-        <div className="ra-sentiment">{article.sentiment}</div>
-        <div className="ra-concepts">
+        <div>
+          <div className="ra-date">{article.date}</div>
+          <div className="ra-sentiment">
+            <Lens style={{
+              margin: 8,
+              color: red[400]
+            }} />
+            {article.sentiment}
+          </div>
+        </div>
+        <div className="ra-source"><img src={`http://logo.clearbit.com/${getDomain(article.url)}`} alt="source" /></div>
+        {/* <div className="ra-concepts">
           {article.concepts.slice(0, 4).map((concept, index) => {
             return <ArticleConcept key={index} concept={concept} />;
           })}
-        </div>
-        {author != null ? <div className="ra-author">
-          {author}
-        </div> : <div></div>}
+        </div> */}
+        {/* {author} */}
       </div>
     );
   }
@@ -109,26 +127,26 @@ class RelatedArticle extends Component {
 
 export default ArticleView;
 
-function getDomain(url) {
-  if (url == null) {
-      return '';
-  }
+// function getDomain(url) {
+//   if (url == null) {
+//       return '';
+//   }
 
-  var result;
-  var match;
+//   var result;
+//   var match;
 
-  if (
-      (match = url.match(
-      /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im
-      ))
-  ) {
-      result = match[1];
-      if ((match = result.match(/^[^\.]+\.(.*\..*\..+)$/))) {
-      result = match[1];
-      }
-  }
-  return result;
-}
+//   if (
+//       (match = url.match(
+//       /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im
+//       ))
+//   ) {
+//       result = match[1];
+//       if ((match = result.match(/^[^\.]+\.(.*\..*\..+)$/))) {
+//       result = match[1];
+//       }
+//   }
+//   return result;
+// }
 
 function getWikiSearchText(url) {
   if(url == null) {
@@ -187,9 +205,9 @@ class ArticleText extends Component {
   generateConceptPopup(conceptPhrase, concept){
     const { description, label, score, summary, uri} = concept
 
-    console.log(Object.keys(concept))
-    console.log(concept)
-    console.log(summary)
+    // console.log(Object.keys(concept))
+    // console.log(concept)
+    // console.log(summary)
 
     let conceptPhrasePopup = 
       <Tooltip placement="top"
@@ -290,7 +308,7 @@ class ArticleText extends Component {
       let article = this.props.article
       let concepts = this.state.concepts
       let annotatedBody = this.generateOrderOfConcepts(concepts)
-      console.log(annotatedBody)
+      // console.log(annotatedBody)
       let body = annotatedBody ? annotatedBody : article.body
       return (
             <div className="av-text">

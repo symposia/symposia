@@ -172,6 +172,7 @@ class ClusterViz extends Component {
   }
 
   leaveArticleView() {
+    window.scrollTo(0, 0)
     this.setState({articleToView: null})
   }
 
