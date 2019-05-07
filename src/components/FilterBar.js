@@ -216,11 +216,11 @@ class FilterBar extends React.Component {
     open: false,
     range: 1,
     checked: [],
-    checked1: true,
-    checked2: true,
-    checked3: true,
-    checked4: true,
-    checked5: true
+    vnegative: false,
+    negative: false,
+    neutral: false,
+    positive: false,
+    vpositive: false
   };
 
   //toggle for the source filters
@@ -253,7 +253,9 @@ class FilterBar extends React.Component {
   };
 
   handleChange = name => event => {
+    console.log(name, event.target.checked);
     this.setState({ [name]: event.target.checked });
+    this.props.filterSentiment(name, event.target.checked);
   };
 
   //Toggle for the filter button
@@ -305,9 +307,9 @@ class FilterBar extends React.Component {
                   <Checkbox
                     icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                     checkedIcon={<CheckBoxIcon fontSize="small" />}
-                    checked={this.state.checked1}
-                    onChange={this.handleChange('checked1')}
-                    value="checked1"
+                    checked={this.state.vnegative}
+                    onChange={this.handleChange('vnegative')}
+                    value="vnegative"
                     aria-label="Very Negative"
                     classes={{
                       checked: classes.checked,
@@ -322,9 +324,9 @@ class FilterBar extends React.Component {
                   <Checkbox
                     icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                     checkedIcon={<CheckBoxIcon fontSize="small" />}
-                    checked={this.state.checked2}
-                    onChange={this.handleChange('checked2')}
-                    value="checked2"
+                    checked={this.state.negative}
+                    onChange={this.handleChange('negative')}
+                    value="negative"
                     aria-label="Negative"
                     classes={{
                       checked: classes.checked,
@@ -339,10 +341,10 @@ class FilterBar extends React.Component {
                   <Checkbox
                     icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                     checkedIcon={<CheckBoxIcon fontSize="small" />}
-                    checked={this.state.checked3}
-                    onChange={this.handleChange('checked3')}
-                    value="checked3"
-                    aria-label="Very Positive"
+                    checked={this.state.neutral}
+                    onChange={this.handleChange('neutral')}
+                    value="neutral"
+                    aria-label="Neutral"
                     classes={{
                       checked: classes.checked,
                     }}
@@ -356,9 +358,9 @@ class FilterBar extends React.Component {
                   <Checkbox
                     icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                     checkedIcon={<CheckBoxIcon fontSize="small" />}
-                    checked={this.state.checked4}
-                    onChange={this.handleChange('checked4')}
-                    value="checked4"
+                    checked={this.state.positive}
+                    onChange={this.handleChange('positive')}
+                    value="positive"
                     aria-label="Positive"
                     classes={{
                       checked: classes.checked,
@@ -373,9 +375,9 @@ class FilterBar extends React.Component {
                   <Checkbox
                     icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                     checkedIcon={<CheckBoxIcon fontSize="small" />}
-                    checked={this.state.checked5}
-                    onChange={this.handleChange('checked5')}
-                    value="checked5"
+                    checked={this.state.vpositive}
+                    onChange={this.handleChange('vpositive')}
+                    value="vpositive"
                     aria-label="Very Positive"
                     classes={{
                       checked: classes.checked,

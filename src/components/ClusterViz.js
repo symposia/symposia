@@ -24,6 +24,7 @@ class ClusterViz extends Component {
       dataForArticleView: null,
       title: "",
       concept: null,
+      sentiment: null,
       bookmarkList: new Map(),
       filteredSources: null,
       tags: null,
@@ -40,11 +41,12 @@ class ClusterViz extends Component {
     this.selectSecond = this.selectSecond.bind(this);
     this.setFilterSource = this.setFilterSource.bind(this);
     this.setDayFilter = this.setDayFilter.bind(this);
+    this.setSentiment = this.setSentiment.bind(this);
     this.setConcepts = this.setConcepts.bind(this);
     this.setArticleToView = this.setArticleToView.bind(this)
     this.leaveArticleView = this.leaveArticleView.bind(this)
     this.getRecs = this.getRecs.bind(this)
-
+    
   }
 
   componentWillMount() {
@@ -198,6 +200,7 @@ class ClusterViz extends Component {
     })
     return clusteredArticles;
   }
+
   getArticles(data) {
     let articles = {};
     let i = 0;
@@ -342,6 +345,7 @@ class ClusterViz extends Component {
   } 
 
   checkConcept(articleConcepts) {
+    console.log(this.state.concept);
     let exists = true;
     Object.values(this.state.concept).forEach(concept => {
       if (articleConcepts.includes(concept) == false) {
@@ -349,6 +353,28 @@ class ClusterViz extends Component {
       }
     });
     return exists;
+  }
+
+  returnSentimentDec(sent, sentiment) {
+    if (sent == "vnegative") {
+      return sentiment <= -0.5;
+    } else if (sent == "negative") {
+      return sentiment > -0.5 && sentiment <= -0.1;
+    } else if (sent == "neutral") {
+      return sentiment > -0.1 && sentiment <= 0.1;
+    } else if (sent == "positive") {
+      return sentiment >= 0.1 && sentiment < 0.5;
+    } else if (sent == "vpositive") {
+      return sentiment >= 0.5;
+    }
+  }
+
+  checkSentiment(sentiment) {
+    let isValid = [];
+    Object.values(this.state.sentiment).forEach(sent => {
+      isValid.push(this.returnSentimentDec(sent, sentiment));
+    });
+    return !(isValid.every(this.checkIfFalse));
   }
 
   getAllFilters(article, filters) {
@@ -362,7 +388,10 @@ class ClusterViz extends Component {
     if(filters[2] !== null) {
       f.push(this.checkConcept(article.conceptList));
     }
-    console.log(f);
+    if(filters[3] !== null) {
+      f.push(this.checkSentiment(article.sentiment));
+    }
+
     return f.every(this.checkIfTrue);
   }
 
@@ -374,8 +403,12 @@ class ClusterViz extends Component {
     return filterResult == true;
   }
 
+  checkIfFalse(filterResult) {
+    return filterResult == false;
+  }
+
   applyFilterToAllArticles(data) {
-    let filters = [this.state.filteredSources, this.state.days, this.state.concept];
+    let filters = [this.state.filteredSources, this.state.days, this.state.concept, this.state.sentiment];
     if (filters.every(this.checkIfNull)) {
       return data;
     } 
@@ -403,7 +436,6 @@ class ClusterViz extends Component {
           }
         });
       })
-      console.log(fitArticles);
       clust1.articles = fitArticles;
 
 
@@ -414,8 +446,26 @@ class ClusterViz extends Component {
       // Object.values(result)[0].concepts = [this.state.concept];
       // Object.values()
     }
-    console.log(result);
     return result;
+  }
+
+  setSentiment(name, add) {
+    if (this.state.sentiment === null) {
+      this.setState({sentiment: [name]})
+    } else {
+      if (add) {
+        let a = this.state.sentiment.concat(name);
+        this.setState({sentiment: a})
+      } else {
+        var index = this.state.sentiment.indexOf(name);
+        let a = this.state.sentiment.filter(e => e !== name)
+        if (a.length == 0) {
+          this.setState({sentiment: null});
+        } else {
+          this.setState({sentiment: a})
+        }
+      }
+    }
   }
 
   setFilterSource(checkedSources) {
@@ -442,7 +492,6 @@ class ClusterViz extends Component {
     } else {
       this.setState({concept: null});
     }
-    console.log(this.state.concept);
   }
 
   getTags(data) {
@@ -480,7 +529,7 @@ class ClusterViz extends Component {
 
         let mainView =
           <div> 
-            <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter}/>
+            <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
             <div id="cluster-viz-container">
               <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
             </div>
