@@ -15,7 +15,11 @@ class ArticleView extends Component {
     let author =
       article.authors.length > 0 ? "By " + article.authors[0].name : null;
     let recs = this.props.getRecs(article.uri)
-
+    let authorElement = (
+              <div className="author" style={author ? {marginRight: '20px'} : {}}>
+                <p> {author} </p>
+              </div>
+    )
     return (
       <div className="article-view-container">
         <div className="article-view-exit-container">
@@ -40,19 +44,23 @@ class ArticleView extends Component {
             <img src={article.image} alt={article.title} />
           </div>
           <div className="av-details">
-            <div className="author">
-              <p> {author} </p>
-            </div>
-            <div className="concepts">
-              {article.concepts.slice(0, 4).map((concept, index) => {
-                return <ArticleConcept key={index} concept={concept} />;
-              })}
+            <div className="first-row">
+              {authorElement}
+              <div className="concepts">
+                {article.concepts.slice(0, 4).map((concept, index) => {
+                  return <ArticleConcept key={index} concept={concept} />;
+                })}
+              </div>
             </div>
             <div className="date">
-              <p>{article.date}</p>
+              {article.date}
             </div>
             <div className="sentiment">
-              <p>sentiment: {article.sentiment}</p>
+              <Lens style={{
+                margin: 8,
+                color: red[400]
+              }} />
+              {article.sentiment}
             </div>
           </div>
           <ArticleText article={this.props.article} />
