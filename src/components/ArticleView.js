@@ -52,11 +52,11 @@ class ArticleView extends Component {
           <div className="av-details">
             <div className="first-row">
               {authorElement}
-              <div className="concepts">
+              {/* <div className="concepts">
                 {article.concepts.slice(0, 4).map((concept, index) => {
                   return <ArticleConcept key={index} concept={concept} />;
                 })}
-              </div>
+              </div> */}
             </div>
             <div className="date">
               {article.date}
