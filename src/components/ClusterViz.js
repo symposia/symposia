@@ -24,6 +24,7 @@ class ClusterViz extends Component {
       dataForArticleView: null,
       title: "",
       concept: null,
+      sentiment: null,
       bookmarkList: new Map(),
       filteredSources: null,
       tags: null,
@@ -40,11 +41,12 @@ class ClusterViz extends Component {
     this.selectSecond = this.selectSecond.bind(this);
     this.setFilterSource = this.setFilterSource.bind(this);
     this.setDayFilter = this.setDayFilter.bind(this);
-    this.setConcept = this.setConcept.bind(this);
+    this.setSentiment = this.setSentiment.bind(this);
+    this.setConcepts = this.setConcepts.bind(this);
     this.setArticleToView = this.setArticleToView.bind(this)
     this.leaveArticleView = this.leaveArticleView.bind(this)
     this.getRecs = this.getRecs.bind(this)
-
+    
   }
 
   componentWillMount() {
@@ -198,6 +200,7 @@ class ClusterViz extends Component {
     })
     return clusteredArticles;
   }
+
   getArticles(data) {
     let articles = {};
     let i = 0;
@@ -208,12 +211,37 @@ class ClusterViz extends Component {
     return articles;
   }
 
-  getConcepts(data) {
+  getClusterConcepts(data) {
     let concepts = {};
     let i = 0;
     Object.values(data).forEach(entry => {
       concepts[i] = entry.concepts;
       i = i + 1;
+    });
+    return concepts;
+  }
+
+  getAllConcepts(data) {
+    // let concepts = {};
+    // let i = 0;
+    // Object.values(data).forEach(entry => { 
+    //   Object.values(entry.articles).forEach(article => {
+    //     concepts[i] = article.conceptList;
+    //     i = i + 1;
+    //   });
+    // });
+
+    let concepts = [];
+    let conceptSet = new Set();
+    Object.values(data).forEach(entry => { 
+      Object.values(entry.articles).forEach(article => {
+        Object.values(article.conceptList).forEach(tag => {
+          if (!conceptSet.has(tag)) {
+              conceptSet.add(tag);
+              concepts.push({value: tag.toLowerCase(), label: tag});
+          }
+        });
+      });
     });
     return concepts;
   }
@@ -317,7 +345,36 @@ class ClusterViz extends Component {
   } 
 
   checkConcept(articleConcepts) {
-    return articleConcepts.includes(this.state.concept)
+    console.log(this.state.concept);
+    let exists = true;
+    Object.values(this.state.concept).forEach(concept => {
+      if (articleConcepts.includes(concept) == false) {
+        exists = false;
+      }
+    });
+    return exists;
+  }
+
+  returnSentimentDec(sent, sentiment) {
+    if (sent == "vnegative") {
+      return sentiment <= -0.5;
+    } else if (sent == "negative") {
+      return sentiment > -0.5 && sentiment <= -0.1;
+    } else if (sent == "neutral") {
+      return sentiment > -0.1 && sentiment <= 0.1;
+    } else if (sent == "positive") {
+      return sentiment >= 0.1 && sentiment < 0.5;
+    } else if (sent == "vpositive") {
+      return sentiment >= 0.5;
+    }
+  }
+
+  checkSentiment(sentiment) {
+    let isValid = [];
+    Object.values(this.state.sentiment).forEach(sent => {
+      isValid.push(this.returnSentimentDec(sent, sentiment));
+    });
+    return !(isValid.every(this.checkIfFalse));
   }
 
   getAllFilters(article, filters) {
@@ -329,8 +386,12 @@ class ClusterViz extends Component {
       f.push(this.checkDate(article.date));
     }
     if(filters[2] !== null) {
-      f.push(this.checkConcept(this.getLowerConcepts(article.conceptList)));
+      f.push(this.checkConcept(article.conceptList));
     }
+    if(filters[3] !== null) {
+      f.push(this.checkSentiment(article.sentiment));
+    }
+
     return f.every(this.checkIfTrue);
   }
 
@@ -342,10 +403,12 @@ class ClusterViz extends Component {
     return filterResult == true;
   }
 
+  checkIfFalse(filterResult) {
+    return filterResult == false;
+  }
+
   applyFilterToAllArticles(data) {
-    console.log(this.state.concept);
-    console.log(data);
-    let filters = [this.state.filteredSources, this.state.days, this.state.concept];
+    let filters = [this.state.filteredSources, this.state.days, this.state.concept, this.state.sentiment];
     if (filters.every(this.checkIfNull)) {
       return data;
     } 
@@ -362,16 +425,19 @@ class ClusterViz extends Component {
       })
     } else {
       let clust1 = Object.values(result)[0];
-      clust1.concepts = [this.state.concept];
+      clust1.concepts = this.state.concept;
       let fitArticles = [];
+      let fitTitles = new Set();
       Object.values(result).forEach(entry => {
         Object.values(entry.articles).forEach(article => {
-          if (this.getAllFilters(article, filters)) {
+          if (this.getAllFilters(article, filters) && !fitTitles.has(article.title)) {
               fitArticles.push(article);
+              fitTitles.add(article.title)
           }
         });
       })
       clust1.articles = fitArticles;
+
 
       Object.values(result).slice(1).forEach(entry => {
         entry.concepts = []
@@ -380,9 +446,26 @@ class ClusterViz extends Component {
       // Object.values(result)[0].concepts = [this.state.concept];
       // Object.values()
     }
-    console.log(result);
     return result;
-    
+  }
+
+  setSentiment(name, add) {
+    if (this.state.sentiment === null) {
+      this.setState({sentiment: [name]})
+    } else {
+      if (add) {
+        let a = this.state.sentiment.concat(name);
+        this.setState({sentiment: a})
+      } else {
+        var index = this.state.sentiment.indexOf(name);
+        let a = this.state.sentiment.filter(e => e !== name)
+        if (a.length == 0) {
+          this.setState({sentiment: null});
+        } else {
+          this.setState({sentiment: a})
+        }
+      }
+    }
   }
 
   setFilterSource(checkedSources) {
@@ -399,8 +482,16 @@ class ClusterViz extends Component {
     }
   }
 
-  setConcept(concept) {
-    this.setState({concept: concept});
+  setConcepts(concepts) {
+    if (concepts.length > 0) {
+      let conceptList = []
+      Object.values(concepts).forEach(concept => {
+        conceptList.push(concept.label);
+      });
+      this.setState({concept: conceptList});
+    } else {
+      this.setState({concept: null});
+    }
   }
 
   getTags(data) {
@@ -411,8 +502,6 @@ class ClusterViz extends Component {
     }
   }
 
-  
-
   render() {
     if (!this.state.data) { 
       return null //should replace with spinner or sth
@@ -421,8 +510,9 @@ class ClusterViz extends Component {
       const data = this.applyFilterToAllArticles(this.state.data);
       const articles = this.getArticles(data);
       const sources = this.getSources(this.state.data);
-      const tags = this.getConcepts(data);
-      console.log(tags);
+      const tags = this.getClusterConcepts(data);
+      const conceptList = this.getAllConcepts(this.state.data);
+
       // const { bookmark, popupData, bookmarkList} = this.state;
       // const summaries = this.state.summaries;
 
@@ -439,7 +529,7 @@ class ClusterViz extends Component {
 
         let mainView =
           <div> 
-            <FilterBar sources={sources} tags={tags} filterConcept={this.setConcept} filterSource={this.setFilterSource} filterDate={this.setDayFilter}/>
+            <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
             <div id="cluster-viz-container">
               <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
             </div>
@@ -451,9 +541,7 @@ class ClusterViz extends Component {
           {!this.state.articleToView ? mainView : articleView}
         </div>
       )
-  }
-
-    
+    }
   }
 }
 

@@ -12,46 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
-const suggestions = [
-  { label: 'Afghanistan' },
-  { label: 'Aland Islands' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -210,37 +170,37 @@ const components = {
 
 class ConceptSelect extends React.Component {
   state = {
-    tagList: null,
-    tagSet: null,
     single: null,
-    multi: null,
+    multi: null
   };
 
-  componentDidMount() {
-      let tags = [];
-      let tagSet = new Set();
-      Object.values(this.props.tags).forEach(clust => {
-        Object.values(clust).forEach(tag => {
-            if (!tagSet.has(tag)) {
-                tagSet.add(tag);
-                tags.push({value: tag.toLowerCase(), label: tag});
-            }
-        });
-      });
+  // componentDidMount() {
+  //     // let concepts = [];
+  //     // let conceptSet = new Set();
+  //     // Object.values(this.props.concepts).forEach(clust => {
+  //     //   Object.values(clust).forEach(tag => {
+  //     //       if (!conceptSet.has(tag)) {
+  //     //           conceptSet.add(tag);
+  //     //           concepts.push({value: tag.toLowerCase(), label: tag});
+  //     //       }
+  //     //   });
+  //     // });
        
-      this.setState({tagList: tags, tagSet: tagSet});
-  }
+  //     // this.setState({conceptList: concepts, conceptSet: conceptSet});
+  //     this.setState({})
+  // }
 
-  handleChange = name => value => {
-    console.log(value);
+  handleChange = name => values => {
+    console.log(values);
     this.setState({
-        [name]: value
+        [name]: values
     });
-    if (this.state.tagList.includes(value)) {
-        this.props.filterConcept(value.value);
-    } else {
-      this.props.filterConcept(null);
-    }
+    this.props.filterConcept(values)
+    // if (this.props.conceptList.includes(value)) {
+    //   this.props.filterConcept(value.label);
+    // } else {
+    //   this.props.filterConcept(null);
+    // }
   };
 
   render() {
@@ -256,20 +216,38 @@ class ConceptSelect extends React.Component {
       }),
     };
     
-    if (this.state.tagList === null) {
+    if (this.props.conceptList === null) {
         return null;
     } else {
         return (
+            // <Select
+            //     classes={classes}
+            //     styles={selectStyles}
+            //     options={this.props.conceptList}
+            //     components={components}
+            //     value={this.state.single}
+            //     onChange={this.handleChange('single')}
+            //     placeholder="Search a concept"
+            //     isClearable
+            // />
+
             <Select
                 classes={classes}
                 styles={selectStyles}
-                options={this.state.tagList}
+                textFieldProps={{
+                  label: 'Label',
+                  InputLabelProps: {
+                    shrink: true,
+                  },
+                }}
+                options={this.props.conceptList}
                 components={components}
-                value={this.state.single}
-                onChange={this.handleChange('single')}
-                placeholder="Search a concept"
+                value={this.state.multi}
+                onChange={this.handleChange('multi')}
+                placeholder="Select concepts"
+                isMulti
                 isClearable
-            />
+            /> 
         //   <div className={classes.root}>
         //     <NoSsr>
         //     <Select
