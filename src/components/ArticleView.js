@@ -29,9 +29,9 @@ class ArticleView extends Component {
     return (
       <div className="article-view-container">
         <div className="article-view-exit-container">
-          <Button variant="contained" onClick={this.props.exitView}> 
+          {/* <Button variant="contained" onClick={this.props.exitView}> 
             Back to Articles 
-          </Button>
+          </Button> */}
           {/* <button onClick={this.props.exitView}> Back to Story </button> */}
         </div>
         <div className="article-view-main">
@@ -330,7 +330,7 @@ class ArticleText extends Component {
             <div className="av-text">
               {body}
               <a href={article.url} target="_blank" rel="noopener noreferrer">
-                Read More...
+                Go to Article
               </a>
             </div>
       )
