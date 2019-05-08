@@ -4,10 +4,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { getDomain } from './Helpers'
 import Lens from '@material-ui/icons/Lens';
+import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 import Button from '@material-ui/core/Button';
 
 class ArticleView extends Component {
+
+  componentDidUpdate() {
+    window.scrollTo(0,0);
+  }
   
   render() {
     
@@ -55,13 +61,14 @@ class ArticleView extends Component {
             <div className="date">
               {article.date}
             </div>
-            <div className="sentiment">
+            {/* <div className="sentiment">
               <Lens style={{
                 margin: 8,
                 color: red[400]
               }} />
               {article.sentiment}
-            </div>
+            </div> */}
+            <ArticleSentiment value={article.sentiment} />
           </div>
           <ArticleText article={this.props.article} />
         </div>
@@ -113,13 +120,14 @@ class RelatedArticle extends Component {
         <div className="ra-title" onClick={()=>{this.props.setView(article)}}>{article.title}</div>
         <div>
           <div className="ra-date">{article.date}</div>
-          <div className="ra-sentiment">
+          {/* <div className="ra-sentiment">
             <Lens style={{
               margin: 8,
               color: red[400]
             }} />
             {article.sentiment}
-          </div>
+          </div> */}
+          <ArticleSentiment value={article.sentiment} />
         </div>
         <div className="ra-source"><img src={`http://logo.clearbit.com/${getDomain(article.url)}`} alt="source" /></div>
         {/* <div className="ra-concepts">
@@ -330,4 +338,35 @@ class ArticleText extends Component {
   }
 }
 
-// class ArticleTextPopup
+export function ArticleSentiment(props) {
+  let value = parseFloat(props.value)
+  let color = grey[600];
+  let label = "Neutral"
+  // [-1,-.6] [-.6,-.2] [-.2,.2] [.2,.6] [.6,1]
+  if (-1 <= value && value <= -.6) {
+    color = red[900];
+    label = "Very Negative"
+  } else if (-.6 <= value && value <= -.2) {
+    color = red[400];
+    label = "Negative"
+  } else if (-.2 <= value && value <= .2) {
+    color = grey[600];
+    label = "Neutral"
+  } else if (.2 <= value && value <= .6) {
+    color = green[600];
+    label = "Positive"
+  } else if (.6 <= value && value <= 1) {
+    color = green[900];
+    label = "Very Positive"
+  }
+
+  return (
+    <div className="sentiment">
+    <Lens style={{
+      margin: 8,
+      color: color
+    }} />
+      {label} 
+  </div>
+  )
+}
