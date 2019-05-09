@@ -10,9 +10,27 @@ import grey from '@material-ui/core/colors/grey';
 import Button from '@material-ui/core/Button';
 
 class ArticleView extends Component {
+  constructor(props) {
+    super(props)
+
+    this.onPerspectiveChange = this.onPerspectiveChange.bind(this)
+  }
 
   componentDidUpdate() {
     window.scrollTo(0,0);
+  }
+
+  state = {
+    differentPerspectives: false,
+  }
+
+  onPerspectiveChange(e) {
+    console.log("e.target.value", e.target.value)
+    if (e.target.checked) {
+      this.setState({
+        differentPerspectives: e.target.value === "different" ? true : false
+      })
+    }
   }
   
   render() {
@@ -28,12 +46,6 @@ class ArticleView extends Component {
     )
     return (
       <div className="article-view-container">
-        <div className="article-view-exit-container">
-          {/* <Button variant="contained" onClick={this.props.exitView}> 
-            Back to Articles 
-          </Button> */}
-          {/* <button onClick={this.props.exitView}> Back to Story </button> */}
-        </div>
         <div className="article-view-main">
           <div className="av-main-header">
             <div className="av-news-source">
@@ -72,21 +84,30 @@ class ArticleView extends Component {
           </div>
           <ArticleText article={this.props.article} />
         </div>
-        <div>
-          <h3>Similar Perspectives</h3>
+        <div class="sidebar">
+          <div class="perspectives">
+            <label>
+              <input type="radio" name="perspectives" value="similar" checked={!this.state.differentPerspectives} onChange={this.onPerspectiveChange}/> 
+              <span>Similar Perspectives</span>
+            </label> 
+            <label>
+              <input type="radio" name="perspectives" value="different" checked={this.state.differentPerspectives} onChange={this.onPerspectiveChange}/>  
+              <span>Different Perspectives</span>
+            </label> 
+          </div>
+          { !this.state.differentPerspectives ? 
           <div className="av-related-articles">
             {recs["rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
-          </div>
-          <h3>Alternate Prespectives</h3>
+          </div> : 
           <div className="av-related-articles">
             {recs["non_rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
-          </div>
+          </div> }
         </div>
       </div>
     );
@@ -110,10 +131,9 @@ class ArticleConcept extends Component {
 class RelatedArticle extends Component {
   render() {
     let article = this.props.article;
-    console.log(article);
-    let authorText =
-      article.authors.length > 0 ? "By " + article.authors[0].name : null;
-    let author = authorText ? <div className="ra-author">{authorText}</div> : <div></div>
+    // let authorText =
+    //   article.authors.length > 0 ? "By " + article.authors[0].name : null;
+    // let author = authorText ? <div className="ra-author">{authorText}</div> : <div></div>
     let imageURL = article.image
     return (
       <div className="related-article" style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(${imageURL}`}} >

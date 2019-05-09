@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 import Button from '@material-ui/core/Button';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
   root: {
@@ -100,9 +101,9 @@ class SearchAppBar extends React.Component {
   render()  {
     const { classes, theme } = this.props;
     let backButton = (
-            <Button style={{color: "white", marginRight: 20}} onClick={this.props.leaveArticleView}>
-              Back to Articles
-            </Button>
+            <IconButton style={{color: "white", marginRight: 20}} onClick={this.props.leaveArticleView}>
+              <ArrowBack/>
+            </IconButton>
     )
     return (
       <div className={classes.root}>
