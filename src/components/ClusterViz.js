@@ -174,6 +174,7 @@ class ClusterViz extends Component {
   }
 
   leaveArticleView() {
+    window.scrollTo(0, 0)
     this.setState({articleToView: null})
   }
 
@@ -512,7 +513,7 @@ class ClusterViz extends Component {
       const sources = this.getSources(this.state.data);
       const tags = this.getClusterConcepts(data);
       const conceptList = this.getAllConcepts(this.state.data);
-
+      const articleViewActive = this.state.articleToView != null
       // const { bookmark, popupData, bookmarkList} = this.state;
       // const summaries = this.state.summaries;
 
@@ -537,7 +538,11 @@ class ClusterViz extends Component {
 
       return (
         <div>
-            <SearchAppBar storyTitle={this.state.title} />
+            <SearchAppBar 
+              storyTitle={this.state.title} 
+              leaveArticleView={this.leaveArticleView} 
+              articleViewActive={articleViewActive}
+            />
           {!this.state.articleToView ? mainView : articleView}
         </div>
       )

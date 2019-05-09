@@ -1,19 +1,25 @@
 .article-view-container {
   display: grid;
-  grid-template-columns: auto 400px;
-  margin-top: 34px;
+  grid-template-columns: 400px auto 400px;
+  grid-gap: 0 20px;
+  max-width: 100%;
+  margin: auto;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  position: relative;
+  top: 96px;
 }
 
-.article-view-exit-container {
+/* .article-view-exit-container {
   grid-column: 1/3;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 }
 
 .article-view-exit-container > button {
   position: fixed;
-    top: 80px;
-    left: 30px;
-}
+  top: 80px;
+  left: 30px;
+} */
+
 
 .av-main-header {
   display: grid;
@@ -23,10 +29,11 @@
 .article-view-main {
   max-width: 800px;
   margin: 0 auto;
+  grid-column: 2/3;
 }
 
 .av-image {
-  margin: 40px 0;
+  margin-top: 40px;
 }
 
 .av-image > img {
@@ -35,18 +42,64 @@
 
 .av-details {
   display: grid;
-  grid-template-columns: 200px auto;
+  grid-template-columns: auto 1fr;
   grid-template-rows: auto auto;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.av-details .first-row {
+  grid-column: 1/3;
+  display: flex;
+  align-items: center;
+}
+
+.av-details .author {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.av-details .concepts {
+  padding: 20px 0;
+  flex-grow: 1;
+}
+
+.av-details > .date {
+  font-size: 20px;
+  padding-right: 20px;
 }
 
 .av-text {
   line-height: 2em;
 }
 
+.av-text a {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
 .concepts {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+}
+
+.concept-list-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.article-concept {
+  margin-bottom: 10px;
+  font-size: 1.25em;
+}
+
+.article-concept a {
+  font-weight: bold;
+  color: green;
+}
+
+.av-concept-list {
+  margin-left: 20px;
 }
 
 .av-title > h1{
@@ -55,9 +108,17 @@
 
 .related-article {
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px gray solid;
+  padding: 16px 16px 24px;
   border-radius: 8px;
+  height: 250px;
+  color: white;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  background-size: cover;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
 }
 
 .ra-author {
@@ -65,8 +126,23 @@
 }
 
 .ra-title {
-  font-weight: bold;
   cursor: pointer;
+  font-size: 16px;
+  grid-column: 1/3;
+}
+
+.ra-date, .ra-sentiment {
+  font-size: 12px;
+}
+
+.ra-sentiment {
+  display: flex;
+  align-items: center;
+}
+
+.ra-source > img {
+  height: 75px;
+  width: 75px;
 }
 
 .concept-phrase {
@@ -85,9 +161,44 @@
 }
 
 .av-related-articles {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 pre {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
   white-space: pre-wrap;
+  font-size: 1.25em !important;
+}
+
+.sentiment {
+  display: flex;
+  align-items: center;
+}
+
+.av-related-articles {
+  margin-right: 20px;
+}
+
+.perspectives {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.perspectives span {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+label {
+  color: #8331FE;
+}
+
+.perspectives input[type="radio"]:checked+span { 
+  text-decoration: underline;
+  font-weight: bold; 
+}
+
+.perspectives input[type="radio"]{
+  display: none;
 }

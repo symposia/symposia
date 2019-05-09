@@ -10,6 +10,8 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
+import Button from '@material-ui/core/Button';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
   root: {
@@ -20,8 +22,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '90%'
-
+    margin: 'auto'
   },
   grow: {
     flexGrow: 1,
@@ -99,13 +100,19 @@ class SearchAppBar extends React.Component {
 
   render()  {
     const { classes, theme } = this.props;
+    let backButton = (
+            <IconButton style={{color: "white", marginRight: 20}} onClick={this.props.leaveArticleView}>
+              <ArrowBack/>
+            </IconButton>
+    )
     return (
       <div className={classes.root}>
         <AppBar classes={{root: classes.root}} position="fixed">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+            {this.props.articleViewActive ? backButton : null}
+            {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography className={classes.title} variant="h6" noWrap>
               <a href="/"
                 style={{

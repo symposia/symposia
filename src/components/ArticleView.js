@@ -2,8 +2,94 @@ import React, { Component } from "react";
 import "./css/ArticleView.css";
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import { getDomain } from './Helpers'
+import Lens from '@material-ui/icons/Lens';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
+import Button from '@material-ui/core/Button';
 
 class ArticleView extends Component {
+  constructor(props) {
+    super(props)
+    this.onPerspectiveChange = this.onPerspectiveChange.bind(this)
+  }
+
+  componentDidUpdate() {
+    window.scrollTo(0,0);
+  }
+
+  state = {
+    differentPerspectives: false,
+    concepts: [],
+  }
+
+  componentDidMount() {
+    let concepts = this.props.article.concepts
+
+    Object.values(concepts).forEach((entry, index) => {
+      let currConcept = concepts[index]
+      let { uri } = currConcept
+      let wikiSearchText = getWikiSearchText(uri)
+
+
+      fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${wikiSearchText}`)
+      .then((resp) => { resp.json()
+        .then((data) => {
+          Object.assign(currConcept, {description: data.description})
+          Object.assign(currConcept, {summary: data.extract_html})
+          
+          concepts[index] = currConcept
+          this.setState({concepts: concepts})  
+        })}
+      ) 
+    })
+  }
+
+  generateConceptPopup(conceptPhrase, concept){
+    const { description, label, score, summary, uri} = concept
+
+    // console.log(Object.keys(concept))
+    // console.log(concept)
+    // console.log(summary)
+
+    let conceptPhrasePopup = 
+      <Tooltip placement="top"
+          leaveTouchDelay = {1000}
+          title={
+            <Typography color="inherit">
+              <p className="popup-title">
+                {label.eng}
+              </p>
+              <p>
+                <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
+              </p>
+              <p className="popup-description">
+                {description}
+              </p>
+              <p>
+              <div className="popup-summary" dangerouslySetInnerHTML={{ __html: summary }} />
+
+                {/* {summary} */}
+              </p>
+              
+            </Typography>
+          }
+        >
+        <a href={uri} target="_blank" rel="noopener noreferrer">{ conceptPhrase }</a>
+      </Tooltip>
+
+    return conceptPhrasePopup
+  }
+
+  onPerspectiveChange(e) {
+    console.log("e.target.value", e.target.value)
+    if (e.target.checked) {
+      this.setState({
+        differentPerspectives: e.target.value === "different" ? true : false
+      })
+    }
+  }
   
   render() {
     
@@ -11,11 +97,25 @@ class ArticleView extends Component {
     let author =
       article.authors.length > 0 ? "By " + article.authors[0].name : null;
     let recs = this.props.getRecs(article.uri)
-
+    let authorElement = (
+              <div className="author" style={author ? {marginRight: '20px'} : {}}>
+                <p> {author} </p>
+              </div>
+    )
     return (
       <div className="article-view-container">
-        <div className="article-view-exit-container">
-          <button onClick={this.props.exitView}> Back to Story </button>
+        <div className="av-concept-list">
+          <div className="concept-list-title">Concepts</div>
+            <div className="concepts">
+                {article.concepts.map((concept, index) => {
+                  // return <ArticleConcept key={index} concept={concept} />;
+                  return (
+                    <div className="article-concept" key={index}>
+                      {this.generateConceptPopup(concept.label.eng, concept)}
+                    </div>
+                  )
+                })}
+            </div>
         </div>
         <div className="article-view-main">
           <div className="av-main-header">
@@ -33,38 +133,52 @@ class ArticleView extends Component {
             <img src={article.image} alt={article.title} />
           </div>
           <div className="av-details">
-            <div className="author">
-              <p> {author} </p>
-            </div>
-            <div className="concepts">
-              {article.concepts.slice(0, 4).map((concept, index) => {
-                return <ArticleConcept key={index} concept={concept} />;
-              })}
+            <div className="first-row">
+              {authorElement}
+              {/* <div className="concepts">
+                {article.concepts.slice(0, 4).map((concept, index) => {
+                  return <ArticleConcept key={index} concept={concept} />;
+                })}
+              </div> */}
             </div>
             <div className="date">
-              <p>{article.date}</p>
+              {article.date}
             </div>
-            <div className="sentiment">
-              <p>sentiment: {article.sentiment}</p>
-            </div>
+            {/* <div className="sentiment">
+              <Lens style={{
+                margin: 8,
+                color: red[400]
+              }} />
+              {article.sentiment}
+            </div> */}
+            <ArticleSentiment value={article.sentiment} />
           </div>
           <ArticleText article={this.props.article} />
         </div>
-        <div>
-          <h3>Related Articles</h3>
+        <div className="av-related-articles">
+          <div className="perspectives">
+            <label>
+              <input type="radio" name="perspectives" value="similar" checked={!this.state.differentPerspectives} onChange={this.onPerspectiveChange}/> 
+              <span>Similar Perspectives</span>
+            </label> 
+            <label>
+              <input type="radio" name="perspectives" value="different" checked={this.state.differentPerspectives} onChange={this.onPerspectiveChange}/>  
+              <span>Different Perspectives</span>
+            </label> 
+          </div>
+          { !this.state.differentPerspectives ? 
           <div className="av-related-articles">
             {recs["rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
-          </div>
-          <h3>Alternate Viewpoints</h3>
+          </div> : 
           <div className="av-related-articles">
             {recs["non_rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
-          </div>
+          </div> }
         </div>
       </div>
     );
@@ -75,7 +189,7 @@ class ArticleConcept extends Component {
   render() {
     let concept = this.props.concept;
     return (
-      <div>
+      <div className="article-concept">
         <a href={concept.uri} target="_blank" rel="noopener noreferrer">
           {" "}
           {concept.label.eng}{" "}
@@ -88,20 +202,31 @@ class ArticleConcept extends Component {
 class RelatedArticle extends Component {
   render() {
     let article = this.props.article;
-    let author =
-      article.authors.length > 0 ? "By " + article.authors[0].name : null;
+    // let authorText =
+    //   article.authors.length > 0 ? "By " + article.authors[0].name : null;
+    // let author = authorText ? <div className="ra-author">{authorText}</div> : <div></div>
+    let imageURL = article.image
     return (
-      <div className="related-article">
+      <div className="related-article" style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(${imageURL}`}} >
         <div className="ra-title" onClick={()=>{this.props.setView(article)}}>{article.title}</div>
-        <div className="ra-sentiment">{article.sentiment}</div>
-        <div className="ra-concepts">
+        <div>
+          <div className="ra-date">{article.date}</div>
+          {/* <div className="ra-sentiment">
+            <Lens style={{
+              margin: 8,
+              color: red[400]
+            }} />
+            {article.sentiment}
+          </div> */}
+          <ArticleSentiment value={article.sentiment} />
+        </div>
+        <div className="ra-source"><img src={`http://logo.clearbit.com/${getDomain(article.url)}`} alt="source" /></div>
+        {/* <div className="ra-concepts">
           {article.concepts.slice(0, 4).map((concept, index) => {
             return <ArticleConcept key={index} concept={concept} />;
           })}
-        </div>
-        {author != null ? <div className="ra-author">
-          {author}
-        </div> : <div></div>}
+        </div> */}
+        {/* {author} */}
       </div>
     );
   }
@@ -109,26 +234,26 @@ class RelatedArticle extends Component {
 
 export default ArticleView;
 
-function getDomain(url) {
-  if (url == null) {
-      return '';
-  }
+// function getDomain(url) {
+//   if (url == null) {
+//       return '';
+//   }
 
-  var result;
-  var match;
+//   var result;
+//   var match;
 
-  if (
-      (match = url.match(
-      /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im
-      ))
-  ) {
-      result = match[1];
-      if ((match = result.match(/^[^\.]+\.(.*\..*\..+)$/))) {
-      result = match[1];
-      }
-  }
-  return result;
-}
+//   if (
+//       (match = url.match(
+//       /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im
+//       ))
+//   ) {
+//       result = match[1];
+//       if ((match = result.match(/^[^\.]+\.(.*\..*\..+)$/))) {
+//       result = match[1];
+//       }
+//   }
+//   return result;
+// }
 
 function getWikiSearchText(url) {
   if(url == null) {
@@ -162,7 +287,6 @@ class ArticleText extends Component {
       .then((resp) => { resp.json()
         .then((data) => {
           Object.assign(currConcept, {description: data.description})
-          // currConcept = {...currConcept, ...{description: data.description}}
           Object.assign(currConcept, {summary: data.extract_html})
           
           concepts[index] = currConcept
@@ -187,9 +311,9 @@ class ArticleText extends Component {
   generateConceptPopup(conceptPhrase, concept){
     const { description, label, score, summary, uri} = concept
 
-    console.log(Object.keys(concept))
-    console.log(concept)
-    console.log(summary)
+    // console.log(Object.keys(concept))
+    // console.log(concept)
+    // console.log(summary)
 
     let conceptPhrasePopup = 
       <Tooltip placement="top"
@@ -277,7 +401,7 @@ class ArticleText extends Component {
     return annotatedText
   }
 
-  getCharIndexOfConcept(concept, dict, prevWordLength) {
+  getCharIndexOfConcept(concept, dict) {
     let phrase = concept.label.eng
     let articleBody = this.props.article.body
     let index = articleBody.indexOf(phrase) 
@@ -290,13 +414,13 @@ class ArticleText extends Component {
       let article = this.props.article
       let concepts = this.state.concepts
       let annotatedBody = this.generateOrderOfConcepts(concepts)
-      console.log(annotatedBody)
+      // console.log(annotatedBody)
       let body = annotatedBody ? annotatedBody : article.body
       return (
             <div className="av-text">
               {body}
               <a href={article.url} target="_blank" rel="noopener noreferrer">
-                Read More...
+                Go to Article
               </a>
             </div>
       )
@@ -304,4 +428,35 @@ class ArticleText extends Component {
   }
 }
 
-// class ArticleTextPopup
+export function ArticleSentiment(props) {
+  let value = parseFloat(props.value)
+  let color = grey[600];
+  let label = "Neutral"
+  // [-1,-.6] [-.6,-.2] [-.2,.2] [.2,.6] [.6,1]
+  if (-1 <= value && value <= -.6) {
+    color = red[900];
+    label = "Very Negative"
+  } else if (-.6 <= value && value <= -.2) {
+    color = red[400];
+    label = "Negative"
+  } else if (-.2 <= value && value <= .2) {
+    color = grey[600];
+    label = "Neutral"
+  } else if (.2 <= value && value <= .6) {
+    color = green[600];
+    label = "Positive"
+  } else if (.6 <= value && value <= 1) {
+    color = green[900];
+    label = "Very Positive"
+  }
+
+  return (
+    <div className="sentiment">
+    <Lens style={{
+      margin: 8,
+      color: color
+    }} />
+      {label} 
+  </div>
+  )
+}
