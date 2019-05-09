@@ -11,6 +11,7 @@
     "normalize.css": "^8.0.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-grid-system": "^4.4.5",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8",
     "react-select": "^2.4.3"
@@ -29,5 +30,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@brainhubeu/react-carousel": "^1.10.17"
+  }
 }

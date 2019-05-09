@@ -5,6 +5,9 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import Carousel, { Dots } from '@brainhubeu/react-carousel';
+import { Container, Row, Col } from 'react-grid-system';
+import '@brainhubeu/react-carousel/lib/style.css';
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import "./css/ArticleGrid.css";
@@ -36,7 +39,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2
   },
   card: {
-    width: 400,
+    // width: 400,
     height: 300,
     alignItems: '',
     backgroundSize: 'cover',
@@ -162,17 +165,22 @@ class ArticleGrid extends React.Component {
     const { alignItems, direction, justify } = this.state;
     if (this.props.articles.length > 0) {
       return (
-          <Grid item xs={"auto"}>
-            <Grid
-              container
-              spacing={16}
-              className={classes.demo+this.props.articles.length}
-              alignItems={alignItems}
-              direction={direction}
-              justify={justify}
-            >
-              {this.props.articles.map((value, index) => (
-                <Grid key={index} item className={this.filterOut(value)}>
+        <Container>
+          
+        <Carousel
+        slidesPerPage={3}
+        slidesPerScroll={3}
+        arrows
+        infinite
+        offset={25}
+        centered
+     
+      >
+      
+     
+       {this.props.articles.map((value, index) => (
+                //<Grid key={index} item className={this.filterOut(value)}>
+                <Col md={12} className={this.filterOut(value)}>
                   <Card 
                   style={{backgroundImage: `url(${value.image})`}} 
                   className={classes.card} 
@@ -211,10 +219,13 @@ class ArticleGrid extends React.Component {
                         </div>
                       </CardContent>
                   </Card>
-                </Grid>
+                {/* </Grid> */}
+                </Col>
               ))}
-            </Grid>
-          </Grid>
+            
+      </Carousel>
+     
+      </Container>
         );
     } else {
       return null;
