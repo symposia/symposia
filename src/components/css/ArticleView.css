@@ -73,10 +73,33 @@
   line-height: 2em;
 }
 
+.av-text a {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
 .concepts {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+}
+
+.concept-list-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.article-concept {
+  margin-bottom: 10px;
+  font-size: 1.25em;
+}
+
+.article-concept a {
+  font-weight: bold;
+  color: green;
+}
+
+.av-concept-list {
+  margin-left: 20px;
 }
 
 .av-title > h1{
@@ -152,7 +175,7 @@ pre {
   align-items: center;
 }
 
-.sidebar {
+.av-related-articles {
   margin-right: 20px;
 }
 
@@ -167,7 +190,12 @@ pre {
   cursor: pointer;
 }
 
+label {
+  color: #8331FE;
+}
+
 .perspectives input[type="radio"]:checked+span { 
+  text-decoration: underline;
   font-weight: bold; 
 }
 

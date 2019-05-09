@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 class ArticleView extends Component {
   constructor(props) {
     super(props)
-
     this.onPerspectiveChange = this.onPerspectiveChange.bind(this)
   }
 
@@ -22,6 +21,65 @@ class ArticleView extends Component {
 
   state = {
     differentPerspectives: false,
+    concepts: [],
+  }
+
+  componentDidMount() {
+    let concepts = this.props.article.concepts
+
+    Object.values(concepts).forEach((entry, index) => {
+      let currConcept = concepts[index]
+      let { uri } = currConcept
+      let wikiSearchText = getWikiSearchText(uri)
+
+
+      fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${wikiSearchText}`)
+      .then((resp) => { resp.json()
+        .then((data) => {
+          Object.assign(currConcept, {description: data.description})
+          Object.assign(currConcept, {summary: data.extract_html})
+          
+          concepts[index] = currConcept
+          this.setState({concepts: concepts})  
+        })}
+      ) 
+    })
+  }
+
+  generateConceptPopup(conceptPhrase, concept){
+    const { description, label, score, summary, uri} = concept
+
+    // console.log(Object.keys(concept))
+    // console.log(concept)
+    // console.log(summary)
+
+    let conceptPhrasePopup = 
+      <Tooltip placement="top"
+          leaveTouchDelay = {1000}
+          title={
+            <Typography color="inherit">
+              <p className="popup-title">
+                {label.eng}
+              </p>
+              <p>
+                <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
+              </p>
+              <p className="popup-description">
+                {description}
+              </p>
+              <p>
+              <div className="popup-summary" dangerouslySetInnerHTML={{ __html: summary }} />
+
+                {/* {summary} */}
+              </p>
+              
+            </Typography>
+          }
+        >
+        <a href={uri} target="_blank" rel="noopener noreferrer">{ conceptPhrase }</a>
+      </Tooltip>
+
+    return conceptPhrasePopup
   }
 
   onPerspectiveChange(e) {
@@ -46,6 +104,19 @@ class ArticleView extends Component {
     )
     return (
       <div className="article-view-container">
+        <div className="av-concept-list">
+          <div className="concept-list-title">Concepts</div>
+            <div className="concepts">
+                {article.concepts.map((concept, index) => {
+                  // return <ArticleConcept key={index} concept={concept} />;
+                  return (
+                    <div className="article-concept" key={index}>
+                      {this.generateConceptPopup(concept.label.eng, concept)}
+                    </div>
+                  )
+                })}
+            </div>
+        </div>
         <div className="article-view-main">
           <div className="av-main-header">
             <div className="av-news-source">
@@ -84,8 +155,8 @@ class ArticleView extends Component {
           </div>
           <ArticleText article={this.props.article} />
         </div>
-        <div class="sidebar">
-          <div class="perspectives">
+        <div className="av-related-articles">
+          <div className="perspectives">
             <label>
               <input type="radio" name="perspectives" value="similar" checked={!this.state.differentPerspectives} onChange={this.onPerspectiveChange}/> 
               <span>Similar Perspectives</span>
@@ -118,7 +189,7 @@ class ArticleConcept extends Component {
   render() {
     let concept = this.props.concept;
     return (
-      <div>
+      <div className="article-concept">
         <a href={concept.uri} target="_blank" rel="noopener noreferrer">
           {" "}
           {concept.label.eng}{" "}
@@ -216,7 +287,6 @@ class ArticleText extends Component {
       .then((resp) => { resp.json()
         .then((data) => {
           Object.assign(currConcept, {description: data.description})
-          // currConcept = {...currConcept, ...{description: data.description}}
           Object.assign(currConcept, {summary: data.extract_html})
           
           concepts[index] = currConcept
@@ -331,7 +401,7 @@ class ArticleText extends Component {
     return annotatedText
   }
 
-  getCharIndexOfConcept(concept, dict, prevWordLength) {
+  getCharIndexOfConcept(concept, dict) {
     let phrase = concept.label.eng
     let articleBody = this.props.article.body
     let index = articleBody.indexOf(phrase) 
