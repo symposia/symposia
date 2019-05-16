@@ -21,7 +21,6 @@ class ClusterViz extends Component {
       data: null,
       sources: null,
       days: null,
-      dataForArticleView: null,
       title: "",
       concept: null,
       sentiment: null,
@@ -92,10 +91,8 @@ class ClusterViz extends Component {
       fetch(dataURL)
         .then(resp => resp.json())
         .then(clusteredData => {
-          console.log(this.formatDataForArticleView(clusteredData))
           this.setState({
             data: clusteredData,
-            dataForArticleView: this.formatDataForArticleView(clusteredData),
             tags: this.createFakeConcepts(),
             title: title
           })
@@ -106,7 +103,7 @@ class ClusterViz extends Component {
       //   .then(resp => resp.json())
       //   .then(rawArticles => {
       //     let clusteredArticles = this.createFakeClusters(rawArticles)
-      //     // console.log(clusteredArticles)
+      //     // // console.log(clusteredArticles)
       //     this.setState({
       //       data: clusteredArticles,
       //       tags: this.createFakeConcepts(),
@@ -118,10 +115,6 @@ class ClusterViz extends Component {
         .then(resp => resp.json())
         .then(recs => this.createRecsDict(recs))
 
-  }
-
-  formatDataForArticleView(clusteredData) {
-    return Object.values(clusteredData).map(cluster => cluster.articles)
   }
 
   createRecsDict(recs) {
@@ -145,11 +138,11 @@ class ClusterViz extends Component {
 
     recURIObj.rec.forEach(uri => {
       let article = this.getArticleByURI(uri)
-      // console.log(typeof(uri), uri)
+      // // console.log(typeof(uri), uri)
       recObj["rec"].push(article)
     })
     recURIObj.non_rec.forEach(uri => {
-      // console.log(uri)
+      // // console.log(uri)
       recObj["non_rec"].push(this.getArticleByURI(uri))
     })
 
@@ -159,12 +152,11 @@ class ClusterViz extends Component {
   getArticleByURI(uri) {
     let result
     
-    Object.values(this.state.dataForArticleView).forEach(cluster => {
-      // console.log(cluster)
-      cluster.forEach(article => {
-        // console.log(uri, typeof(uri))
+    Object.values(this.state.data).forEach(cluster => {
+      cluster["articles"].forEach(article => {
+        // // console.log(uri, typeof(uri))
         if (article.uri === parseInt(uri)) {
-          // console.log("Found:", article.uri)
+          // // console.log("Found:", article.uri)
           result = article
         }
       })
@@ -270,21 +262,21 @@ class ClusterViz extends Component {
   }
 
   getFirst(article) {
-    console.log("getFirst()")
+    // console.log("getFirst()")
     this.setState({article1: article});
   }
 
   selectSecond() {
-    console.log("selectSecond: true")
+    // console.log("selectSecond: true")
     this.setState({selectSecond: true})
   }
 
   getSecond(article2) {
-    console.log("getSecond()")
+    // console.log("getSecond()")
     let article1 = this.state.article1;
     let summaries = this.state.summaries;
-    console.log(summaries[article1["title"]]["who"]);
-    console.log(summaries[article2["title"]]["who"]);
+    // console.log(summaries[article1["title"]]["who"]);
+    // console.log(summaries[article2["title"]]["who"]);
     this.setState({article2: article2, selectSecond: false, showSummarizerModal: true});
   }
 
@@ -507,7 +499,8 @@ class ClusterViz extends Component {
     if (!this.state.data) { 
       return null //should replace with spinner or sth
     } else {
-      const key = Object.keys(this.state.data)[this.state.clusterNum];
+      console.log(this.state.data)
+      // const key = Object.keys(this.state.data)[this.state.clusterNum];
       const data = this.applyFilterToAllArticles(this.state.data);
       const articles = this.getArticles(data);
       const sources = this.getSources(this.state.data);
@@ -517,7 +510,6 @@ class ClusterViz extends Component {
       // const { bookmark, popupData, bookmarkList} = this.state;
       // const summaries = this.state.summaries;
 
-      // const dataForArticleView = this.state.dataForArticleView
       // const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
 
       
