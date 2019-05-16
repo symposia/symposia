@@ -349,15 +349,15 @@ class ClusterViz extends Component {
   }
 
   returnSentimentDec(sent, sentiment) {
-    if (sent == "vnegative") {
+    if (sent === "vnegative") {
       return sentiment <= -0.5;
-    } else if (sent == "negative") {
+    } else if (sent === "negative") {
       return sentiment > -0.5 && sentiment <= -0.1;
-    } else if (sent == "neutral") {
+    } else if (sent === "neutral") {
       return sentiment > -0.1 && sentiment <= 0.1;
-    } else if (sent == "positive") {
+    } else if (sent === "positive") {
       return sentiment >= 0.1 && sentiment < 0.5;
-    } else if (sent == "vpositive") {
+    } else if (sent === "vpositive") {
       return sentiment >= 0.5;
     }
   }
@@ -452,7 +452,7 @@ class ClusterViz extends Component {
       } else {
         var index = this.state.sentiment.indexOf(name);
         let a = this.state.sentiment.filter(e => e !== name)
-        if (a.length == 0) {
+        if (a.length === 0) {
           this.setState({sentiment: null});
         } else {
           this.setState({sentiment: a})

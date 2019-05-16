@@ -173,6 +173,9 @@ pre {
 .sentiment {
   display: flex;
   align-items: center;
+  color: white;
+  font-weight: 500; 
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 .av-related-articles {
@@ -201,4 +204,8 @@ label {
 
 .perspectives input[type="radio"]{
   display: none;
+}
+
+.MuiTooltip-popper-393 * {
+  background-color: black !important;
 }

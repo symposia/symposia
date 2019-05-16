@@ -17,6 +17,7 @@ import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
 import purple from '@material-ui/core/colors/purple';
 import yellow from '@material-ui/core/colors/yellow';
+import ArticleSentiment from './ArticleSentiment';
 
 let u = Image;
 
@@ -142,20 +143,22 @@ class ArticleGrid extends React.Component {
     return value.filterOut ? "filter-out" : ""
   }
 
-  getSentimentColor(sentiment) {
-    const { classes } = this.props;
-    if (sentiment <= -0.5) {
-      return classes.vnegative;
-    } else if (sentiment > -0.5 && sentiment <= -0.1) {
-      return classes.negative;
-    } else if (sentiment > -0.1 && sentiment <= 0.1) {
-      return classes.neutral;
-    } else if (sentiment >= 0.1 && sentiment < 0.5) {
-      return classes.positive;
-    } else if (sentiment >= 0.5) {
-      return classes.vpositive;
-    }
-  }
+  // getSentimentColor(sentiment) {
+  //   const { classes } = this.props;
+  //   if (sentiment <= -0.5) {
+  //     return classes.vnegative;
+  //   } else if (sentiment > -0.5 && sentiment <= -0.1) {
+  //     return classes.negative;
+  //   } else if (sentiment > -0.1 && sentiment <= 0.1) {
+  //     return classes.neutral;
+  //   } else if (sentiment >= 0.1 && sentiment < 0.5) {
+  //     return classes.positive;
+  //   } else if (sentiment >= 0.5) {
+  //     return classes.vpositive;
+  //   }
+  // }
+
+  
 
   render() {
     const { classes } = this.props;
@@ -189,10 +192,11 @@ class ArticleGrid extends React.Component {
                               {value.date}
                             </Typography>
                             <div className={classes.sentiment}>
-                              <Lens className={`${classes.icon} ${this.getSentimentColor(value.sentiment)}`} />
+                              {/* <Lens className={`${classes.icon} ${this.getSentimentColor(value.sentiment)}`} />
                               <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
                                 {value.sentiment}
-                              </Typography>
+                              </Typography> */}
+                              <ArticleSentiment value={value.sentiment}/>
                             </div>
                           </div>
                         {/* <div className={classes.details}>
