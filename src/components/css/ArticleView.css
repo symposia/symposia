@@ -1,12 +1,13 @@
 .article-view-container {
   display: grid;
-  grid-template-columns: 400px auto 400px;
+  grid-template-columns: 800px 400px;
   grid-gap: 0 20px;
   max-width: 100%;
   margin: auto;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   position: relative;
   top: 96px;
+  justify-content: center;
 }
 
 /* .article-view-exit-container {
@@ -29,7 +30,7 @@
 .article-view-main {
   max-width: 800px;
   margin: 0 auto;
-  grid-column: 2/3;
+  /* grid-column: 2/3; */
 }
 
 .av-image {
@@ -160,10 +161,6 @@
   color: rgb(178, 180, 182);
 }
 
-.av-related-articles {
-  margin-bottom: 20px;
-}
-
 pre {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
   white-space: pre-wrap;
@@ -179,7 +176,7 @@ pre {
 }
 
 .av-related-articles {
-  margin-right: 20px;
+  margin: 0 40px;
 }
 
 .perspectives {

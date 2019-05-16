@@ -100,7 +100,8 @@ class ArticleView extends Component {
     )
     return (
       <div className="article-view-container">
-        <div className="av-concept-list">
+
+        {/* <div className="av-concept-list">
           <div className="concept-list-title">Concepts</div>
             <div className="concepts">
                 {article.concepts.map((concept, index) => {
@@ -112,7 +113,8 @@ class ArticleView extends Component {
                   )
                 })}
             </div>
-        </div>
+        </div> */}
+
         <div className="article-view-main">
           <div className="av-main-header">
             <div className="av-news-source">
@@ -143,21 +145,21 @@ class ArticleView extends Component {
           <div className="perspectives">
             <label>
               <input type="radio" name="perspectives" value="similar" checked={!this.state.differentPerspectives} onChange={this.onPerspectiveChange}/> 
-              <span>Similar Perspectives</span>
+              <span>Similar Views</span>
             </label> 
             <label>
               <input type="radio" name="perspectives" value="different" checked={this.state.differentPerspectives} onChange={this.onPerspectiveChange}/>  
-              <span>Different Perspectives</span>
+              <span>Different Views</span>
             </label> 
           </div>
           { !this.state.differentPerspectives ? 
-          <div className="av-related-articles">
+          <div >
             {recs["rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
           </div> : 
-          <div className="av-related-articles">
+          <div >
             {recs["non_rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
