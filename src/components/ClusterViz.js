@@ -12,6 +12,7 @@ import SummarizerModal from "./SummarizerModal";
 import SearchAppBar from "./SearchAppBar";
 import FilterBar from "./FilterBar";
 import ArticleView from "./ArticleView"
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class ClusterViz extends Component {
 
@@ -46,6 +47,7 @@ class ClusterViz extends Component {
     this.leaveArticleView = this.leaveArticleView.bind(this)
     this.getRecs = this.getRecs.bind(this)
     
+    console.log(this.props)
   }
 
   componentWillMount() {
@@ -57,8 +59,10 @@ class ClusterViz extends Component {
     let recsURL;
     let fileName
 
+
+
     //handling click actions on homepage of articles
-    switch (last_segment) {
+    switch (this.props.match.params.storyID) {
       case "avengers-endgame":
         title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/avengers-endgame-rec.json"
@@ -513,20 +517,22 @@ class ClusterViz extends Component {
       // const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
 
       
-      let articleView = <ArticleView 
-        article={this.state.articleToView} 
+      let articleView = (props) => ( <ArticleView {...props}
+        article={this.getArticleByURI(props.match.params.articleID)} 
         exitView={this.leaveArticleView}
         setView={this.setArticleToView}
         getRecs={this.getRecs}
         />
+      )
 
-        let mainView =
+        let mainView = () => (
           <div> 
             <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
             <div id="cluster-viz-container">
               <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
             </div>
           </div>
+        )
 
       return (
         <div>
@@ -535,7 +541,16 @@ class ClusterViz extends Component {
               leaveArticleView={this.leaveArticleView} 
               articleViewActive={articleViewActive}
             />
-          {!this.state.articleToView ? mainView : articleView}
+
+
+
+            <Route exact path="/story/:storyID"
+            component={mainView}/>
+
+            <Route path="/story/:storyID/:articleID"
+            component={articleView}
+            />
+          {/* {!this.state.articleToView ? mainView : articleView} */}
         </div>
       )
     }

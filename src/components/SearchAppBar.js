@@ -13,6 +13,8 @@ import { emphasize } from '@material-ui/core/styles/colorManipulator';
 import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -101,9 +103,11 @@ class SearchAppBar extends React.Component {
   render()  {
     const { classes, theme } = this.props;
     let backButton = (
+            <Link to={window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/'))} >
             <IconButton style={{color: "white", marginRight: 20}} onClick={this.props.leaveArticleView}>
               <ArrowBack/>
             </IconButton>
+            </Link>
     )
     return (
       <div className={classes.root}>

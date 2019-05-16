@@ -18,6 +18,7 @@ import grey from '@material-ui/core/colors/grey';
 import purple from '@material-ui/core/colors/purple';
 import yellow from '@material-ui/core/colors/yellow';
 import ArticleSentiment from './ArticleSentiment';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 let u = Image;
 
@@ -163,6 +164,7 @@ class ArticleGrid extends React.Component {
   render() {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;
+    console.log("AritcleGrid Props: ", this.props);
     if (this.props.articles.length > 0) {
       return (
           <Grid item xs={"auto"}>
@@ -176,6 +178,7 @@ class ArticleGrid extends React.Component {
             >
               {this.props.articles.map((value, index) => (
                 <Grid key={index} item className={this.filterOut(value)}>
+                <Link style={{textDecoration: "none"}} to={window.location.pathname + "/" + value.uri}>
                   <Card 
                   style={{backgroundImage: `url(${value.image})`}} 
                   className={classes.card} 
@@ -215,6 +218,7 @@ class ArticleGrid extends React.Component {
                         </div>
                       </CardContent>
                   </Card>
+                </Link>
                 </Grid>
               ))}
             </Grid>

@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import { getDomain } from './Helpers'
 import ArticleSentiment from './ArticleSentiment';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 class ArticleView extends Component {
   constructor(props) {
     super(props)
@@ -197,6 +199,12 @@ class RelatedArticle extends Component {
     // let author = authorText ? <div className="ra-author">{authorText}</div> : <div></div>
     let imageURL = article.image
     return (
+            <Link 
+              style={{textDecoration: "none"}}
+              to={ window.location.pathname.substring(
+                0,window.location.pathname.lastIndexOf('/')
+                ) + "/" + article.uri}
+            >
       <div className="related-article" style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(${imageURL}`}} >
         <div className="ra-title" onClick={()=>{this.props.setView(article)}}>{article.title}</div>
         <div>
@@ -218,6 +226,7 @@ class RelatedArticle extends Component {
         </div> */}
         {/* {author} */}
       </div>
+      </Link>
     );
   }
 }
