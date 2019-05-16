@@ -133,6 +133,10 @@ class ArticleView extends Component {
           <div className="av-details">
             <div className="first-row">
               {authorElement}
+
+              <a className="match-pre" href={article.url} target="_blank" rel="noopener noreferrer">
+                View Source Article
+              </a>
             </div>
             <div className="date">
               {article.date}
@@ -153,13 +157,13 @@ class ArticleView extends Component {
             </label> 
           </div>
           { !this.state.differentPerspectives ? 
-          <div >
+          <div className="related-articles">
             {recs["rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
             })}
           </div> : 
-          <div >
+          <div className="related-articles">
             {recs["non_rec"].map((article, index) => {
               if (!article) {return null}
               return <RelatedArticle key={index} article={article} setView={this.props.setView}/>;
