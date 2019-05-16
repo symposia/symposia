@@ -9,3 +9,9 @@
   justify-content: center;
   margin: auto;
 }
+
+.article-cards-container, .tags-container {
+  max-width: 1250px;
+  margin: auto !important;
+  justify-content: center;
+}

@@ -31,7 +31,7 @@ class TagGrid extends React.Component {
     const { classes } = this.props;
     if(this.props.tags.length > 0) {
       return (
-        <Grid container spacing={16} className={classes.root}>
+        <Grid container spacing={16} className={classes.root + " tags-container"}>
           {this.props.tags.map((value, index) => (
             <Grid key={index} item>
               <Chip
