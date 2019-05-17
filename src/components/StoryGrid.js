@@ -20,9 +20,11 @@ class StoryGrid extends React.Component {
             <div id="story-grid">
                 <Grid container className={classes.root}>
                     {[0,1,2,3,4].map(index => { 
+                        console.log(this.props.data[index]);
                         return (
                             <div key={index}>
-                                <TagGrid tags= {this.props.tags[index]} />
+                                {this.props.data[index].every((article) => article.filterOut) ? null : 
+                                <TagGrid tags= {this.props.tags[index]} /> }
                                 <ArticleGrid articles={this.props.data[index]} setArticle={this.props.setArticle} handlePopup={this.props.handlePopup} />
                             </div>
                         )

@@ -294,7 +294,7 @@ color:#EEE;
 #cluster-viz-container {
   justify-content: center;
   padding: 12px;
-  margin-top: 64px;
+  margin-top: 152px
 
   /* display: grid;
   grid-template-columns: auto min-content;
@@ -432,4 +432,8 @@ color:#EEE;
   background-color: rgba(0,0,0,.95);
   padding: 30px;
 
+}
+
+div[role="tooltip"] * {
+  background-color: black
 }

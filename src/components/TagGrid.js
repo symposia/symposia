@@ -67,6 +67,7 @@ class TagGrid extends React.Component {
   }
   
   generateConceptPopup(concept){
+    if (!concept) { return null}
     const { description, label, summary, uri} = concept
 
     // console.log(concept)
@@ -106,9 +107,8 @@ class TagGrid extends React.Component {
     const { classes } = this.props;
     if(this.state.concepts) {
       return (
-        <Grid container spacing={16} className={classes.root}>
-          {/* {console.log(this.state.concepts)} */}
-          {  this.state.concepts.map((value, index) => (
+        <Grid container spacing={16} className={classes.root + " tags-container"}>
+          {this.props.tags.map((value, index) => (
             <Grid key={index} item>
               <Chip
                 label={this.generateConceptPopup(this.state.concepts[index])}
