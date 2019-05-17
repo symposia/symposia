@@ -37,6 +37,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2
   },
   card: {
+    cursor: "pointer",
     width: 400,
     height: 300,
     alignItems: '',
