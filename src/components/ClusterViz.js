@@ -187,6 +187,8 @@ class ClusterViz extends Component {
     for (let i=0;i<5;i++) {
       concepts[i] = [`concept ${i+1}.1`, `concept ${i+1}.2`]
     }
+    console.log(concepts)
+
     return concepts
   }
 
@@ -213,6 +215,7 @@ class ClusterViz extends Component {
   }
 
   getClusterConcepts(data) {
+    console.log(data)
     let concepts = {};
     let i = 0;
     Object.values(data).forEach(entry => {

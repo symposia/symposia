@@ -41,8 +41,8 @@ class ArticleView extends Component {
           
           concepts[index] = currConcept
           this.setState({concepts: concepts})  
-        })}
-      ) 
+        })
+      }) 
     })
   }
 
