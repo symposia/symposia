@@ -431,5 +431,8 @@ color:#EEE;
   align-items: center;
   background-color: rgba(0,0,0,.95);
   padding: 30px;
+}
 
+div[role="tooltip"] * {
+  background-color: black;
 }
