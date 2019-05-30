@@ -10,6 +10,7 @@ import logo from "./logo.png";
 // import ArticleView from "./components/ArticleView";
 import ArticleViewPopup from "./components/ArticleViewPopup";
 import Spinner from "./components/Spinner";
+import { CSSTransition } from "react-transition-group";
 
 class App extends Component {
   NavBar() {
@@ -42,9 +43,23 @@ class App extends Component {
     return (
       <Router>
         <div id="app-container">
-          <Route path="/" exact render={this.NavBar} />
+          {/* <Route path="/" exact render={this.NavBar} /> */}
           <main>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact>
+              {({ match }) => (
+                <CSSTransition
+                  in={match != null}
+                  appear={true}
+                  timeout={300}
+                  classNames="page"
+                  unmountOnExit
+                 >
+                  <div className="page">
+                    <Home />
+                  </div>
+                 </CSSTransition>
+              )}
+            </Route>
             <Route path="/about/" component={About} />
             <Route
               path="/story/"
