@@ -1,3 +1,8 @@
+.av-related-articles {
+  padding-left: 10%;
+  border-left: 1px solid black;
+}
+
 .article-view-container {
   display: grid;
   grid-template-columns: 800px 400px;
@@ -30,7 +35,7 @@
 
 .article-view-main {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0px auto;
   /* grid-column: 2/3; */
 }
 
