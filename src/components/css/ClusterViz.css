@@ -436,3 +436,97 @@ color:#EEE;
 body > div[role="tooltip"] * {
   background-color: black;
 }
+
+/* Transitions */
+.fade-appear {
+  opacity: 0;
+}
+.fade-appear-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
+
+
+.fadeLeft-appear {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.fadeLeft-appear.fadeLeft-appear-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition-property: opacity, transform;
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+}
+.fadeLeft-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.fadeLeft-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition-property: opacity, transform;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+}
+.fadeLeft-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.fadeLeft-exit-active {
+  opacity: 0;
+  transform: translateX(20px);
+  transition-property: opacity, transform;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+}
+
+
+.fadeRight-appear {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.fadeRight-appear.fadeRight-appear-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition-property: opacity, transform;
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+}
+.fadeRight-enter {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.fadeRight-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition-property: opacity, transform;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+}
+.fadeRight-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.fadeRight-exit-active {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition-property: opacity, transform;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+}

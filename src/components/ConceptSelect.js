@@ -191,7 +191,7 @@ class ConceptSelect extends React.Component {
   // }
 
   handleChange = name => values => {
-    console.log(values);
+    // console.log(values);
     this.setState({
         [name]: values
     });

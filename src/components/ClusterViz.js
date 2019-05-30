@@ -15,6 +15,8 @@ import ArticleView from "./ArticleView"
 
 import Spinner from "./Spinner";
 
+import { CSSTransition } from 'react-transition-group';
+import { hidden } from "ansi-colors";
 
 class ClusterViz extends Component {
 
@@ -106,7 +108,7 @@ class ClusterViz extends Component {
       //   .then(resp => resp.json())
       //   .then(rawArticles => {
       //     let clusteredArticles = this.createFakeClusters(rawArticles)
-      //     // // console.log(clusteredArticles)
+      //     // // // console.log(clusteredArticles)
       //     this.setState({
       //       data: clusteredArticles,
       //       tags: this.createFakeConcepts(),
@@ -141,11 +143,11 @@ class ClusterViz extends Component {
 
     recURIObj.rec.forEach(uri => {
       let article = this.getArticleByURI(uri)
-      // // console.log(typeof(uri), uri)
+      // // // console.log(typeof(uri), uri)
       recObj["rec"].push(article)
     })
     recURIObj.non_rec.forEach(uri => {
-      // // console.log(uri)
+      // // // console.log(uri)
       recObj["non_rec"].push(this.getArticleByURI(uri))
     })
 
@@ -157,9 +159,9 @@ class ClusterViz extends Component {
     
     Object.values(this.state.data).forEach(cluster => {
       cluster["articles"].forEach(article => {
-        // // console.log(uri, typeof(uri))
+        // // // console.log(uri, typeof(uri))
         if (article.uri === parseInt(uri)) {
-          // // console.log("Found:", article.uri)
+          // // // console.log("Found:", article.uri)
           result = article
         }
       })
@@ -265,21 +267,21 @@ class ClusterViz extends Component {
   }
 
   getFirst(article) {
-    // console.log("getFirst()")
+    // // console.log("getFirst()")
     this.setState({article1: article});
   }
 
   selectSecond() {
-    // console.log("selectSecond: true")
+    // // console.log("selectSecond: true")
     this.setState({selectSecond: true})
   }
 
   getSecond(article2) {
-    // console.log("getSecond()")
+    // // console.log("getSecond()")
     let article1 = this.state.article1;
     let summaries = this.state.summaries;
-    // console.log(summaries[article1["title"]]["who"]);
-    // console.log(summaries[article2["title"]]["who"]);
+    // // console.log(summaries[article1["title"]]["who"]);
+    // // console.log(summaries[article2["title"]]["who"]);
     this.setState({article2: article2, selectSecond: false, showSummarizerModal: true});
   }
 
@@ -341,7 +343,7 @@ class ClusterViz extends Component {
   } 
 
   checkConcept(articleConcepts) {
-    console.log(this.state.concept);
+    // console.log(this.state.concept);
     let exists = true;
     Object.values(this.state.concept).forEach(concept => {
       if (articleConcepts.includes(concept) == false) {
@@ -500,9 +502,11 @@ class ClusterViz extends Component {
 
   render() {
     if (!this.state.data) { 
-      return <Spinner/>
+      return (
+          <Spinner/>
+      )
     } else {
-      console.log(this.state.data)
+      // console.log(this.state.data)
       // const key = Object.keys(this.state.data)[this.state.clusterNum];
       const data = this.applyFilterToAllArticles(this.state.data);
       const articles = this.getArticles(data);
@@ -516,29 +520,54 @@ class ClusterViz extends Component {
       // const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
 
       
-      let articleView = <ArticleView 
-        article={this.state.articleToView} 
-        exitView={this.leaveArticleView}
-        setView={this.setArticleToView}
-        getRecs={this.getRecs}
-        />
+      let articleView = 
+        <div>
+          <CSSTransition
+            in={true}
+            appear={true}
+            timeout={500}
+            classNames="fadeLeft"
+          >
+            <ArticleView 
+            article={this.state.articleToView} 
+            exitView={this.leaveArticleView}
+            setView={this.setArticleToView}
+            getRecs={this.getRecs}
+            />
+          </CSSTransition>
+        </div>
 
         let mainView =
-          <div> 
+          <div > 
             <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
             <div id="cluster-viz-container">
-              <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
+              <CSSTransition
+                in={true}
+                appear={true}
+                timeout={500}
+                classNames="fadeRight"
+              >
+                <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
+              </CSSTransition>
             </div>
           </div>
 
       return (
         <div>
+          <CSSTransition
+            in={true}
+            appear={true}
+            timeout={500}
+            classNames="fade"
+          >
             <SearchAppBar 
               storyTitle={this.state.title} 
               leaveArticleView={this.leaveArticleView} 
               articleViewActive={articleViewActive}
             />
+          </CSSTransition>
           {!this.state.articleToView ? mainView : articleView}
+
         </div>
       )
     }

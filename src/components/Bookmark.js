@@ -155,7 +155,7 @@ class Bookmark extends React.Component {
                                   </Typography>
                               </CardContent>
                             <CardActions className={classes.actions} disableActionSpacing>
-                                <IconButton className='close-button' aria-label="Add to favorites" onClick={()=>this.props.handleDeleteBookmark(value.title)}>
+                                <IconButton disableRipple={true} className='close-button' aria-label="Add to favorites" onClick={()=>this.props.handleDeleteBookmark(value.title)}>
                                     <CloseIcon />
                                 </IconButton>
                             </CardActions>

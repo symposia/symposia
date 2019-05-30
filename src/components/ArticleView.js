@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import { getDomain } from './Helpers'
 import ArticleSentiment from './ArticleSentiment';
 
+import { CSSTransition } from 'react-transition-group';
+
 class ArticleView extends Component {
   constructor(props) {
     super(props)
@@ -45,9 +47,9 @@ class ArticleView extends Component {
   generateConceptPopup(conceptPhrase, concept){
     const { description, label, score, summary, uri} = concept
 
-    // console.log(Object.keys(concept))
-    // console.log(concept)
-    // console.log(summary)
+    // // console.log(Object.keys(concept))
+    // // console.log(concept)
+    // // console.log(summary)
 
     let conceptPhrasePopup = 
       <Tooltip placement="top"
@@ -79,7 +81,7 @@ class ArticleView extends Component {
   }
 
   onPerspectiveChange(e) {
-    console.log("e.target.value", e.target.value)
+    // console.log("e.target.value", e.target.value)
     if (e.target.checked) {
       this.setState({
         differentPerspectives: e.target.value === "different" ? true : false
@@ -282,9 +284,9 @@ class ArticleText extends Component {
   generateConceptPopup(conceptPhrase, concept){
     const { description, label, score, summary, uri} = concept
 
-    // console.log(Object.keys(concept))
-    // console.log(concept)
-    // console.log(summary)
+    // // console.log(Object.keys(concept))
+    // // console.log(concept)
+    // // console.log(summary)
 
     let conceptPhrasePopup = 
       <Tooltip placement="top"
@@ -380,7 +382,7 @@ class ArticleText extends Component {
       let article = this.props.article
       let concepts = this.state.concepts
       let annotatedBody = this.generateOrderOfConcepts(concepts)
-      // console.log(annotatedBody)
+      // // console.log(annotatedBody)
       let body = annotatedBody ? annotatedBody : article.body
       return (
             <div className="av-text">

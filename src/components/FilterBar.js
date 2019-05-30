@@ -246,14 +246,14 @@ class FilterBar extends React.Component {
   };
 
   handleInputChange = prop => event => {
-    console.log("hi");
-    console.log(event.target.value);
+    // console.log("hi");
+    // console.log(event.target.value);
     this.setState({ [prop]: event.target.value });
     this.props.filterDate(event.target.value);
   };
 
   handleChange = name => event => {
-    console.log(name, event.target.checked);
+    // console.log(name, event.target.checked);
     this.setState({ [name]: event.target.checked });
     this.props.filterSentiment(name, event.target.checked);
   };

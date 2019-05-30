@@ -20,7 +20,7 @@ class StoryGrid extends React.Component {
             <div id="story-grid">
                 <Grid container className={classes.root}>
                     {[0,1,2,3,4].map(index => { 
-                        console.log(this.props.data[index]);
+                        // console.log(this.props.data[index]);
                         return (
                             <div key={index}>
                                 {this.props.data[index].every((article) => article.filterOut) ? null : 

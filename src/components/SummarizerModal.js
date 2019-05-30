@@ -20,8 +20,8 @@ function getDomain(url) {
 class SummarizerModal extends Component {
 
   componentDidMount(){
-    console.log("Summary 1:", this.props.summary1)
-    console.log("Summary 2:", this.props.summary2)
+    // console.log("Summary 1:", this.props.summary1)
+    // console.log("Summary 2:", this.props.summary2)
   }
 
   render() {
@@ -47,7 +47,7 @@ class ArticleInSummarizerModal extends Component {
   };
 
   componentDidMount() {
-    console.log("ArticleSummarizerModal: ", this.props.article)
+    // console.log("ArticleSummarizerModal: ", this.props.article)
     this.setState({
       article: this.props.article,
       summary: this.props.summary
