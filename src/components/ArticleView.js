@@ -124,7 +124,11 @@ class ArticleView extends Component {
               />
             </div>
             <div className="av-title">
-              <h1>{article.title}</h1>
+              <h1>
+                <a href={article.url} target="_blank" rel="noopener noreferrer">
+                  {article.title}
+                </a>
+                </h1>
             </div>
           </div>
           <div className="av-image">
