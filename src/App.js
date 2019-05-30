@@ -9,6 +9,7 @@ import ClusterViz from "./components/ClusterViz";
 import logo from "./logo.png";
 // import ArticleView from "./components/ArticleView";
 import ArticleViewPopup from "./components/ArticleViewPopup";
+import Spinner from "./components/Spinner";
 
 class App extends Component {
   NavBar() {
@@ -50,6 +51,7 @@ class App extends Component {
               render={() => <ClusterViz width={1440} height={600} />}
             />
             <Route path="/ArticleViewPopup/" component={ArticleViewPopup} />
+            <Route path="/spinner/" component={Spinner}/>
           </main>
         </div>
       </Router>

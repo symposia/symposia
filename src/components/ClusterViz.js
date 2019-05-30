@@ -13,6 +13,9 @@ import SearchAppBar from "./SearchAppBar";
 import FilterBar from "./FilterBar";
 import ArticleView from "./ArticleView"
 
+import Spinner from "./Spinner";
+
+
 class ClusterViz extends Component {
 
   constructor(props) {
@@ -497,7 +500,7 @@ class ClusterViz extends Component {
 
   render() {
     if (!this.state.data) { 
-      return null //should replace with spinner or sth
+      return <Spinner/>
     } else {
       console.log(this.state.data)
       // const key = Object.keys(this.state.data)[this.state.clusterNum];
