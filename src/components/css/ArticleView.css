@@ -172,6 +172,10 @@ pre, .match-pre {
   font-size: 1.25em !important;
 }
 
+.match-pre {
+  margin: 20px 0;
+}
+
 .sentiment {
   display: flex;
   align-items: center;
