@@ -433,6 +433,6 @@ color:#EEE;
   padding: 30px;
 }
 
-div[role="tooltip"] * {
+body > div[role="tooltip"] * {
   background-color: black;
 }
