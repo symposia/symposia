@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {InteractiveForceGraph, ForceGraphNode, ForceGraphLink} from 'react-vis-force';
 
 class ConceptGraph extends Component {
+    state = {
+        graphHeight: null
+    }
 
     selectAction(node) {
         let links = this.props.data.links;
@@ -31,6 +34,10 @@ class ConceptGraph extends Component {
         }
     }
 
+    // componentWillMount() {
+    //     let columnGraph = document.getElementsByClassName("column-graph")
+    //     console.log(columnGraph)
+    // }
 
     render() {
 
@@ -54,7 +61,7 @@ class ConceptGraph extends Component {
                 onSelectNode={(ev, node) => this.selectAction(node)}
                 onDeselectNode={(ev, node) => this.deSelectAction(node)}
                 simulationOptions={{
-                    // height: 800,
+                    height: window.innerHeight-128,
                     // width: 1500,
                     strength: {
                       x: ({ radius }) => 10 / radius,
