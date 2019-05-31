@@ -4,6 +4,9 @@ import { withState } from 'recompose';
 
 
 class ConceptGraph extends Component {
+    state = {
+        graphHeight: null
+    }
 
     selectAction(node) {
         let links = this.props.data.links;
@@ -33,6 +36,11 @@ class ConceptGraph extends Component {
             return "purple"
         }
     }
+
+    // componentWillMount() {
+    //     let columnGraph = document.getElementsByClassName("column-graph")
+    //     console.log(columnGraph)
+    // }
 
     render() {
 
@@ -170,18 +178,23 @@ class ConceptGraph extends Component {
             <InteractiveForceGraph
                 highlightDependencies
                 zoom
+                zoomOptions= {{
+                    minScale: 10,
+                    maxScale: 3
+                }}
                 // labelAttr={fontSize:20}
                 showLabels
                 onSelectNode={(ev, node) => this.selectAction(node)}
                 onDeselectNode={(ev, node) => this.deSelectAction(node)}
                 simulationOptions={{
-                    // height: {},
+                    height: window.innerHeight,
                     // width: 1500,
+                    radiusMargin: 7,
                     strength: {
                     //   x: ({ radius }) => 20 / radius,
-                    //   y: ({ radius }) => 20 / radius,
-                      collide: 100,
-                      charge: 100,
+                    //   y: ({ radius }) => 50 / radius,
+                      collide: -100,
+                      charge: 300
                     }
                 }}
                 >
@@ -189,13 +202,13 @@ class ConceptGraph extends Component {
                 <ForceGraphNode
                     key={node.id}
                     fill={this.getColor(node.type)}
-                    node={{ ...node, radius: 6}}
+                    node={{ ...node, radius: 7}}
                 />
                 ))}
                 {this.props.data.links.map(link => (
                 <ForceGraphLink
                     key={`${link.source}=>${link.target}`}
-                    link={{ ...link, value: 10 }}
+                    link={{ ...link, value: 2}}
                 />
                 ))}
             </InteractiveForceGraph>
