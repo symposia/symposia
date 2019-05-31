@@ -23,6 +23,9 @@ class ArticleView extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.article) {
+      return null;
+    }
     let concepts = this.props.article.concepts
 
     Object.values(concepts).forEach((entry, index) => {
@@ -94,6 +97,7 @@ class ArticleView extends Component {
   render() {
     
     let article = this.props.article;
+    if (!article) {return null;}
     let author =
       article.authors.length > 0 ? "By " + article.authors[0].name : null;
     let recs = this.props.getRecs(article.uri)

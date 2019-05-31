@@ -523,7 +523,7 @@ class ClusterViz extends Component {
       let articleView = 
         <div>
           <CSSTransition
-            in={true}
+            in={this.state.articleView != null}
             appear={true}
             timeout={500}
             classNames="fadeLeft"
@@ -539,6 +539,12 @@ class ClusterViz extends Component {
 
       let mainView = 
           <div> 
+              <CSSTransition
+                in={this.state.articleToView === null}
+                appear={true}
+                timeout={500}
+                classNames="fadeRight"
+              >
             <div id="cluster-viz-container">
               <div class="row">
                 <div class="column-graph">
@@ -547,17 +553,11 @@ class ClusterViz extends Component {
                   </div>
                 </div>
                 <div class="column-article">
-              {/* <CSSTransition
-                in={true}
-                appear={true}
-                timeout={500}
-                classNames="fadeRight"
-              > */}
                   <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
-              {/* </CSSTransition> */}
                 </div>
               </div>
             </div>
+              </CSSTransition>
           </div>
           
       return (
@@ -574,9 +574,12 @@ class ClusterViz extends Component {
               articleViewActive={articleViewActive}
             />
           </CSSTransition>
-          {!this.state.articleToView ? mainView : articleView}
+          <div style={{display: this.state.articleToView ? "block" : "none"}}>
+            { articleView }
+          </div>
 
           <div style={{display: !this.state.articleToView ? "block" : "none"}}>
+            { mainView }
             <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
           </div>
 
