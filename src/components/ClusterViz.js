@@ -403,6 +403,8 @@ class ClusterViz extends Component {
   applyFilterToAllArticles(data) {
     let filters = [this.state.filteredSources, this.state.days, this.state.concept, this.state.sentiment];
     if (filters.every(this.checkIfNull)) {
+      Object.values(data).forEach(cluster => cluster.concepts = [])
+      console.log(data)
       return data;
     } 
     let result = JSON.parse(JSON.stringify(data));
@@ -450,7 +452,7 @@ class ClusterViz extends Component {
         let a = this.state.sentiment.concat(name);
         this.setState({sentiment: a})
       } else {
-        var index = this.state.sentiment.indexOf(name);
+        // var index = this.state.sentiment.indexOf(name);
         let a = this.state.sentiment.filter(e => e !== name)
         if (a.length === 0) {
           this.setState({sentiment: null});
@@ -506,19 +508,14 @@ class ClusterViz extends Component {
           <Spinner/>
       )
     } else {
-      // console.log(this.state.data)
-      // const key = Object.keys(this.state.data)[this.state.clusterNum];
       const data = this.applyFilterToAllArticles(this.state.data);
       const articles = this.getArticles(data);
       const sources = this.getSources(this.state.data);
       const tags = this.getClusterConcepts(data);
       const conceptList = this.getAllConcepts(this.state.data);
       const articleViewActive = this.state.articleToView != null
-      // const { bookmark, popupData, bookmarkList} = this.state;
-      // const summaries = this.state.summaries;
 
-      // const handleCompare = this.state.selectSecond ? this.getSecond : this.getFirst
-
+      console.log(tags, articles)
       
       let articleView = 
         <div>
@@ -546,13 +543,13 @@ class ClusterViz extends Component {
                 classNames="fadeRight"
               >
             <div id="cluster-viz-container">
-              <div class="row">
-                <div class="column-graph">
-                  <div class="graph-wrapper">
+              <div className="row">
+                <div className="column-graph">
+                  <div className="graph-wrapper">
                     <ConceptGraph setConcepts={this.setConcepts} data={this.state.graph} />
                   </div>
                 </div>
-                <div class="column-article">
+                <div className="column-article">
                   <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
                 </div>
               </div>

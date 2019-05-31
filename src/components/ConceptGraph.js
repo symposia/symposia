@@ -181,10 +181,11 @@ class ConceptGraph extends Component {
 
             <InteractiveForceGraph
                 highlightDependencies
-                zoom
-                zoomOptions= {{
-                    minScale: 10,
-                    maxScale: 3
+                zoom={true}
+                zoomOptions={{
+                    minScale: .5,
+                    maxScale: 2,
+                    onMouseDown: (a, b) => {console.log("concept graph mouse down", a, b)}
                 }}
                 // labelAttr={fontSize:20}
                 showLabels
@@ -221,3 +222,5 @@ class ConceptGraph extends Component {
 }
 
 export default ConceptGraph;
+
+// class ZoomableInteractiveForceGraph extends 
