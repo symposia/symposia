@@ -45,7 +45,7 @@ justify-content:center;
 
 .column-graph {
   border-right: 10px solid #8331FE;
-  min-width:900px
+  width:900px
 }
 
 .column-article {
@@ -464,4 +464,8 @@ color:#EEE;
   background-color: rgba(0,0,0,.95);
   padding: 30px;
 
+}
+
+text {
+  font-size: 14px !important;
 }
