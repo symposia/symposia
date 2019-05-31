@@ -21,7 +21,6 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     width: '90%'
-
   },
   grow: {
     flexGrow: 1,

@@ -3,9 +3,8 @@
 }
 
 .article-grid {
-  display:flex;
   display: flex;
-  flex-flow: row wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   margin: auto;
 }

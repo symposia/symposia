@@ -8,6 +8,7 @@ const styles = theme => ({
     root: {
       flexGrow: 1,
       display: "flex",
+      flexWrap: "nowrap",
       flexDirection: "column"
     }
   });

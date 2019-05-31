@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Home from "./components/Home";
 import About from "./components/About";
+import Graph from "./components/ConceptGraph";
 import ClusterViz from "./components/ClusterViz";
 import logo from "./logo.png";
 // import ArticleView from "./components/ArticleView";
@@ -44,6 +45,8 @@ class App extends Component {
           <Route path="/" exact render={this.NavBar} />
           <main>
             <Route path="/" exact component={Home} />
+            <Route path="/about/" component={About} />
+            <Route path="/graph/" component={Graph} />
             <Route path="/about/" component={About} />
             <Route
               path="/story/"
