@@ -30,6 +30,7 @@ class StoryGrid extends React.Component {
                         )
                     })}
                 </Grid>
+                <hr></hr>
             </div>
         );
     };

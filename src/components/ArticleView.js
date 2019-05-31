@@ -36,6 +36,7 @@ class ArticleView extends Component {
         .then((data) => {
           Object.assign(currConcept, {description: data.description})
           Object.assign(currConcept, {summary: data.extract_html})
+          Object.assign(currConcept, {originalimagesrc: data.originalimage})
           
           concepts[index] = currConcept
           this.setState({concepts: concepts})  
@@ -45,17 +46,18 @@ class ArticleView extends Component {
   }
 
   generateConceptPopup(conceptPhrase, concept){
-    const { description, label, score, summary, uri} = concept
+    const { description, label, score, summary, uri, originalimage} = concept
 
-    // // console.log(Object.keys(concept))
-    // // console.log(concept)
-    // // console.log(summary)
+    // console.log(originalimage.source)
 
     let conceptPhrasePopup = 
       <Tooltip placement="top"
           leaveTouchDelay = {1000}
           title={
             <Typography color="inherit">
+              <p>
+                {/* {originalimage.source} */}
+              </p>
               <p className="popup-title">
                 {label.eng}
               </p>
@@ -263,6 +265,8 @@ class ArticleText extends Component {
         .then((data) => {
           Object.assign(currConcept, {description: data.description})
           Object.assign(currConcept, {summary: data.extract_html})
+          Object.assign(currConcept, {originalimage: data.originalimage})
+          // Object.assign(currConcept, {originalimagesrc: data.originalimage.source})
           
           concepts[index] = currConcept
           this.setState({concepts: concepts})  
@@ -282,38 +286,44 @@ class ArticleText extends Component {
   }
 
   generateConceptPopup(conceptPhrase, concept){
-    const { description, label, score, summary, uri} = concept
+    const { description, label, score, summary, uri, originalimage} = concept
+    let conceptPhrasePopup = ''
 
-    // // console.log(Object.keys(concept))
-    // // console.log(concept)
-    // // console.log(summary)
+    // console.log(Object.keys(concept))
+    if(originalimage) {
+      console.log(originalimage.source)
+      // console.log(summary)
 
-    let conceptPhrasePopup = 
-      <Tooltip placement="top"
-          leaveTouchDelay = {1000}
-          className="concept-tooltip"
-          title={
-            <Typography color="inherit">
-              <p className="popup-title">
-                {label.eng}
-              </p>
-              <p>
-                <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
-              </p>
-              <p className="popup-description">
-                {description}
-              </p>
-              <p>
-              <div className="popup-summary" dangerouslySetInnerHTML={{ __html: summary }} />
+      conceptPhrasePopup = 
+        <Tooltip placement="top"
+            leaveTouchDelay = {1000}
+            className="concept-tooltip"
+            title={
+              <Typography color="inherit">
+                <p>
+                  <img src={originalimage.source} height='20%' width='100px'></img>
+                </p>
+                <p className="popup-title">
+                  {label.eng}
+                </p>
+                <p>
+                  <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
+                </p>
+                <p className="popup-description">
+                  {description}
+                </p>
+                <p>
+                <div className="popup-summary" dangerouslySetInnerHTML={{ __html: summary }} />
 
-                {/* {summary} */}
-              </p>
-              
-            </Typography>
-          }
-        >
-        <a href={uri} target="_blank" rel="noopener noreferrer">{ conceptPhrase }</a>
-      </Tooltip>
+                  {/* {summary} */}
+                </p>
+                
+              </Typography>
+            }
+          >
+          <a href={uri} target="_blank" rel="noopener noreferrer">{ conceptPhrase }</a>
+        </Tooltip>
+    }
 
     return conceptPhrasePopup
   }
@@ -348,7 +358,7 @@ class ArticleText extends Component {
                 {concept.label.eng}
               </span>
             )
-
+            
             conceptPhrasePopup = this.generateConceptPopup(conceptPhrase, concept)
 
             // conceptPhrasePopup = conceptPhrase
