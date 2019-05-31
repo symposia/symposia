@@ -27,7 +27,6 @@ margin:0 auto;
 }
 
 .container--fluid {
-max-width:100%;
 text-align:center;
 margin:0;
 }
@@ -39,17 +38,24 @@ justify-content:center;
 }
 
 .row {
+  min-width:100vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto;
 }
 
 .column-graph {
   border-right: 10px solid #8331FE;
+  min-width:900px
 }
 
 .column-article {
-  flex: 50%;
+  overflow: hidden;
 }
+
+.graph-wrapper {
+  position: fixed;
+}
+
 
 .col-1 {
 flex-basis:50%;

@@ -577,7 +577,9 @@ class ClusterViz extends Component {
             <div id="cluster-viz-container">
               <div class="row">
                 <div class="column-graph">
-                  <ConceptGraph setConcepts={this.setConcepts} data={this.state.graph} />
+                  <div class="graph-wrapper">
+                    <ConceptGraph setConcepts={this.setConcepts} data={this.state.graph} />
+                  </div>
                 </div>
                 <div class="column-article">
                   <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
