@@ -284,6 +284,9 @@ class FilterBar extends React.Component {
       <div className={classes.root}>
         <AppBar classes={{root: classes.root}} position="fixed">
           <Toolbar className={classes.toolbar}>
+            <Button onClick={this.props.toggleFullscreen}>
+              Toggle Fullscreen
+            </Button>
             <form className={classes.container} noValidate>
               <TextField
                 id="days"

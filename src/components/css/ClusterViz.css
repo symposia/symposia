@@ -578,3 +578,10 @@ text {
 #story-grid {
   min-height: 100vh;
 }
+
+.fullscreen {
+  grid-template-columns: 0 auto;
+}
+.not-fullscreen {
+  grid-template-columns: auto auto;
+}

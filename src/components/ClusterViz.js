@@ -28,7 +28,8 @@ class ClusterViz extends Component {
       selectSecond: false,
       showSummarizerModal: false,
       articleToView: null,
-      recs: null
+      recs: null,
+      fullscreen: false
     };
 
     this.getFirst = this.getFirst.bind(this);
@@ -41,7 +42,14 @@ class ClusterViz extends Component {
     this.setArticleToView = this.setArticleToView.bind(this)
     this.leaveArticleView = this.leaveArticleView.bind(this)
     this.getRecs = this.getRecs.bind(this)
+    this.toggleFullscreen = this.toggleFullscreen.bind(this)
     
+  }
+
+  toggleFullscreen() {
+    this.setState({
+      fullscreen: !this.state.fullscreen 
+    })
   }
 
   componentWillMount() {
@@ -534,6 +542,8 @@ class ClusterViz extends Component {
           </CSSTransition>
         </div>
 
+      let fullscreen = this.state.fullscreen ? 'fullscreen' : 'not-fullscreen'
+
       let mainView = 
           <div> 
               <CSSTransition
@@ -543,7 +553,7 @@ class ClusterViz extends Component {
                 classNames="fade"
               >
             <div id="cluster-viz-container">
-              <div className="row">
+              <div className={"row " + fullscreen} >
                 <div className="column-graph">
                   <div className="graph-wrapper">
                     <ConceptGraph setConcepts={this.setConcepts} data={this.state.graph} />
@@ -577,7 +587,7 @@ class ClusterViz extends Component {
 
           <div style={{display: !this.state.articleToView ? "block" : "none"}}>
             { mainView }
-            <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
+            <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment} toggleFullscreen={this.toggleFullscreen}/>
           </div>
 
         </div>
