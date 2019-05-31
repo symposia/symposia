@@ -289,7 +289,7 @@ class FilterBar extends React.Component {
                   max: "30",
                   step: "1",
                 }}
-                defaultValue="30"
+                defaultValue="20"
                 onChange={this.handleInputChange('days')}
                 className={classes.textField}
                 InputLabelProps={{

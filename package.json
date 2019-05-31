@@ -6,15 +6,20 @@
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "@material-ui/lab": "^3.0.0-alpha.30",
+    "@material-ui/styles": "^4.0.1",
     "d3": "^5.9.2",
+    "d3-scale": "^3.0.0",
     "jquery": "^3.4.0",
     "normalize.css": "^8.0.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-grid-system": "^4.4.5",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8",
     "react-select": "^2.4.3",
-    "react-transition-group": "^4.1.0"
+    "react-transition-group": "^4.1.0",
+    "react-vis-force": "^0.3.1",
+    "recompose": "^0.30.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,5 +35,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@brainhubeu/react-carousel": "^1.10.17"
+  }
 }

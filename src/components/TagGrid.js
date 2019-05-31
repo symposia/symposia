@@ -8,7 +8,6 @@ const styles = theme => ({
     flexGrow: 1,
     marginTop: 88,
     marginBottom: 16,
-
   },
   demo: {
     height: 240
@@ -19,7 +18,6 @@ const styles = theme => ({
     color: "#707070",
     backgroundColor: "#FFFFFF",
     fontSize: "16px"
-
   },
   control: {
     padding: theme.spacing.unit * 2

@@ -5,6 +5,9 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import Carousel, { Dots } from '@brainhubeu/react-carousel';
+import { Container, Row, Col } from 'react-grid-system';
+import '@brainhubeu/react-carousel/lib/style.css';
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import "./css/ArticleGrid.css";
@@ -164,7 +167,7 @@ class ArticleGrid extends React.Component {
   render() {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;
-    if (this.props.articles.length > 0) {
+    if (this.props.articles.length <= 0) { return null };
       return (
           <Grid item xs={"auto"}>
             <Grid
@@ -221,9 +224,6 @@ class ArticleGrid extends React.Component {
             </Grid>
           </Grid>
         );
-    } else {
-      return null;
-    }
   }
 }
 

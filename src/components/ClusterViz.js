@@ -1,17 +1,29 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import * as d3 from "d3";
 import $ from "jquery";
 import "./css/ClusterViz.css";
 import ZoomSlider from "./ZoomSlider";
 import StoryGrid from "./StoryGrid";
+
 import Popup from "./Popup";
 import Bookmark from "./Bookmark";
 import { PropTypes } from 'react';
 import { ReactContext } from '../Context'
 import SummarizerModal from "./SummarizerModal";
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 import SearchAppBar from "./SearchAppBar";
 import FilterBar from "./FilterBar";
-import ArticleView from "./ArticleView"
+import ArticleView from "./ArticleView";
+import ConceptGraph from "./ConceptGraph";
+import sriLankaJSON from './graph/sri-lanka-graph.json';
+import avengersJSON from './graph/avengers-graph.json';
+import ukraineJSON from './graph/ukraine-graph.json';
+import joeBidenJSON from './graph/joe-biden-graph.json';
+
+
+
 
 import Spinner from "./Spinner";
 
@@ -24,6 +36,7 @@ class ClusterViz extends Component {
     super(props);
     this.state = {
       data: null,
+      graph: null,
       sources: null,
       days: null,
       title: "",
@@ -59,8 +72,10 @@ class ClusterViz extends Component {
     let last_segment = segment_array.pop();
     let title;
     let dataIsClustered = false;
+    let dataHasGraph = false;
     let recsURL;
-    let fileName
+    let fileName;
+    let graphURL;
 
     //handling click actions on homepage of articles
     switch (last_segment) {
@@ -68,30 +83,33 @@ class ClusterViz extends Component {
         title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/avengers-endgame-rec.json"
         dataIsClustered = true
+        graphURL = "./graph/avengers-graph.json"
         fileName = "avengers-cluster.json"
         break;
       case "sri-lanka-attacks":
         title = "Sri Lanka Attacks"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/sri-lanka-attacks-rec.json"
+        graphURL = "./graph/sri-lanka-graph.json"
         dataIsClustered = true
         fileName = "sri-lanka-cluster.json"
         break;
       case "joe-biden-2020":
         title = "Joe Biden Announces 2020 Presidential Campaign"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/joe-biden-2020-rec.json"
+        graphURL = "./graph/joe-biden-graph.json"
         dataIsClustered = true
         fileName = "joe-biden-cluster.json"
         break;
       case "ukraine-elections":
         title = "Comedian wins Ukranian Presidential Elections"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/ukraine-elections-rec.json"
+        graphURL = "./graph/ukraine-graph.json"
         dataIsClustered = true
         fileName = "ukraine-cluster.json"
         break;
       default:
     }
 
-    if (dataIsClustered) {
       const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/clusters/${fileName}`
       fetch(dataURL)
         .then(resp => resp.json())
@@ -102,24 +120,23 @@ class ClusterViz extends Component {
             title: title
           })
         })
-    } else {
-      // const dataURL = `https://s3-us-west-2.amazonaws.com/symposia/articles/${last_segment}.json`
-      // fetch(dataURL)
-      //   .then(resp => resp.json())
-      //   .then(rawArticles => {
-      //     let clusteredArticles = this.createFakeClusters(rawArticles)
-      //     // // // console.log(clusteredArticles)
-      //     this.setState({
-      //       data: clusteredArticles,
-      //       tags: this.createFakeConcepts(),
-      //       title: title
-      //     })
-      //   })
-    }
-      fetch(recsURL)
-        .then(resp => resp.json())
-        .then(recs => this.createRecsDict(recs))
 
+    fetch(recsURL)
+      .then(resp => resp.json())
+      .then(recs => this.createRecsDict(recs))
+
+    // console.log(graphURL);
+    // fetch(graphURL)
+    //   .then(resp => resp.json())
+    //   .then(graphData => {
+    //     this.setState({
+    //       graph: graphData
+    //     })
+    //   })
+    
+    this.setState({
+      graph: sriLankaJSON
+    })
   }
 
   createRecsDict(recs) {
@@ -343,7 +360,6 @@ class ClusterViz extends Component {
   } 
 
   checkConcept(articleConcepts) {
-    // console.log(this.state.concept);
     let exists = true;
     Object.values(this.state.concept).forEach(concept => {
       if (articleConcepts.includes(concept) == false) {
@@ -484,8 +500,13 @@ class ClusterViz extends Component {
     if (concepts.length > 0) {
       let conceptList = []
       Object.values(concepts).forEach(concept => {
-        conceptList.push(concept.label);
+        if (concept.hasOwnProperty("label")) {
+          conceptList.push(concept.label);
+        } else {
+          conceptList.push(concept);
+        }
       });
+      console.log(conceptList);
       this.setState({concept: conceptList});
     } else {
       this.setState({concept: null});
@@ -537,17 +558,26 @@ class ClusterViz extends Component {
           </CSSTransition>
         </div>
 
-        let mainView =
-          <div > 
+      let mainView = 
+          <div> 
             <div id="cluster-viz-container">
-              <CSSTransition
+              <div class="row">
+                <div class="column-graph">
+                  <div class="graph-wrapper">
+                    <ConceptGraph setConcepts={this.setConcepts} data={this.state.graph} />
+                  </div>
+                </div>
+                <div class="column-article">
+              {/* <CSSTransition
                 in={true}
                 appear={true}
                 timeout={500}
                 classNames="fadeRight"
-              >
-                <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
-              </CSSTransition>
+              > */}
+                  <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
+              {/* </CSSTransition> */}
+                </div>
+              </div>
             </div>
           </div>
 

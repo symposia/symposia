@@ -22,7 +22,8 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: 'auto'
+    margin: 'auto',
+    width: '90%'
   },
   grow: {
     flexGrow: 1,

@@ -191,7 +191,6 @@ class ConceptSelect extends React.Component {
   // }
 
   handleChange = name => values => {
-    // console.log(values);
     this.setState({
         [name]: values
     });
@@ -244,7 +243,7 @@ class ConceptSelect extends React.Component {
                 components={components}
                 value={this.state.multi}
                 onChange={this.handleChange('multi')}
-                placeholder="Select concepts"
+                placeholder="Search for a related person/place/thing"
                 isMulti
                 isClearable
             /> 
