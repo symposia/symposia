@@ -18,6 +18,7 @@ import grey from '@material-ui/core/colors/grey';
 import purple from '@material-ui/core/colors/purple';
 import yellow from '@material-ui/core/colors/yellow';
 import ArticleSentiment from './ArticleSentiment';
+import InfiniteScroll from 'react-infinite-scroller';
 
 let u = Image;
 
@@ -126,11 +127,21 @@ function getDomain(url) {
 
 
 class ArticleGrid extends React.Component {
-  state = {
-    direction: "row",
-    justify: "flex-start",
-    alignItems: "flex-start",
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      direction: "row",
+      justify: "flex-start",
+      alignItems: "flex-start",
+      items: [],
+      hasMoreItems: true,
+      page: 1,
+      loading: false
+    };
+
+    this.loadMoreItems = this.loadMoreItems.bind(this)
+  }
+
 
   set_focus(typeFilterList) {
     this.props.articles.map(value => {
@@ -159,66 +170,113 @@ class ArticleGrid extends React.Component {
   //   }
   // }
 
+  componentDidMount() {
+    let hasMoreItems, items
+    if (this.props.articles.length < 10) {
+      hasMoreItems = false
+      items = this.props.articles
+    } else {
+      hasMoreItems = true
+      items = this.props.articles.slice(0, 10)
+    }
+    this.setState({
+      items: items,
+      hasMoreItems: hasMoreItems,
+    })
+  }
+
+  async loadMoreItems() {
+    if (this.state.loading) {
+      return
+    }
+    this.setState({loading: true})
+    let page = this.state.page + 1 
+    let size = page * 10
+    let items
+    if (size < this.props.articles.length) {
+      items = this.props.articles
+      this.setState({
+        items: items,
+        hasMoreItems: false,
+      })
+    } else {
+      items = this.props.articles.splice(0, size)
+      this.setState({
+        page: page,
+        items: items,
+    })
+    console.log(items)
+    }
+    this.setState({loading: false})
+  }
   
 
   render() {
     const { classes } = this.props;
     const { alignItems, direction, justify } = this.state;
+    const items = this.state.items.map((value, index) => (
+                    <Grid key={index} item className={this.filterOut(value)}>
+                      <Card 
+                      style={{backgroundImage: `url(${value.image})`}} 
+                      className={classes.card} 
+                      onClick={() => {this.props.setArticle(value)}}
+                      >
+                          <CardContent  className={classes.content}>
+                            {/* <Typography gutterBottom variant="h5" component="h2" /> */}
+                            <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >
+                              {value.title}
+                            </Typography>
+                            <div className={classes.details}>
+                              <div className= {classes.textmetadata}>
+                                <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
+                                  {value.date}
+                                </Typography>
+                                <div className={classes.sentiment}>
+                                  {/* <Lens className={`${classes.icon} ${this.getSentimentColor(value.sentiment)}`} />
+                                  <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
+                                    {value.sentiment}
+                                  </Typography> */}
+                                  <ArticleSentiment value={value.sentiment}/>
+                                </div>
+                              </div>
+                            {/* <div className={classes.details}>
+                              <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" >
+                                {value.date}
+                                {value.sentiment}
+                              </Typography> */}
+                              <CardMedia
+                                  component="img"
+                                  alt={value.title}
+                                  className={classes.media}
+                                  image={"http://logo.clearbit.com/" + getDomain(value.url)}
+                                  title={value.title}
+                                  data-index={index}
+                              />
+                            </div>
+                          </CardContent>
+                      </Card>
+                    </Grid>
+                  ))
+
     if (this.props.articles.length > 0) {
       return (
           <Grid item xs={"auto"}>
-            <Grid
-              container
-              spacing={16}
-              className={classes.demo+this.props.articles.length+" article-cards-container"}
-              alignItems={alignItems}
-              direction={direction}
-              justify={justify}
-            >
-              {this.props.articles.map((value, index) => (
-                <Grid key={index} item className={this.filterOut(value)}>
-                  <Card 
-                  style={{backgroundImage: `url(${value.image})`}} 
-                  className={classes.card} 
-                  onClick={() => {this.props.setArticle(value)}}
-                  >
-                      <CardContent  className={classes.content}>
-                        {/* <Typography gutterBottom variant="h5" component="h2" /> */}
-                        <Typography className={classes.cardtitle} gutterBottom variant="subtitle2" component="p" >
-                          {value.title}
-                        </Typography>
-                        <div className={classes.details}>
-                          <div className= {classes.textmetadata}>
-                            <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
-                              {value.date}
-                            </Typography>
-                            <div className={classes.sentiment}>
-                              {/* <Lens className={`${classes.icon} ${this.getSentimentColor(value.sentiment)}`} />
-                              <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" noWrap>
-                                {value.sentiment}
-                              </Typography> */}
-                              <ArticleSentiment value={value.sentiment}/>
-                            </div>
-                          </div>
-                        {/* <div className={classes.details}>
-                          <Typography className={classes.metadata} gutterBottom variant="subtitle2" component="p" >
-                            {value.date}
-                            {value.sentiment}
-                          </Typography> */}
-                          <CardMedia
-                              component="img"
-                              alt={value.title}
-                              className={classes.media}
-                              image={"http://logo.clearbit.com/" + getDomain(value.url)}
-                              title={value.title}
-                              data-index={index}
-                          />
-                        </div>
-                      </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={this.loadMoreItems}
+              hasMore={this.state.hasMoreItems}
+             >
+              <Grid
+                container
+                spacing={16}
+                className={classes.demo+this.props.articles.length+" article-cards-container"}
+                alignItems={alignItems}
+                direction={direction}
+                justify={justify}
+              >
+                {items}
+              </Grid>
+            </InfiniteScroll>
           </Grid>
         );
     } else {
