@@ -193,7 +193,7 @@ class ConceptGraph extends Component {
                     strength: {
                     //   x: ({ radius }) => 20 / radius,
                     //   y: ({ radius }) => 50 / radius,
-                      collide: -100,
+                      collide: -50,
                       charge: 300
                     }
                 }}
