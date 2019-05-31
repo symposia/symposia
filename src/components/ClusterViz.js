@@ -1,34 +1,12 @@
 import React, { Component } from "react";
-import ReactDOM from 'react-dom';
-import * as d3 from "d3";
-import $ from "jquery";
 import "./css/ClusterViz.css";
-import ZoomSlider from "./ZoomSlider";
 import StoryGrid from "./StoryGrid";
-
-import Popup from "./Popup";
-import Bookmark from "./Bookmark";
-import { PropTypes } from 'react';
-import { ReactContext } from '../Context'
-import SummarizerModal from "./SummarizerModal";
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
 import SearchAppBar from "./SearchAppBar";
 import FilterBar from "./FilterBar";
 import ArticleView from "./ArticleView";
 import ConceptGraph from "./ConceptGraph";
-import sriLankaJSON from './graph/sri-lanka-graph.json';
-import avengersJSON from './graph/avengers-graph.json';
-import ukraineJSON from './graph/ukraine-graph.json';
-import joeBidenJSON from './graph/joe-biden-graph.json';
-
-
-
-
 import Spinner from "./Spinner";
-
 import { CSSTransition } from 'react-transition-group';
-import { hidden } from "ansi-colors";
 
 class ClusterViz extends Component {
 
