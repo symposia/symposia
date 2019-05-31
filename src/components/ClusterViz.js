@@ -539,7 +539,6 @@ class ClusterViz extends Component {
 
         let mainView =
           <div > 
-            <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
             <div id="cluster-viz-container">
               <CSSTransition
                 in={true}
@@ -567,6 +566,10 @@ class ClusterViz extends Component {
             />
           </CSSTransition>
           {!this.state.articleToView ? mainView : articleView}
+
+          <div style={{display: !this.state.articleToView ? "block" : "none"}}>
+            <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
+          </div>
 
         </div>
       )
