@@ -469,3 +469,7 @@ color:#EEE;
 text {
   font-size: 14px !important;
 }
+
+#story-grid {
+  min-height: 100vh;
+}
