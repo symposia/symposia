@@ -44,6 +44,10 @@ class ConceptGraph extends Component {
 
     render() {
 
+        if (!this.props.data) { 
+            console.log('broken')
+            return null; 
+        }
         // const columnGraph = document.getElementsByClassName("column-graph")
         // if (columnGraph[0]) {
         //     console.log(columnGraph[0].offsetHeight)

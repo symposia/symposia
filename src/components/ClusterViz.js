@@ -83,27 +83,27 @@ class ClusterViz extends Component {
         title = "Avengers: Endgame' Obliterates Records With $1.2 Billion Global Debut"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/avengers-endgame-rec.json"
         dataIsClustered = true
-        graphURL = "./graph/avengers-graph.json"
+        graphURL = "https://symposia.s3-us-west-2.amazonaws.com/graph/avengers-graph.json"
         fileName = "avengers-cluster.json"
         break;
       case "sri-lanka-attacks":
         title = "Sri Lanka Attacks"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/sri-lanka-attacks-rec.json"
-        graphURL = "./graph/sri-lanka-graph.json"
+        graphURL = "https://symposia.s3-us-west-2.amazonaws.com/graph/sri-lanka-graph.json"
         dataIsClustered = true
         fileName = "sri-lanka-cluster.json"
         break;
       case "joe-biden-2020":
         title = "Joe Biden Announces 2020 Presidential Campaign"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/joe-biden-2020-rec.json"
-        graphURL = "./graph/joe-biden-graph.json"
+        graphURL = "https://symposia.s3-us-west-2.amazonaws.com/graph/joe-biden-graph.json"
         dataIsClustered = true
         fileName = "joe-biden-cluster.json"
         break;
       case "ukraine-elections":
         title = "Comedian wins Ukranian Presidential Elections"
         recsURL = "https://s3-us-west-2.amazonaws.com/symposia/recommendations/ukraine-elections-rec.json"
-        graphURL = "./graph/ukraine-graph.json"
+        graphURL = "https://symposia.s3-us-west-2.amazonaws.com/graph/ukraine-graph.json"
         dataIsClustered = true
         fileName = "ukraine-cluster.json"
         break;
@@ -126,17 +126,18 @@ class ClusterViz extends Component {
       .then(recs => this.createRecsDict(recs))
 
     // console.log(graphURL);
-    // fetch(graphURL)
-    //   .then(resp => resp.json())
-    //   .then(graphData => {
-    //     this.setState({
-    //       graph: graphData
-    //     })
-    //   })
+    fetch(graphURL)
+      .then(resp => resp.json())
+      .then(graphData => {
+        console.log(graphData)
+        this.setState({
+          graph: graphData
+        })
+      })
     
-    this.setState({
-      graph: sriLankaJSON
-    })
+  //   this.setState({
+  //     graph: sriLankaJSON
+  //   })
   }
 
   createRecsDict(recs) {
@@ -580,7 +581,7 @@ class ClusterViz extends Component {
               </div>
             </div>
           </div>
-
+          
       return (
         <div>
           <CSSTransition
