@@ -2,25 +2,26 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Carousel, { Dots } from '@brainhubeu/react-carousel';
-import { Container, Row, Col } from 'react-grid-system';
 import '@brainhubeu/react-carousel/lib/style.css';
 import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
 import "./css/ArticleGrid.css";
 import Image from '../images/sri-lanka-mourns-014.jpg';
-import {theme} from '../App.js';
-import Divider from '@material-ui/core/Divider';
-import Lens from '@material-ui/icons/Lens';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
 import purple from '@material-ui/core/colors/purple';
 import yellow from '@material-ui/core/colors/yellow';
 import ArticleSentiment from './ArticleSentiment';
+
+// import Tooltip from "@material-ui/core/Tooltip";
+// import CardActionArea from "@material-ui/core/CardActionArea";
+// import Carousel, { Dots } from '@brainhubeu/react-carousel';
+// import { Container, Row, Col } from 'react-grid-system';
+// import {theme} from '../App.js';
+// import Divider from '@material-ui/core/Divider';
+// import Lens from '@material-ui/icons/Lens';
 
 let u = Image;
 
@@ -41,8 +42,8 @@ const styles = theme => ({
   },
   card: {
     cursor: "pointer",
-    width: 400,
-    height: 300,
+    width: 250,
+    height: 200,
     alignItems: '',
     backgroundSize: 'cover',
     position: 'relative'
@@ -50,12 +51,12 @@ const styles = theme => ({
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: "scale-down",
-    height: 75,
-    width: 75,
-    //needs responsiveness fix here
-    marginLeft: 85,
+    height: 50,
+    width: 50,
     backgroundColor: 'white',
-    marginRight: 16
+    right: 20,
+    bottom: 20,
+    position: 'absolute' 
   },
   filteredCard: {
     maxWidth: 100,
@@ -69,7 +70,7 @@ const styles = theme => ({
   },
   cardtitle: {
     color: 'white',
-    fontSize: '16px'
+    fontSize: 13
   },
   metadata:  {
     fontSize: '12px',
@@ -79,9 +80,6 @@ const styles = theme => ({
   },
   details:  {
     display: 'flex',
-    position: 'absolute',
-    bottom: '24px',
-    left: '24px'
   },
   textmetadata: {
     width: 200,
@@ -93,6 +91,10 @@ const styles = theme => ({
   },
   sentiment:  {
     display: 'flex',
+    position: 'absolute',
+    left: 10,
+    bottom: 10,
+    fontSize: 13
   },
   vnegative:  {
     color: purple[900],

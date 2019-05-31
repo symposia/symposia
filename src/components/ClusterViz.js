@@ -523,7 +523,7 @@ class ClusterViz extends Component {
             in={this.state.articleView != null}
             appear={true}
             timeout={500}
-            classNames="fadeLeft"
+            classNames="fade"
           >
             <ArticleView 
             article={this.state.articleToView} 
@@ -540,7 +540,7 @@ class ClusterViz extends Component {
                 in={this.state.articleToView === null}
                 appear={true}
                 timeout={500}
-                classNames="fadeRight"
+                classNames="fade"
               >
             <div id="cluster-viz-container">
               <div className="row">

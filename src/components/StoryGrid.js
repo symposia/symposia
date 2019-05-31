@@ -10,6 +10,9 @@ const styles = theme => ({
       display: "flex",
       flexWrap: "nowrap",
       flexDirection: "column"
+    },
+    storyGrid: {
+        padding: "20px"
     }
   });
 
@@ -18,7 +21,7 @@ class StoryGrid extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <div id="story-grid">
+            <div id="story-grid" className={classes.storyGrid}>
                 <Grid container className={classes.root}>
                     {[0,1,2,3,4].map(index => { 
                         return (

@@ -184,7 +184,7 @@ class ConceptGraph extends Component {
                 zoom={true}
                 zoomOptions={{
                     minScale: .5,
-                    maxScale: 2,
+                    maxScale: 1,
                     onMouseDown: (a, b) => {console.log("concept graph mouse down", a, b)}
                 }}
                 // labelAttr={fontSize:20}
@@ -192,8 +192,8 @@ class ConceptGraph extends Component {
                 onSelectNode={(ev, node) => this.selectAction(node)}
                 onDeselectNode={(ev, node) => this.deSelectAction(node)}
                 simulationOptions={{
-                    height: window.innerHeight,
-                    // width: 1500,
+                    height: window.innerHeight - 128,
+                    width: window.innerWidth/2,
                     radiusMargin: 7,
                     strength: {
                     //   x: ({ radius }) => 20 / radius,
@@ -207,7 +207,7 @@ class ConceptGraph extends Component {
                 <ForceGraphNode
                     key={node.id}
                     fill={this.getColor(node.type)}
-                    node={{ ...node, radius: 7}}
+                    node={{ ...node, radius: 6}}
                 />
                 ))}
                 {this.props.data.links.map(link => (

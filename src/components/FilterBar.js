@@ -43,6 +43,10 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 
 const styles = theme => ({
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
   root: {
     width: '100%',
     backgroundColor: 'white',
@@ -279,7 +283,7 @@ class FilterBar extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar classes={{root: classes.root}} position="fixed">
-          <Toolbar>
+          <Toolbar className={classes.toolbar}>
             <form className={classes.container} noValidate>
               <TextField
                 id="days"
@@ -387,12 +391,9 @@ class FilterBar extends React.Component {
                 }
                 label="Very Positive"
               />
-            </div> */}
-            <div className={classes.grow} />
+            </div> 
             
             <ConceptSelect conceptList={this.props.conceptList} filterConcept={this.props.filterConcept}/>
-
-            <div className={classes.grow} />
             
             {//Filter Sources button and Window
             }
