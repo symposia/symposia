@@ -184,7 +184,7 @@ class ArticleGrid extends React.Component {
                 <Grid key={index} item className={this.filterOut(value)}>
                   <Card 
                   style={{backgroundImage: `url(${value.image})`}} 
-                  className={classes.card} 
+                  className={classes.card + " article-card"} 
                   onClick={() => {this.props.setArticle(value)}}
                   >
                       <CardContent  className={classes.content}>

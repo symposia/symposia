@@ -630,6 +630,10 @@ class ClusterViz extends Component {
               filterSentiment={this.setSentiment}
               toggleFullscreen={this.toggleFullscreen}
             />
+            { fullscreen === "fullscreen" ? 
+            <style dangerouslySetInnerHTML={{__html: `
+              .article-card { width: 400px; height: 300px;}
+            `}} /> : null}
           </div>
         </div>
       );
