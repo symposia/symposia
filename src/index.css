@@ -39,3 +39,11 @@ body,
   height: 100%;
   min-height: 100%;
 }
+
+
+ /* @media (min-width: 1840px) {
+  .modal-responsive {
+   width:20% !important;
+   height: 20%;
+ }
+} */

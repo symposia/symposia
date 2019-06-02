@@ -12,6 +12,9 @@ import SummarizerModal from "./SummarizerModal";
 import SearchAppBar from "./SearchAppBar";
 import FilterBar from "./FilterBar";
 import ArticleView from "./ArticleView"
+import Modal from '@material-ui/core/Modal';
+import Typography from '@material-ui/core/Typography';
+import IntroModal from "./IntroModal";
 
 class ClusterViz extends Component {
 
@@ -33,7 +36,7 @@ class ClusterViz extends Component {
       showSummarizerModal: false,
       articleToView: null,
       recs: null
-    };
+      };
 
     this.getFirst = this.getFirst.bind(this);
     this.getSecond = this.getSecond.bind(this);
@@ -44,8 +47,7 @@ class ClusterViz extends Component {
     this.setConcepts = this.setConcepts.bind(this);
     this.setArticleToView = this.setArticleToView.bind(this)
     this.leaveArticleView = this.leaveArticleView.bind(this)
-    this.getRecs = this.getRecs.bind(this)
-    
+    this.getRecs = this.getRecs.bind(this)    
   }
 
   componentWillMount() {
@@ -520,16 +522,18 @@ class ClusterViz extends Component {
         getRecs={this.getRecs}
         />
 
-        let mainView =
-          <div> 
-            <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
-            <div id="cluster-viz-container">
-              <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
-            </div>
+      let mainView =
+        <div> 
+          <FilterBar sources={sources} conceptList={conceptList} filterConcept={this.setConcepts} filterSource={this.setFilterSource} filterDate={this.setDayFilter} filterSentiment={this.setSentiment}/>
+          <div id="cluster-viz-container">
+            <StoryGrid data={articles} tags={tags} setArticle={this.setArticleToView}/>
           </div>
+        </div>
+
 
       return (
         <div>
+            <IntroModal />
             <SearchAppBar 
               storyTitle={this.state.title} 
               leaveArticleView={this.leaveArticleView} 
