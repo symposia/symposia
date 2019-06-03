@@ -243,7 +243,7 @@ class ConceptSelect extends React.Component {
                 components={components}
                 value={this.state.multi}
                 onChange={this.handleChange('multi')}
-                placeholder="Search for a related person/place/thing"
+                placeholder="Filter related person/place/groups"
                 isMulti
                 isClearable
             /> 
