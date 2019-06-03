@@ -194,12 +194,12 @@ class ConceptGraph extends Component {
                 simulationOptions={{
                     height: window.innerHeight - 128,
                     width: window.innerWidth/2,
-                    radiusMargin: 7,
+                    radiusMargin: 10,
                     strength: {
                     //   x: ({ radius }) => 20 / radius,
                     //   y: ({ radius }) => 50 / radius,
-                      collide: -50,
-                      charge: 300
+                      collide: -65,
+                      charge: 450
                     }
                 }}
                 >
@@ -207,7 +207,7 @@ class ConceptGraph extends Component {
                 <ForceGraphNode
                     key={node.id}
                     fill={this.getColor(node.type)}
-                    node={{ ...node, radius: 6}}
+                    node={{ ...node, radius: 10}}
                 />
                 ))}
                 {this.props.data.links.map(link => (

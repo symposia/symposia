@@ -632,7 +632,11 @@ class ClusterViz extends Component {
             />
             { fullscreen === "fullscreen" ? 
             <style dangerouslySetInnerHTML={{__html: `
-              .article-card { width: 400px; height: 300px;}
+              .article-card { 
+                width: 400px;
+                height: 300px;
+                font-size: 20px;
+              }
             `}} /> : null}
           </div>
         </div>

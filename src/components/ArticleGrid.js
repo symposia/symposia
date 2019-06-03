@@ -70,10 +70,10 @@ const styles = theme => ({
   },
   cardtitle: {
     color: 'white',
-    fontSize: 13
+    fontSize: 15
   },
   metadata:  {
-    fontSize: '12px',
+    fontSize: '15px',
     display: 'inline-block',
     width: 200,
     color: 'white'
