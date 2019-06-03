@@ -12,8 +12,9 @@ import IntroModal2 from '../images/introModal/IntroModal2.PNG';
 import IntroModal3 from '../images/introModal/IntroModal3.PNG';
 import IntroModal4 from '../images/introModal/IntroModal4.PNG';
 import IntroModal5 from '../images/introModal/IntroModal5.PNG';
-import Modal from '@material-ui/core/Modal'
-import classNames from 'classnames'
+import Modal from '@material-ui/core/Modal';
+import classNames from 'classnames';
+import CloseIcon from '@material-ui/icons/Close';
 
 const tutorialSteps = [
   {
@@ -92,7 +93,11 @@ const styles = theme => ({
     fontWeight: 'bold',
     marginLeft: '5%',
     marginRight: '5%',
-  }
+  },
+  closeButton: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 });
 
 
@@ -149,6 +154,11 @@ class IntroModal extends Component {
       >
       <div className={classNames(classes.root, 'modal-responsive')}>
         <div className={classes.content}>
+          <div className={classes.closeButton}>
+            <Button size="small" onClick={this.handleClose}>
+              <CloseIcon/>
+            </Button>  
+          </div>
           {tutorialSteps[activeStep].label? (
             <Typography variant='h5' className={classes.text} color='primary'>{tutorialSteps[activeStep].label}</Typography>
           ): null}
