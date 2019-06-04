@@ -73,7 +73,7 @@ const styles = theme => ({
   img: {
     overflow: "hidden",
     display: "block",
-    maxHeight: "75%",
+    maxHeight: "100%",
     maxWidth: "100%",
     marginLeft: "auto",
     marginRight: "auto"
@@ -96,6 +96,9 @@ const styles = theme => ({
     marginTop: 10,
     display: "flex",
     justifyContent: "flex-end"
+  },
+  imgContainer: {
+    maxHeight: "50%"
   }
 });
 
@@ -159,11 +162,13 @@ class IntroModal extends Component {
                 {tutorialSteps[activeStep].label}
               </Typography>
             ) : null}
-            <img
-              className={classes.img}
-              src={tutorialSteps[activeStep].imgPath}
-              alt={tutorialSteps[activeStep].label}
-            />
+            <div className={classes.imgContainer}>
+              <img
+                className={classes.img}
+                src={tutorialSteps[activeStep].imgPath}
+                alt={tutorialSteps[activeStep].label}
+              />
+            </div>
             <Typography variant="h5" className={classes.text} color="default">
               {tutorialSteps[activeStep].description}
             </Typography>
