@@ -7,44 +7,15 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Graph from "./components/ConceptGraph";
 import ClusterViz from "./components/ClusterViz";
-import logo from "./logo.png";
-// import ArticleView from "./components/ArticleView";
 import ArticleViewPopup from "./components/ArticleViewPopup";
 import Spinner from "./components/Spinner";
 import { CSSTransition } from "react-transition-group";
 
 class App extends Component {
-  NavBar() {
-    return (
-      <nav>
-        <ul>
-          <li id="nav-link-1">
-            <Link to="/">
-              <img id="logo" src={logo} alt="Symposia Logo" />
-            </Link>
-          </li>
-          <li id="nav-link-2">
-            {/* <span>
-              <Link to="/about/">About</Link>
-            </span> */}
-            <a
-              href="mailto:pvthejas@uw.edu,jyc24@uw.edu,aman.arya524@gmail.com,lndrgs@uw.edu"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Contact Us
-            </a>
-          </li>
-        </ul>
-      </nav>
-    );
-  }
-
   render() {
     return (
       <Router>
         <div id="app-container">
-          {/* <Route path="/" exact render={this.NavBar} /> */}
           <main>
             <Route path="/" exact>
               {({ match }) => (
@@ -54,11 +25,11 @@ class App extends Component {
                   timeout={300}
                   classNames="page"
                   unmountOnExit
-                 >
+                >
                   <div className="page">
                     <Home />
                   </div>
-                 </CSSTransition>
+                </CSSTransition>
               )}
             </Route>
             <Route path="/about/" component={About} />
@@ -69,7 +40,7 @@ class App extends Component {
               render={() => <ClusterViz width={1440} height={600} />}
             />
             <Route path="/ArticleViewPopup/" component={ArticleViewPopup} />
-            <Route path="/spinner/" component={Spinner}/>
+            <Route path="/spinner/" component={Spinner} />
           </main>
         </div>
       </Router>

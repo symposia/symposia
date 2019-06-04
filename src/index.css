@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Pontano+Sans');
+@import url("https://fonts.googleapis.com/css?family=Pontano+Sans");
+@import url("//cdn.rawgit.com/rtaibah/dubai-font-cdn/master/dubai-font.css");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap");
 
 html {
   box-sizing: border-box;
@@ -13,14 +15,14 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Pontano Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Open Sans", "Pontano Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   color: #707070;
-  background-color: ##FFFFFF;
+  background-color: #ffffff;
 }
 
 /* Header Colors */
@@ -40,8 +42,7 @@ body,
   min-height: 100%;
 }
 
-
- /* @media (min-width: 1840px) {
+/* @media (min-width: 1840px) {
   .modal-responsive {
    width:20% !important;
    height: 20%;

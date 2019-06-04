@@ -16,48 +16,6 @@ main {
   flex: 1;
 }
 
-/* NavBar */
-
-nav {
-  width: 100%;
-  border-bottom: solid 1px rgba(255, 255, 255, 0.08);
-}
-
-nav > ul {
-  width: 1040px;
-  max-width: 100%;
-  padding: 0 12px;
-  margin: 16px auto;
-
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  align-items: center;
-}
-
-#nav-link-1 {
-  justify-self: start;
-}
-
-#nav-link-2 {
-  justify-self: end;
-}
-
-#nav-link-2 > span {
-  margin-right: 40px;
-}
-
-#logo {
-  width: 33px;
-}
-
-/* NavBar Links */
-
-nav a {
-  color: #707070;
-  text-decoration: none;
-  font-weight: 600;
-}
-
 /* Main Content */
 
 main {
@@ -69,7 +27,7 @@ main {
 /* Transition Animations */
 
 .page-appear {
-  opacity:0;
+  opacity: 0;
 }
 
 .page-appear-active {
