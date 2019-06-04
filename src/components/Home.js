@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import "./css/Home.css";
+
 import logo from "../logo.svg";
 import heroImage from "../images/hero.png";
-import "./css/Home.css";
+import step1 from "../images/step1.png";
+import step2 from "../images/step2.png";
+import step3 from "../images/step3.png";
 
 const NavBar = () => {
   return (
@@ -39,19 +43,19 @@ class Home extends Component {
         path: "avengers-endgame"
       },
       {
-        title: "Ukraine Elections",
+        title: "Ukraine Presidency",
         backgroundImageURL:
           "https://s3-us-west-2.amazonaws.com/symposia/images/ukraine-elections.jpg",
         path: "ukraine-elections"
       },
       {
-        title: "Joe Biden 2020",
+        title: "Joe Biden Candidacy",
         backgroundImageURL:
           "https://s3-us-west-2.amazonaws.com/symposia/images/joe-biden-2020.jpg",
         path: "joe-biden-2020"
       },
       {
-        title: "Sri Lanka Attacks",
+        title: "Sri Lanka Terror Attacks",
         backgroundImageURL:
           "https://s3-us-west-2.amazonaws.com/symposia/images/sri-lanka-attacks.jpg",
         path: "sri-lanka-attacks"
@@ -68,17 +72,45 @@ class Home extends Component {
             do something about it.
           </h2>
         </section>
-        <section id="featured-stories">
-          {stories.map((story, index) => {
-            return (
-              <StoryCard
-                key={index}
-                title={story.title}
-                backgroundImage={story.backgroundImageURL}
-                path={story.path}
-              />
-            );
-          })}
+        <section className="stories">
+          <h1>Today's Top Stories</h1>
+          <div id="featured-stories">
+            {stories.map((story, index) => {
+              return (
+                <StoryCard
+                  key={index}
+                  title={story.title}
+                  backgroundImage={story.backgroundImageURL}
+                  path={story.path}
+                />
+              );
+            })}
+          </div>
+        </section>
+        <section className="how-it-works">
+          <h1>How it Works</h1>
+          <div>
+            <p>
+              1. Symposia is a news research web application that offers
+              analytics and insights into popular news stories by analyzing news
+              articles from media sources.
+            </p>
+            <img src={step1} />
+          </div>
+          <div>
+            <p>
+              2. We group articles together based on similar perspectives and
+              concepts, allowing you to see the bigger picture
+            </p>
+            <img src={step2} />
+          </div>
+          <div>
+            <p>
+              3. We give users insights into the articles they read, right where
+              they need them
+            </p>
+            <img src={step3} />
+          </div>
         </section>
       </div>
     );
