@@ -7,7 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import '@brainhubeu/react-carousel/lib/style.css';
 import Typography from "@material-ui/core/Typography";
 import "./css/ArticleGrid.css";
-import Image from '../images/sri-lanka-mourns-014.jpg';
+// import Image from '../images/sri-lanka-mourns-014.jpg';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
@@ -23,7 +23,7 @@ import ArticleSentiment from './ArticleSentiment';
 // import Divider from '@material-ui/core/Divider';
 // import Lens from '@material-ui/icons/Lens';
 
-let u = Image;
+// let u = Image;
 
 const styles = theme => ({
   root: {

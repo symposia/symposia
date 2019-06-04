@@ -13,6 +13,11 @@ class ArticleView extends Component {
     this.onPerspectiveChange = this.onPerspectiveChange.bind(this)
   }
 
+  onError(e) {
+    console.log(e.target)
+    e.target.style="display: none;"
+  }
+
   componentDidUpdate() {
     window.scrollTo(0,0);
   }
@@ -64,9 +69,9 @@ class ArticleView extends Component {
               <p className="popup-title">
                 {label.eng}
               </p>
-              <p>
+              {/* <p>
                 <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
-              </p>
+              </p> */}
               <p className="popup-description">
                 {description}
               </p>
@@ -129,6 +134,7 @@ class ArticleView extends Component {
               <img
                 src={"http://logo.clearbit.com/" + getDomain(article.source.uri)}
                 alt="news source"
+                onError={this.onError}
               />
             </div>
             <div className="av-title">
@@ -310,9 +316,9 @@ class ArticleText extends Component {
                 <p className="popup-title">
                   {label.eng}
                 </p>
-                <p>
+                {/* <p>
                   <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
-                </p>
+                </p> */}
                 <p className="popup-description">
                   {description}
                 </p>
