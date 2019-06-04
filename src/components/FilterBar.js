@@ -132,33 +132,33 @@ const styles = theme => ({
     marginRight: 50,
   },
   vnegative:  {
-    color: purple[900],
+    color: red[900],
     '&$checked': {
-      color: purple[900],
+      color: red[900],
     },
   },
   negative: {
     color: red[400],
     '&$checked': {
-      color: red[300],
+      color: red[400],
     },
   },
   neutral:  {
     color: grey[600],
     '&$checked': {
-      color: grey[500],
+      color: grey[600],
     },
   },
   positive: {
     color: green[400],
     '&$checked': {
-      color: green[300],
+      color: green[400],
     },
   },
   vpositive:  {
-    color: yellow[800],
+    color: green[900],
     '&$checked': {
-      color: yellow[700],
+      color: green[900],
     },
   },
   checked: {},
