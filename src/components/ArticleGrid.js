@@ -51,9 +51,9 @@ const styles = theme => ({
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: "scale-down",
-    height: 50,
+    height: 60,
     width: 50,
-    backgroundColor: 'white',
+    // backgroundColor: '',
     right: 20,
     bottom: 20,
     position: 'absolute' 
@@ -137,6 +137,10 @@ class ArticleGrid extends React.Component {
     alignItems: "flex-start",
   };
 
+  onError(e) {
+    console.log(e.target)
+    e.target.style="display: none;"
+  }
   set_focus(typeFilterList) {
     this.props.articles.map(value => {
       if(typeFilterList.includes(value.sourceName)) {
@@ -210,14 +214,23 @@ class ArticleGrid extends React.Component {
                             {value.date}
                             {value.sentiment}
                           </Typography> */}
-                          <CardMedia
+                          <img 
+                            src={"http://logo.clearbit.com/" + getDomain(value.url)} 
+                            data-index={index}
+                            title={value.title}
+                            alt={value.title}
+                            className={classes.media}
+                            onError={this.onError}
+                          />
+                          {/* <CardMedia
                               component="img"
                               alt={value.title}
                               className={classes.media}
                               image={"http://logo.clearbit.com/" + getDomain(value.url)}
                               title={value.title}
                               data-index={index}
-                          />
+                              onError={}
+                          /> */}
                         </div>
                       </CardContent>
                   </Card>

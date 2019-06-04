@@ -73,7 +73,7 @@ class Home extends Component {
           </h2>
         </section>
         <section className="stories">
-          <h1>Today's Top Stories</h1>
+          <h1>Top Stories</h1>
           <div id="featured-stories">
             {stories.map((story, index) => {
               return (
@@ -91,7 +91,7 @@ class Home extends Component {
           <h1>How it Works</h1>
           <div>
             <p>
-              1. Symposia is a news research web application that offers
+              Symposia is a news research web application that offers
               analytics and insights into popular news stories by analyzing news
               articles from media sources.
             </p>
@@ -99,14 +99,14 @@ class Home extends Component {
           </div>
           <div>
             <p>
-              2. We group articles together based on similar perspectives and
+              We group articles together based on similar perspectives and
               concepts, allowing you to see the bigger picture
             </p>
             <img src={step2} />
           </div>
           <div>
             <p>
-              3. We give users insights into the articles they read, right where
+              We give users insights into the articles they read, right where
               they need them
             </p>
             <img src={step3} />

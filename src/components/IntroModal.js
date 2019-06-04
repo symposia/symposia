@@ -57,7 +57,7 @@ const items = [
 const styles = theme => ({
   root: {
     width: "50%",
-    height: "50%",
+    height: "60%",
     maxHeight: "750px",
     maxWidth: "800px",
     backgroundColor: "white",
