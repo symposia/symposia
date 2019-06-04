@@ -90,9 +90,10 @@ class TagGrid extends React.Component {
           Object.assign(currConcept, {summary: data.extract_html})
           Object.assign(currConcept, {originalimage: data.originalimage})
           Object.assign(currConcept, {title: data.title})
-          // Object.assign(currConcept, {uri: data.content_urls.desktop.page})
-
-
+          if (data.content_urls) {
+            console.log(data)
+            Object.assign(currConcept, {uri: data.content_urls.desktop.page}) 
+          }
           console.log(currConcept)
           concepts[index] = currConcept
           this.setState({concepts: concepts})  
@@ -123,9 +124,9 @@ class TagGrid extends React.Component {
                     <p className="popup-title">
                       {value.title}
                     </p>
-                    <p>
+                    {/* <p>
                       <b className="popup-subtitles">{"Relevancy Score: "}</b>{value.score}
-                    </p>
+                    </p> */}
                     <p className="popup-description">
                       {value.description}
                     </p>

@@ -287,7 +287,7 @@ class FilterBar extends React.Component {
             <Button onClick={this.props.toggleFullscreen}>
               Toggle Fullscreen
             </Button>
-            <form className={classes.container} noValidate>
+            {/* <form className={classes.container} noValidate>
               <TextField
                 id="days"
                 type="number"
@@ -307,7 +307,7 @@ class FilterBar extends React.Component {
                   endAdornment: <InputAdornment position="end">Days</InputAdornment>,
                 }}
               />
-            </form>
+            </form> */}
             <div className={classes.sentiment}>
               <FormControlLabel
                 control={

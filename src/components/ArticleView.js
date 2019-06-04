@@ -64,9 +64,9 @@ class ArticleView extends Component {
               <p className="popup-title">
                 {label.eng}
               </p>
-              <p>
+              {/* <p>
                 <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
-              </p>
+              </p> */}
               <p className="popup-description">
                 {description}
               </p>
@@ -271,7 +271,11 @@ class ArticleText extends Component {
           Object.assign(currConcept, {summary: data.extract_html})
           Object.assign(currConcept, {originalimage: data.originalimage})
           // Object.assign(currConcept, {originalimagesrc: data.originalimage.source})
-          
+          if (data.content_urls) {
+            console.log(data)
+            Object.assign(currConcept, {uri: data.content_urls.desktop.page}) 
+          }
+          console.log(currConcept)
           concepts[index] = currConcept
           this.setState({concepts: concepts})  
         })}
@@ -310,9 +314,9 @@ class ArticleText extends Component {
                 <p className="popup-title">
                   {label.eng}
                 </p>
-                <p>
+                {/* <p>
                   <b className="popup-subtitles">{"Relevancy Score: "}</b>{score}
-                </p>
+                </p> */}
                 <p className="popup-description">
                   {description}
                 </p>
