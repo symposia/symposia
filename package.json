@@ -15,7 +15,7 @@
     "react-dom": "^16.8.3",
     "react-grid-system": "^4.4.5",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.8",
+    "react-scripts": "^5.0.1",
     "react-select": "^2.4.3",
     "react-transition-group": "^4.1.0",
     "react-vis-force": "^0.3.1",
